@@ -1,11 +1,3 @@
-# GIT
-## GIT Clone
-Copy the ssh link from the repo and use it in the following command in a terminal window that is open to where you want the folder of the git repo to be placed.
-
-Note: This command does create a subfolder that contains the repo so you do not need to create an additional one.
-
-`git clone <sshURL>`
-
 ### SSH Key
 If you do not have an ssh key setup use the following command to generate one in a terminal window:
 
@@ -14,6 +6,14 @@ If you do not have an ssh key setup use the following command to generate one in
 Then, follow the prompts taking the defaults for everything by pressing enter, but setting a password for the key if you wish to have one.
 
 Then, follow the instructions [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to add that key to your github account.
+
+# GIT
+## GIT Clone
+Copy the ssh link from the repo and use it in the following command in a terminal window that is open to where you want the folder of the git repo to be placed.
+
+Note: This command does create a subfolder that contains the repo so you do not need to create an additional one.
+
+`git clone <sshURL>`
 
 ## Cheat Sheet
 Go [here](https://education.github.com/git-cheat-sheet-education.pdf) for a git command cheat sheet. 
