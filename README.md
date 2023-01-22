@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # GIT
 ## GIT Clone
 Copy the ssh link from the repo and use it in the following command in a terminal window that is open to where you want the folder of the git repo to be placed.
@@ -91,6 +90,3 @@ You can find it by searching for "ESLint" in the extensions tab of VSCode or by 
 <br>**Note:** If you see any errors, take note of what they say and either message or ping me (Riley Chometa) in the Discord server to let me know. <br>
 You can stop the containers by pressing `ctrl+c` in while having the terminal window selected.
 4. Using the "Docker" extension, attach to the 
-=======
-# term-project-2023-team-2
->>>>>>> c2bc4e28427d1b429adc99b819acb59771717903
