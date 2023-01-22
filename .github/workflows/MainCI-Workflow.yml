@@ -31,13 +31,13 @@ jobs:
       
       - name: Test Frontend Container
         run: |
-          docker exec -it covid_app
+          docker exec -it covid_app sh
           echo "This is a test"
           exit
       
       - name: Test Backend Container
         run: |
-          docker exec -it covid_api
+          docker exec -it covid_api sh
           echo "This is a test"
           exit
       
