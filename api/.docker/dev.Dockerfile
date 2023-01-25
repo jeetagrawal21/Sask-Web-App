@@ -21,7 +21,7 @@ RUN npm install --production=false
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
+EXPOSE 3000 4000
 
 #start the backend server
 CMD [ "npm", "run", "dev" ]
