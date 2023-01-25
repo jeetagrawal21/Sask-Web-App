@@ -29,11 +29,11 @@ jobs:
       - name: Build The Stack
         run: docker compose up -d
       
-      - name: Test Frontend Container
-        run: docker exec covid_app echo "This is a test"
+      - name: Lint Frontend
+        run: docker exec covid_app run eslint
       
-      - name: Test Backend Container
-        run: docker exec covid_api echo "This is a test"
+      - name: Lint Backend
+        run: docker exec covid_api run eslint
       
       - name: Stop The Stacks
         if: always()
