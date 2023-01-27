@@ -1,4 +1,19 @@
-### SSH Key
+# Branch Structure
+### feature/story-name
+These branches are for actual features that we expect to eventually end up on the main branch.<br>
+After the developer is done with creating code for this branch, the tester assigned to them will take over the branch to perform their testing.
+
+### prototype/story-name
+These branches are for working on spike-prototypes.
+
+### dev
+This branch is where you will eventually merge your branches into, this code should be fully tested but may end up having bugs in it.
+
+### main
+We should shoot to only merge and push to this branch once per deliverable once we have a satisfactory product on the dev branch that is fully tested.
+
+# GIT Setup
+## SSH Key
 If you do not have an ssh key setup use the following command to generate one in a terminal window:
 
 `ssh-keygen -t ed25519 -a 100`
@@ -7,7 +22,7 @@ Then, follow the prompts taking the defaults for everything by pressing enter, b
 
 Then, follow the instructions [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to add that key to your github account.
 
-# GIT
+
 ## GIT Clone
 Copy the ssh link from the repo and use it in the following command in a terminal window that is open to where you want the folder of the git repo to be placed.
 
