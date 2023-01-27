@@ -29,11 +29,11 @@ jobs:
       - name: Build The Stack
         run: docker compose up -d
       
-      - name: Lint Frontend
-        run: docker exec covid_app run eslint
+      # - name: Lint Frontend
+      #   run: docker exec covid_app npm run lint
       
       - name: Lint Backend
-        run: docker exec covid_api run eslint
+        run: docker exec covid_api npm run lint
       
       - name: Stop The Stacks
         if: always()

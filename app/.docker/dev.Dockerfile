@@ -25,4 +25,4 @@ EXPOSE 3080
 
 
 # Start the app
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "start" ]
