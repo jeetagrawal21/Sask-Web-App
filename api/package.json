@@ -39,7 +39,10 @@
     "jsonfile": "^6.1.0",
     "jsonwebtoken": "^9.0.0",
     "module-alias": "^2.2.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "pg": "^8.8.0",
+    "sequelize": "^6.28.0",
+    "sequelize-typescript": "^2.1.5"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

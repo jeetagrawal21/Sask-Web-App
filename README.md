@@ -104,4 +104,6 @@ You can find it by searching for "ESLint" in the extensions tab of VSCode or by 
 3. Enter the command `docker compose up` in the terminal and watch the outputs to ensure everything starts up correctly. 
 <br>**Note:** If you see any errors, take note of what they say and either message or ping me (Riley Chometa) in the Discord server to let me know. <br>
 You can stop the containers by pressing `ctrl+c` in while having the terminal window selected.
-4. Using the "Docker" extension, attach to the 
+4. Using the "Docker" extension, attach to the container(s) you will be coding in, the container ending with "app" is the frontend and the container ending with "api" is the backend.
+5. A new VSCode window should open up attached to the file system inside of the container. Click the top left tab to make sure you're in the view that shows the project files. Click "Open Folder".
+6. In the prompt, enter "/app" and then press the "ok" button on the right side of the prompt and it will open the root app directory for the container you attached to.

@@ -60,28 +60,32 @@ app.use((
 
 // **** Serve front-end content **** //
 
-// Set views directory (html)
-const viewsDir = path.join(__dirname, 'views');
-app.set('views', viewsDir);
+// // not need(we using react for front-end. this need to be removed)
+// // Set views directory (html)
+// const viewsDir = path.join(__dirname, 'views');
+// app.set('views', viewsDir);
 
-// Set static directory (js and css).
-const staticDir = path.join(__dirname, 'public');
-app.use(express.static(staticDir));
+// // Set static directory (js and css).
+// const staticDir = path.join(__dirname, 'public');
+// app.use(express.static(staticDir));
 
-// Nav to login pg by default
-app.get('/', (_: Request, res: Response) => {
-  res.sendFile('login.html', {root: viewsDir});
-});
+// // Nav to login pg by default
+// app.get('/', (_: Request, res: Response) => {
+//   res.sendFile('login.html', {root: viewsDir});
+// });
 
-// Redirect to login if not logged in.
-app.get('/users', (req: Request, res: Response) => {
-  const jwt = req.signedCookies[EnvVars.cookieProps.key];
-  if (!jwt) {
-    res.redirect('/');
-  } else {
-    res.sendFile('users.html', {root: viewsDir});
-  }
-});
+// // Redirect to login if not logged in.
+// app.get('/users', (req: Request, res: Response) => {
+//   const jwt = req.signedCookies[EnvVars.cookieProps.key];
+//   if (!jwt) {
+//     res.redirect('/');
+//   } else {
+//     res.sendFile('users.html', {root: viewsDir});
+//   }
+// });
+
+
+// connect db
 
 
 // **** Export default **** //

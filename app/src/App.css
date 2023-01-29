@@ -1,6 +1,7 @@
 body{
   background-color: #93C6E7;
 }
+
 .container {
   display: flex;
   justify-content: space-between;
@@ -9,4 +10,5 @@ body{
 .welcome-message{
     width: 50%
 }
+
 
