@@ -51,7 +51,7 @@ services:
     container_name: covid_postgres
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - SaskLongCovidDevData:/var/lib/postgresql/data
     env_file:
