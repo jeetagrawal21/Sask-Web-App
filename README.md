@@ -1,4 +1,19 @@
-### SSH Key
+# Branch Structure
+### feature/story-name
+These branches are for actual features that we expect to eventually end up on the main branch.<br>
+After the developer is done with creating code for this branch, the tester assigned to them will take over the branch to perform their testing.
+
+### prototype/story-name
+These branches are for working on spike-prototypes.
+
+### dev
+This branch is where you will eventually merge your branches into, this code should be fully tested but may end up having bugs in it.
+
+### main
+We should shoot to only merge and push to this branch once per deliverable once we have a satisfactory product on the dev branch that is fully tested.
+
+# GIT Setup
+## SSH Key
 If you do not have an ssh key setup use the following command to generate one in a terminal window:
 
 `ssh-keygen -t ed25519 -a 100`
@@ -7,7 +22,7 @@ Then, follow the prompts taking the defaults for everything by pressing enter, b
 
 Then, follow the instructions [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to add that key to your github account.
 
-# GIT
+
 ## GIT Clone
 Copy the ssh link from the repo and use it in the following command in a terminal window that is open to where you want the folder of the git repo to be placed.
 
@@ -89,4 +104,6 @@ You can find it by searching for "ESLint" in the extensions tab of VSCode or by 
 3. Enter the command `docker compose up` in the terminal and watch the outputs to ensure everything starts up correctly. 
 <br>**Note:** If you see any errors, take note of what they say and either message or ping me (Riley Chometa) in the Discord server to let me know. <br>
 You can stop the containers by pressing `ctrl+c` in while having the terminal window selected.
-4. Using the "Docker" extension, attach to the 
+4. Using the "Docker" extension, attach to the container(s) you will be coding in, the container ending with "app" is the frontend and the container ending with "api" is the backend.
+5. A new VSCode window should open up attached to the file system inside of the container. Click the top left tab to make sure you're in the view that shows the project files. Click "Open Folder".
+6. In the prompt, enter "/app" and then press the "ok" button on the right side of the prompt and it will open the root app directory for the container you attached to.
