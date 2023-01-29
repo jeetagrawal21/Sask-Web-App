@@ -1,7 +1,12 @@
 import '../stylings/signin.css';
-function SignIn(){
-    return(
-        <div className="signin">
+import React , {Component} from 'react'
+import { Link } from 'react-router-dom';
+
+
+class SignIn extends Component{
+    render(){
+        return (
+            <div className="signin">
             <form className="Auth-form">
                 <h3>Sign In!</h3>
                 <div className="participantId">
@@ -18,11 +23,15 @@ function SignIn(){
                 </div>
                 <button className="signin-button">SIGN IN</button>
                 <p>Do not have an account?</p>
+                <Link to="Register">
                 <button className="register-button">REGISTER NOW</button>
+                </Link>
+
 
         </form>
         </div>
-    );
+        );
+    }
 }
 
-export default SignIn
+export default SignIn;
