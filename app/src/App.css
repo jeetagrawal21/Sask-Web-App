@@ -1,5 +1,12 @@
-body {
-  background-color: #94C6E7;
+body{
+  background-color: #93C6E7;
 }
-
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.welcome-message{
+    width: 50%
+}
 

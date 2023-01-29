@@ -1,0 +1,19 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    justify-content: space-between;
+      
+  }
+
+  /* all the a tags under the div with class name navbar*/
+.navbar a{
+    padding-right: 10px;
+}
+
+.signin{
+    display: flex;
+    width: 50%;
+    justify-content: center;
+}
