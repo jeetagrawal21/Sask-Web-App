@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Title from "./components/Title"
-import Text from "./components/Text"
+import Title from "./componentsRegister/Title"
+import Text from "./componentsRegister/Text"
 
 function App() {
   return (

@@ -19,13 +19,13 @@ function Text() {
 
                 {/* Textfield to enter password */}
                 <div>
-                    <input placeholder="Enter your passowrd"></input>
+                    <input placeholder="Enter your password"></input>
                 </div>
 
 
                 {/* Textfield to confirm password */}
                 <div>
-                    <input placeholder="Confirm your passowrd"></input>
+                    <input placeholder="Confirm your password"></input>
                 </div>
 
 
