@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Open+Sans:ital,wght@0,700;1,400&family=Source+Sans+Pro:ital@1&display=swap');
+
 body{
-  background-color: #93C6E7;
+  background-color: #fff;
 }
 
 .container {
@@ -8,7 +10,17 @@ body{
   align-items: center;
 }
 .welcome-message{
-    width: 50%
-}
+  padding-top: 30px;
+    width: 50%;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
 
+}
+.welcome-text-heading{
+  font-size: 50px;
+
+}
+.welcome-text-body{
+  font-size: 30px;
+}
 

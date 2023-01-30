@@ -3,12 +3,12 @@ import '../stylings/navbar.css';
 
 function Navbar() {
   return (
-    <nav className="navbar">
-      <a href="#">About</a>
-      <a href="#">Contact us</a>
-      <a href="#">Help</a>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <a className="nav-link" href="#">About</a>
+      <a className="nav-link" href="#">Contact us</a>
+      <a className="nav-link" href="#">Help</a>
     </nav>
   );
 }
 
-export default Navbar;
+export default Navbar; 
