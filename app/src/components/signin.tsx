@@ -20,12 +20,14 @@ class SignIn extends Component{
                     type="password"
                     className="input-fields"
                     placeholder="Password"></input>
-                </div>
+                </div >
+                <div className="button-div">
                 <button className="signin-button">SIGN IN</button>
                 <p>Do not have an account?</p>
                 <Link to="Register">
-                <button className="register-button">REGISTER NOW</button>
+                <button className="signin-button">REGISTER NOW</button>
                 </Link>
+                </div>
 
 
         </form>
