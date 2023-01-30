@@ -28,8 +28,9 @@ function Text() {
                     <input placeholder="Confirm your password"></input>
                 </div>
 
-
-                <button>REGISTER</button>
+                <div className="register-page-button-div">
+                <button className="signin-button">REGISTER</button>
+                </div>
         </form>
         </div>
     );

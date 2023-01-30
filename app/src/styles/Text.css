@@ -3,3 +3,22 @@
     width: 100%;
     justify-content: center;
 }
+
+.register div{
+    padding-bottom: 10px;
+}
+
+.register input{
+    width: 300px;
+    text-align: center;
+    padding: 10px;
+    font-size: 1.0rem;
+    margin-bottom: 20px;
+}
+
+.register-page-button-div{
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
