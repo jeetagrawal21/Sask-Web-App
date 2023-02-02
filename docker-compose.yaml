@@ -1,16 +1,35 @@
 version: "3.8"
 name: cmpt371-group2
 services:
+  # app:
+  #   container_name: covid_app
+  #   hostname: covid_app
+  #   image: sask-long-covid-app
+  #   build:
+  #     context: ./app
+  #     dockerfile: .docker/dev.Dockerfile
+  #   volumes:
+  #     - ./app:/app
+  #     - app_node_modules:/app/node_modules
+  #   working_dir: /app
+  #   ports:
+  #     - 3080:3080
+  #   tty: true
+  #   stdin_open: true
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - api
+  
   app:
     container_name: covid_app
     hostname: covid_app
     image: sask-long-covid-app
     build:
-      context: ./app
+      context: ./client
       dockerfile: .docker/dev.Dockerfile
     volumes:
-      - ./app:/app
-      - app_node_modules:/app/node_modules
+      - ./cleint:/app
+      - app_node_modules:/client/node_modules
     working_dir: /app
     ports:
       - 3080:3080
