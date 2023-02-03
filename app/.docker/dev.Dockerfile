@@ -15,8 +15,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install --production=false
-
+#RUN npm install --production=false
+RUN yarn
 # Copy app files
 COPY . .
 
@@ -25,4 +25,4 @@ EXPOSE 3080
 
 
 # Start the app
-CMD [ "npm", "run", "start" ]
+CMD [ "yarn", "run", "start" ]
