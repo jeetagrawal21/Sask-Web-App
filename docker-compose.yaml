@@ -28,7 +28,7 @@ services:
       context: ./client
       dockerfile: .docker/dev.Dockerfile
     volumes:
-      - ./cleint:/app
+      - ./client:/app
       - app_node_modules:/client/node_modules
     working_dir: /app
     ports:
