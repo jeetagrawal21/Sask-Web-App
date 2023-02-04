@@ -98,7 +98,11 @@ AppDataSource.initialize().then(async () => {
   console.log("Inserting a new user into the database...");
   const user = new User();
   user.email = "Timber@usask.ca";
-  user.name = "Saw";
+  user.surname = '';
+  user.givename1 = '';
+  user.givename2 = '';
+  user.participant_id = 1234;
+  user.pwdHash = "1234";
   await AppDataSource.manager.save(user);
   // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
   console.log("Saved a new user with id: " + user.id);

@@ -10,7 +10,7 @@ export const AppDataSource = new DataSource({
   password: "ThisIsASuperLongAndCoolPassword4DevelopmentToKeepOutHackersSoIfYoureAHackerPleaseLeave>:3",
   database: "SaskLongCovidData",
   synchronize: true,
-  logging: true,
+  logging: false,
   entities: [User],
   subscribers: [],
   migrations: [],

@@ -4,12 +4,16 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 export class User {
   @PrimaryGeneratedColumn()
     id!: number;
-
   @Column()
     email!: string;
-  
   @Column()
-    name!: string;
+    surname!: string;
   @Column()
-    pwdHash?: string;
+    participant_id!: number ;
+  @Column()
+    givename1!: string ;
+  @Column()
+    givename2!: string;
+  @Column()
+    pwdHash!: string;
 }
