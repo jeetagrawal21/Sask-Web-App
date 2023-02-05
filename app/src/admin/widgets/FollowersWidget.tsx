@@ -6,36 +6,36 @@ import Typography from "@material-ui/core/Typography";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
-import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import Poll from "@material-ui/icons/Poll";
+import Article from "@material-ui/icons/Article";
+import CalendarToday from "@material-ui/icons/CalendarToday";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
 const socials = [
   {
     bgcolor: "primary.main",
-    icon: <ThumbUpIcon sx={{ color: "#fff" }} />,
-    name: "Likes",
+    icon: <CalendarToday sx={{ color: "#fff" }} />,
+    name: "Days Since Last Login",
     trend: <ArrowDropUpIcon sx={{ color: "success.main" }} />,
     unitKey: "admin.home.followers.units.likes",
-    value: "26,789",
+    value: "26",
   },
   {
     bgcolor: "error.main",
-    icon: <FavoriteIcon style={{ color: "#fff" }} />,
-    name: "Love",
+    icon: <Article style={{ color: "#fff" }} />,
+    name: "Last Survey Recorded",
     trend: <ArrowRightIcon sx={{ color: "action.disabled" }} />,
     unitKey: "admin.home.followers.units.love",
-    value: "6,754",
+    value: "Nov 6, 2022",
   },
   {
     bgcolor: "warning.main",
-    icon: <EmojiEmotionsIcon style={{ color: "#fff" }} />,
-    name: "Smiles",
+    icon: <Poll style={{ color: "#fff" }} />,
+    name: "Total Reponses Recorded",
     trend: <ArrowDropDownIcon sx={{ color: "error.main" }} />,
     unitKey: "admin.home.followers.units.smiles",
-    value: "52,789",
+    value: "15",
   },
 ];
 

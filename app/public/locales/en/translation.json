@@ -22,13 +22,13 @@
     "home": {
       "achievement": {
         "action": "View Profile",
-        "description": "You have completed {{progress}}% of your profile. Your current progress is great.",
-        "title": "Congratulations {{name}}"
+        "description": "Your contribution to the SASK Long COVID project is greatly appreciated.",
+        "title": "Thank you for your participation, {{name}}."
       },
       "followers": {
         "units": {
-          "likes": "Likes",
-          "love": "Love",
+          "likes": "Last survey filled out",
+          "love": "Days since last login",
           "smiles": "Smiles"
         }
       },
@@ -39,16 +39,16 @@
         "income": "Income",
         "followers": "Followers",
         "title": "Targets",
-        "views": "Views"
+        "views": "Timeline"
       },
       "views": {
         "action": "View Dashboard",
-        "unit": "Views"
+        "unit": "Timeline"
       },
       "welcome": {
-        "message": "This page is designed to give some important information about the application. Let's make someting together!",
+        "message": "This is your SASK Long COVID profile. You can view your survey responses and progress here.",
         "subTitle": "Welcome back!",
-        "title": "Hi {{name}},"
+        "title": "Hi, {{name}}."
       }
     }
   },
@@ -58,13 +58,13 @@
         "action": "Send Confirmation",
         "back": "Back to login",
         "email": {
-          "label": "E-mail Address"
+          "label": "Email Address"
         }
       },
       "notifications": {
         "success": "Email has been sent!"
       },
-      "subTitle": "To get a validation code, enter the e-mail address associated to your account.",
+      "subTitle": "To get a validation code, enter the email address associated to your account.",
       "title": "Get validation code"
     },
     "forgotPasswordSubmit": {
@@ -91,13 +91,13 @@
       "forgotPasswordLink": "Forgot password?",
       "form": {
         "email": {
-          "label": "E-mail Address"
+          "label": "Email Address"
         },
         "password": {
           "label": "Password"
         }
       },
-      "newAccountLink": "Don't have an account? Sign Up!",
+      "newAccountLink": "Can't sign in? Request an account!",
       "submit": "Sign in",
       "title": "Sign in"
     },
@@ -295,13 +295,13 @@
     "cta": {
       "main": "Sign in",
       "mainAuth": "Continue as {{name}}",
-      "secondary": "Source code"
+      "secondary": "Register"
     },
     "features": {
       "more": "More on Github",
       "title": "Main Features"
     },
-    "title": "Free and open-source admin application made with React and Material-UI"
+    "title": "Sask Long COVID Participant Portal"
   },
   "notifications": {
     "newComment": "<bold>{{user}}</bold> has written a new comment on your profile",
