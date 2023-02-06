@@ -53,6 +53,20 @@
     }
   },
   "auth": {
+    "requestAccount": {
+      "form": {
+        "action": "Request Account",
+        "back": "Back to login",
+        "email": {
+          "label": "Participant ID"
+        }
+      },
+      "notifications": {
+        "success": "Request has been sent!"
+      },
+      "subTitle": "Please provide your participant ID. The admin will review your request and send you an email with further instructions.",
+      "title": "Request Account"
+    },
     "forgotPassword": {
       "form": {
         "action": "Send Confirmation",
@@ -97,7 +111,8 @@
           "label": "Password"
         }
       },
-      "newAccountLink": "Can't sign in? Request an account!",
+      "newAccountLink":"Register account",
+      "requestAccountLink": "Can't sign in? Request an account!",
       "submit": "Sign in",
       "title": "Sign in"
     },
