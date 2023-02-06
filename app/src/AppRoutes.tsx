@@ -22,6 +22,7 @@ const ForgotPasswordSubmit = lazy(
 );
 const Login = lazy(() => import("./auth/pages/Login"));
 const Register = lazy(() => import("./auth/pages/Register"));
+const RequestAccount = lazy(() => import("./auth/pages/RequestAccount"));
 
 // Calendar
 const CalendarApp = lazy(() => import("./calendar/pages/CalendarApp"));
@@ -69,6 +70,7 @@ const AppRoutes = () => {
       <Route path="forgot-password-submit" element={<ForgotPasswordSubmit />} />
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
+      <Route path="request-account" element={<RequestAccount />} />
       <Route path="under-construction" element={<UnderConstructions />} />
       <Route path="403" element={<Forbidden />} />
       <Route path="404" element={<NotFound />} />

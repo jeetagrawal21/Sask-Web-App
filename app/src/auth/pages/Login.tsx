@@ -129,6 +129,15 @@ const Login = () => {
             >
               {t("auth.login.newAccountLink")}
             </Button>
+            <Button
+              component={RouterLink}
+              to={`/${process.env.PUBLIC_URL}/request-account`}
+              color="primary"
+              fullWidth
+              sx={{ mt: 2 }}
+            >
+              {t("auth.login.requestAccountLink")}
+            </Button>
           </Box>
         </BoxedLayout>
       </Grid>
