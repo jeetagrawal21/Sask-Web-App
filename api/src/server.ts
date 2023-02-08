@@ -2,7 +2,7 @@ import { ParticipantID } from './entity/ParticipantID';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import { AppDataSource } from "./data-source";
-import { User } from "./entity/User";
+import { Users } from "./entity/Users";
 import path from 'path';
 import { Client } from "pg";
 import dotenv from "dotenv";
@@ -19,6 +19,7 @@ import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
 import { NodeEnvs } from '@src/declarations/enums';
 import { RouteError } from '@src/declarations/classes';
 import { createConnection } from 'net';
+import userService from './services/user-service';
 
 
 // **** Init express **** //
@@ -106,11 +107,11 @@ AppDataSource.initialize().then(async () => {
     await AppDataSource.manager.save(participantId);
   }
   console.log(" paticipantID is ", id);
-  const user = new User();
+  const user = new Users();
   user.email = "test@usask.ca";
   user.participant_id = 1234;
   await AppDataSource.manager.save(user);
-  const users = await AppDataSource.manager.find(User);
+  const users = await AppDataSource.manager.find(Users);
   console.log("users are: ", users);
   
   
