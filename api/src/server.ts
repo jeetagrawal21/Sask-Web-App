@@ -1,3 +1,4 @@
+import { ParticipantID } from './entity/ParticipantID';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import { AppDataSource } from "./data-source";
@@ -95,21 +96,38 @@ app.get('/', (_: Request, res: Response) => {
 
 AppDataSource.initialize().then(async () => {
 
-  console.log("Inserting a new user into the database...");
+  console.log("Inserting a new participant_id into the database...");
+  const participantId = new ParticipantID();
+  participantId.participantid = 1234;
+  const id = await AppDataSource.manager.find(ParticipantID);
+  if (id != null) {
+    console.log("already have and id");
+  } else {
+    await AppDataSource.manager.save(participantId);
+  }
+  console.log(" paticipantID is ", id);
   const user = new User();
-  user.email = "Timber@usask.ca";
-  user.surname = '';
-  user.givename1 = '';
-  user.givename2 = '';
+  user.email = "test@usask.ca";
   user.participant_id = 1234;
-  user.pwdHash = "1234";
   await AppDataSource.manager.save(user);
-  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-  console.log("Saved a new user with id: " + user.id);
-
-  console.log("Loading users from the database...");
   const users = await AppDataSource.manager.find(User);
-  console.log("Loaded users: ", users);
+  console.log("users are: ", users);
+  
+  
+  // const user = new User();
+  // user.email = "Timber@usask.ca";
+  // user.surname = '';
+  // user.givename1 = '';
+  // user.givename2 = '';
+  // user.participant_id = 1234;
+  // user.pwdHash = "1234";
+  // await AppDataSource.manager.save(user);
+  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+  // console.log("Saved a new user with id: " + user.id);
+
+  // console.log("Loading users from the database...");
+  // const users = await AppDataSource.manager.find(User);
+  // console.log("Loaded users: ", users);
 
 }).catch(error => console.log(error));
 

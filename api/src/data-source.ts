@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import "reflect-metadata";
 import { User } from "./entity/User";
+import { ParticipantID } from "./entity/ParticipantID";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -11,7 +12,7 @@ export const AppDataSource = new DataSource({
   database: "SaskLongCovidData",
   synchronize: true,
   logging: false,
-  entities: [User],
+  entities: [User,ParticipantID],
   subscribers: [],
   migrations: [],
 });
