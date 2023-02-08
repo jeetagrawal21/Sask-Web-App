@@ -28,22 +28,22 @@ const overviewItems = [
     /* Not sure if this is the correct way to do this. Cant find the
     visits variable in another file to change so I am just changing manually,
     this applies for all 4 overview items - Alex */
-    unit: "Headache severity past 30 days",
-    value: "7",
+    unit: "Vaccinations",
+    value: "4",
   },
   {
-    unit: "Fever severity past 30 days",
+    unit: "Check-Ups",
     value: "7",
   },
   {
     // unit: "dashboard.overview.orders",
-    unit: "Hair loss severity past 30 days",
+    unit: "New Symptoms",
     value: "6",
   },
   {
     // unit: "dashboard.overview.users",
-    unit: "Sleep apnea severity past 30 days",
-    value: "6",
+    unit: "New Medications",
+    value: "2",
   },
 ];
 
