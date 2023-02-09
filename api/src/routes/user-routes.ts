@@ -49,26 +49,23 @@ async function getAll(_: IReq, res: IRes) {
 /**
  * Add one user.
  */
-async function add(req: IReq<{user: IUser}>, res: IRes) {
-  const request = req.body;
-  console.log(typeof request);
+async function add(req: IReq<IUser>, res: IRes) {
+  const { id,surname,email,participant_id,givename1,givename2,question1,question2,question3,answer1,answer2,answer3,pwdHash} = req.body;
   const new_user = new Users();
-  console.log(request.user);
-  // new_user.email = request.user.email;
-  // new_user.surname = request.user.surname;
-  // new_user.participant_id = request.user.participant_id;
-  // new_user.givename1 = request.user.givename1;
-  // new_user.givename2 = request.user.givename2;
-  // new_user.question1 = request.user.question1;
-  // new_user.question2 = request.user.question2;
-  // new_user.question3 = request.user.question3;
-  // new_user.answer1 = request.user.answer1;
-  // new_user.answer2 = request.user.answer2;
-  // new_user.answer3 = request.user.answer3;
-  // new_user.pwdHash = String(request.user.pwdHash);
+  new_user.email = email;
+  new_user.surname = surname;
+  new_user.participant_id = participant_id;
+  new_user.givename1 = givename1;
+  new_user.givename2 = givename2;
+  new_user.question1 = question1;
+  new_user.question2 = question2;
+  new_user.question3 = question3;
+  new_user.answer1 = answer1;
+  new_user.answer2 = answer2;
+  new_user.answer3 = answer3;
+  new_user.pwdHash = pwdHash;
   console.log(new_user);
   
-  const a = new Users();
   await userService.addOne(new_user);
   return res.status(HttpStatusCodes.CREATED).end();
 }
