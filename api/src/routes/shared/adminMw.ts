@@ -8,7 +8,8 @@ import { JwtPayload } from 'jsonwebtoken';
 import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
 import EnvVars from '@src/declarations/major/EnvVars';
 import jwtUtil from '@src/util/jwt-util';
-import { IUser, UserRoles } from '@src/models/User';
+// import { IUser, UserRoles } from '@src/models/User';
+// import { Users } from '@src/entity/Users';
 
 
 // **** Variables **** //
@@ -23,8 +24,6 @@ const jwtNotPresentErr = 'JWT not present in signed cookie.',
 export interface ISessionUser extends JwtPayload {
   id: number;
   email: string;
-  name: string;
-  role: IUser['role'];
 }
 
 
@@ -49,8 +48,7 @@ async function adminMw(
   // Make sure user role is an admin
   const clientData = await jwtUtil.decode<ISessionUser>(jwt);
   if (
-    typeof clientData === 'object' &&
-    clientData.role === UserRoles.Admin
+    typeof clientData === 'object'
   ) {
     res.locals.sessionUser = clientData;
     return next();

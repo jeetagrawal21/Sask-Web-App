@@ -1,4 +1,5 @@
 import userRepo from '@src/repos/user-repo';
+import userRepository from '@src/repos/user.repository';
 import jwtUtil from '@src/util/jwt-util';
 import pwdUtil from '@src/util/pwd-util';
 import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
@@ -22,7 +23,8 @@ export const errors = {
  */
 async function getJwt(email: string, password: string): Promise<string> {
   // Fetch user
-  const user = await userRepo.getOne(email);
+  // const user = await userRepo.getOne(email);
+  const user = await userRepository.getOne(email);
   if (!user) {
     throw new RouteError(
       HttpStatusCodes.UNAUTHORIZED,
@@ -43,9 +45,9 @@ async function getJwt(email: string, password: string): Promise<string> {
   // Setup Admin Cookie
   return jwtUtil.sign({
     id: user.id,
-    email: user.name,
-    name: user.name,
-    role: user.role,
+    email: user.email,
+    // name: user.name,
+    // role: user.role,
   });
 }
 

@@ -97,22 +97,31 @@ app.get('/', (_: Request, res: Response) => {
 
 AppDataSource.initialize().then(async () => {
 
-  console.log("Inserting a new participant_id into the database...");
+  
   const participantId = new ParticipantID();
   participantId.participantid = 1234;
   const id = await AppDataSource.manager.find(ParticipantID);
-  if (id != null) {
-    console.log("already have and id");
+  if (id.length != 0) {
+    console.log("already have an id");
   } else {
+    console.log("Inserting a new participant_id into the database...");
     await AppDataSource.manager.save(participantId);
   }
   console.log(" paticipantID is ", id);
   const user = new Users();
-  user.email = "test@usask.ca";
+  user.email = "sean.maxwell@gmail.com";
   user.participant_id = 1234;
-  await AppDataSource.manager.save(user);
+  user.pwdHash = "$2b$12$1mE2OI9hMS/rgH9Mi0s85OM2V5gzm7aF3gJIWH1y0S1MqVBueyjsy";
+  
   const users = await AppDataSource.manager.find(Users);
-  console.log("users are: ", users);
+  if (users.length != 0) {
+    console.log("already has a user: ");
+  } else {
+    console.log("Inserting a new user into the database...");
+    await AppDataSource.manager.save(user);
+  }
+  console.log(" User is ", await AppDataSource.manager.find(Users));
+  
   
   
   // const user = new User();
