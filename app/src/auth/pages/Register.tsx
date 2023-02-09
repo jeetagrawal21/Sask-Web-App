@@ -100,6 +100,7 @@ const Register = () => {
           justifyContent: 'center',
           alignItems: 'center',
           height: '100%',
+          width: "50%"
         }}
       >
         <TextField
