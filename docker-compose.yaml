@@ -58,6 +58,18 @@ services:
       - SaskLongCovidDevData:/var/lib/postgresql/data
     env_file:
       - ./db/.env
+
+
+  selenium_test:
+    container_name: selenium_test
+    hostname: covid_selenium_test
+    image: selenium/standalone-chrome
+    volumes:
+      - ./src:/app
+    ports:
+      - 4444:4444
+    tty: true
+    stdin_open: true
       
 volumes:
   app_node_modules:
