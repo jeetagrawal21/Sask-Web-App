@@ -1,31 +1,31 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({name : "users"})
+@Entity({ name: 'users' })
 export class Users {
   @PrimaryGeneratedColumn()
   id!: number;
-  @Column({nullable: true})
+  @Column({ nullable: true })
   surname?: string;
-  @Column({nullable: true})
+  @Column({ nullable: true })
   email?: string;
-  @Column({nullable: true})
-  participant_id?: number ;
-  @Column({nullable: true})
-  givename1?: string ;
-  @Column({nullable: true})
+  @Column({ nullable: true, unique: true })
+  participant_id?: number;
+  @Column({ nullable: true })
+  givename1?: string;
+  @Column({ nullable: true })
   givename2!: string;
-  @Column({nullable: true})
+  @Column({ nullable: true })
   question1!: string;
-  @Column({nullable: true})
+  @Column({ nullable: true })
   question2!: string;
-  @Column({nullable: true})
+  @Column({ nullable: true })
   question3!: string;
-  @Column({nullable: true})
+  @Column({ nullable: true })
   answer1!: string;
-  @Column({nullable: true})
+  @Column({ nullable: true })
   answer2!: string;
-  @Column({nullable: true})
+  @Column({ nullable: true })
   answer3!: string;
-  @Column({nullable: true})
-  pwdHash!: string;
+  @Column({ nullable: true })
+  pwdHash!: string; 
 }
