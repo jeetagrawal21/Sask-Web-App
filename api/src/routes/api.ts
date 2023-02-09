@@ -2,7 +2,7 @@ import { Router } from 'express';
 import jetValidator from 'jet-validator';
 
 import adminMw from './shared/adminMw';
-import User from '@src/models/User';
+import { Users } from '@src/entity/Users';
 import authRoutes from './auth-routes';
 import userRoutes from './user-routes';
 
@@ -38,12 +38,12 @@ const userRouter = Router();
 // Get all users
 userRouter.get(userRoutes.paths.get, userRoutes.getAll);
 
-// // Add one user
-// userRouter.post(
-//   userRoutes.paths.add,
-//   validate(['user', User.instanceOf]),
-//   userRoutes.add,
-// );
+// Add one user
+userRouter.post(
+  userRoutes.paths.add,
+  // validate('user'),
+  userRoutes.add,
+);
 
 // // Update one user
 // userRouter.put(

@@ -9,7 +9,7 @@ const userRepository = AppDataSource.getRepository(Users);
  */
 async function getAll(): Promise<Users[]> {
   return userRepository.find({
-    take: 10,
+    take: 2,
   });
 }
 /**

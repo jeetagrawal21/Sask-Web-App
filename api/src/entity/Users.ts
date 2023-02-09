@@ -6,9 +6,9 @@ export class Users {
   id!: number;
   @Column({ nullable: true })
   surname?: string;
-  @Column({ nullable: true })
-  email?: string;
   @Column({ nullable: true, unique: true })
+  email!: string;
+  @Column({ nullable: false, unique: true })
   participant_id?: number;
   @Column({ nullable: true })
   givename1?: string;
@@ -26,6 +26,6 @@ export class Users {
   answer2!: string;
   @Column({ nullable: true })
   answer3!: string;
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   pwdHash!: string; 
 }

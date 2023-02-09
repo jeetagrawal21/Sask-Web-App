@@ -5,11 +5,11 @@ import { ParticipantID } from "./entity/ParticipantID";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: "localhost",
+  host: process.env.POSTGRES_HOST,
   port: 5432,
-  username: "postgres",
-  password: "ThisIsASuperLongAndCoolPassword4DevelopmentToKeepOutHackersSoIfYoureAHackerPleaseLeave>:3",
-  database: "SaskLongCovidData",
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DATABASE,
   synchronize: true,
   logging: false,
   entities: [Users,ParticipantID],
