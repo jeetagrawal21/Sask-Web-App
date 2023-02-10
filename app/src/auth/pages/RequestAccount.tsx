@@ -69,7 +69,8 @@ const RequestAccount = () => {
           error={formik.touched.participantID && Boolean(formik.errors.participantID)}
           helperText={formik.touched.participantID && formik.errors.participantID}
         />
-        <LoadingButton
+        {/* Uncomment when you want to add authentication to the PID and delete the button below */}
+        {/* <LoadingButton
           type="submit"
           fullWidth
           variant="contained"
@@ -79,7 +80,17 @@ const RequestAccount = () => {
           sx={{ mt: 2 }}
         >
           {t("auth.requestAccount.form.action")}
-        </LoadingButton>
+        </LoadingButton> */}
+        <Button
+          component={RouterLink}
+          to={`/${process.env.PUBLIC_URL}/register`}
+          color="primary"
+          variant="contained"
+          fullWidth
+          sx={{ mt: 2 }}
+        >
+          {t("auth.requestAccount.form.action")}
+        </Button>
         <Button
           component={RouterLink}
           to={`/${process.env.PUBLIC_URL}/login`}
