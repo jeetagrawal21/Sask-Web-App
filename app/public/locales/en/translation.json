@@ -22,13 +22,13 @@
     "home": {
       "achievement": {
         "action": "View Profile",
-        "description": "You have completed {{progress}}% of your profile. Your current progress is great.",
-        "title": "Congratulations {{name}}"
+        "description": "Your contribution to the SASK Long COVID project is greatly appreciated.",
+        "title": "Thank you for your participation, {{name}}."
       },
       "followers": {
         "units": {
-          "likes": "Likes",
-          "love": "Love",
+          "likes": "Last survey filled out",
+          "love": "Days since last login",
           "smiles": "Smiles"
         }
       },
@@ -39,32 +39,46 @@
         "income": "Income",
         "followers": "Followers",
         "title": "Targets",
-        "views": "Views"
+        "views": "Timeline"
       },
       "views": {
         "action": "View Dashboard",
-        "unit": "Views"
+        "unit": "Timeline"
       },
       "welcome": {
-        "message": "This page is designed to give some important information about the application. Let's make someting together!",
+        "message": "This is your SASK Long COVID profile. You can view your survey responses and progress here.",
         "subTitle": "Welcome back!",
-        "title": "Hi {{name}},"
+        "title": "Hi, {{name}}."
       }
     }
   },
   "auth": {
+    "requestAccount": {
+      "form": {
+        "action": "Request Account",
+        "back": "Back to login",
+        "email": {
+          "label": "Participant ID"
+        }
+      },
+      "notifications": {
+        "success": "Request has been sent!"
+      },
+      "subTitle": "Please provide your participant ID. The admin will review your request and send you an email with further instructions.",
+      "title": "Request Account"
+    },
     "forgotPassword": {
       "form": {
         "action": "Send Confirmation",
         "back": "Back to login",
         "email": {
-          "label": "E-mail Address"
+          "label": "Email Address"
         }
       },
       "notifications": {
         "success": "Email has been sent!"
       },
-      "subTitle": "To get a validation code, enter the e-mail address associated to your account.",
+      "subTitle": "To get a validation code, enter the email address associated to your account.",
       "title": "Get validation code"
     },
     "forgotPasswordSubmit": {
@@ -91,13 +105,14 @@
       "forgotPasswordLink": "Forgot password?",
       "form": {
         "email": {
-          "label": "E-mail Address"
+          "label": "Email Address"
         },
         "password": {
           "label": "Password"
         }
       },
-      "newAccountLink": "Don't have an account? Sign Up!",
+      "newAccountLink":"Register account",
+      "requestAccountLink": "Can't sign in? Request an account!",
       "submit": "Sign in",
       "title": "Sign in"
     },
@@ -210,7 +225,7 @@
   },
   "dashboard": {
     "activity": {
-      "title": "Activity"
+      "title": "My Story Timeline"
     },
     "budget": {
       "legend": {
@@ -250,11 +265,11 @@
     },
     "teams": {
       "columns": {
-        "progress": "Progress",
-        "team": "Team",
+        "progress": "Severity",
+        "team": "Symptom",
         "value": "Value"
       },
-      "title": "Teams Progress"
+      "title": "Reported Symptoms"
     },
     "users": {
       "title": "Recent Users"
@@ -295,13 +310,13 @@
     "cta": {
       "main": "Sign in",
       "mainAuth": "Continue as {{name}}",
-      "secondary": "Source code"
+      "secondary": "Register"
     },
     "features": {
       "more": "More on Github",
       "title": "Main Features"
     },
-    "title": "Free and open-source admin application made with React and Material-UI"
+    "title": "Sask Long COVID Participant Portal"
   },
   "notifications": {
     "newComment": "<bold>{{user}}</bold> has written a new comment on your profile",
@@ -311,10 +326,10 @@
     "activity": {
       "empty": "Logs of your activity will show up here!",
       "logs": {
-        "eventAdded": "<bold>You</bold> added a new event: <bold>{{resource}}</bold>",
-        "eventUpdated": "<bold>You</bold> updated event: <bold>{{resource}}</bold>",
-        "userAdded": "<bold>You</bold> added a new user: <bold>{{resource}}</bold>",
-        "userDeleted": "<bold>You</bold> deleted user: <bold>{{resource}}</bold>",
+        "eventAdded": "<bold>You</bold> reported a new symptom: <bold>Headache</bold>",
+        "eventUpdated": "<bold>You</bold> seeked care for: <bold>Anxiety</bold>",
+        "userAdded": "<bold>You reported a new activity: <bold>Jousting</bold>",
+        "userDeleted": "<bold>You</bold> reported a new event: <bold>Booster Shot</bold>",
         "userUpdated": "<bold>You</bold> updated user: <bold>{{resource}}</bold>"
       }
     },
