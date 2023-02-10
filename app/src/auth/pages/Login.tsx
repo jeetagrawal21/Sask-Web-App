@@ -13,7 +13,7 @@ import * as Yup from "yup";
 import BoxedLayout from "../../core/components/BoxedLayout";
 import { useSnackbar } from "../../core/contexts/SnackbarProvider";
 import { useAuth } from "../contexts/AuthProvider";
-import axios from "axios";
+// import axios from "axios";
 
 const Login = () => {
   const { isLoggingIn, login } = useAuth();
@@ -22,28 +22,28 @@ const Login = () => {
   const { t } = useTranslation();
 
   
-  const baseURL = "http://localhost:3000";
-  const loginURL = "/api/users/add";
+  // const baseURL = "http://localhost:3000";
+  // const loginURL = "/api/users/add";
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault();
+  // const handleSubmit = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  //   e.preventDefault();
 
-    const loginInfo = {
-      email: formik.values.email,
-      pwdHash: formik.values.password,
-    }
-    try {
-      const response = await axios.post(
-       baseURL + loginURL,
-        JSON.stringify(loginInfo),
-      );
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
+  //   const loginInfo = {
+  //     email: formik.values.email,
+  //     pwdHash: formik.values.password,
+  //   }
+  //   try {
+  //     const response = await axios.post(
+  //      baseURL + loginURL,
+  //       JSON.stringify(loginInfo),
+  //     );
+  //     const accessToken = response?.data?.accessToken;
+  //     const roles = response?.data?.roles;
      
-    } catch (err) {
-        console.log("Login failed");
-    }
-  }
+  //   } catch (err) {
+  //       console.log("Login failed");
+  //   }
+  // }
 
   const handleLogin = (email: string, password: string) => {
     login(email, password)
@@ -151,7 +151,6 @@ const Login = () => {
               color="primary"
               fullWidth
               sx={{ mt: 2 }}
-              onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => handleSubmit(e)}
             >
               {t("auth.login.requestAccountLink")}
             </Button>
