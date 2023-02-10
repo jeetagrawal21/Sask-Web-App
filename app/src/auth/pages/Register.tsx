@@ -11,6 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import { useSnackbar } from "../../core/contexts/SnackbarProvider";
 import { useRegister } from "../hooks/useRegister";
 import { UserInfo } from "../types/userInfo";
+import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -19,7 +20,31 @@ const Register = () => {
 
   const { isRegistering, register } = useRegister();
 
-  
+  const baseURL = "http://localhost:3000";
+  const registerURL = "/api/users/add";
+
+  const registerPartcipant = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault();
+    const participantInfo = {
+      surname: formik.values.surname,
+      email: formik.values.email,
+      givenName1: formik.values.givenName1,
+      givenName2: formik.values.givenName2,
+      question1: formik.values.question1,
+      question2: formik.values.question2,
+      question3:formik.values.question3,
+      answer1: formik.values.answer1,
+      answer2: formik.values.answer2,
+      answer3: formik.values.answer3,
+      pwdHash: formik.values.password,
+    }
+    try{
+    const response = await axios.post( (baseURL + registerURL), JSON.stringify(participantInfo));
+    } catch (err){
+      console.log("Registration unsuccesful");
+    }
+  }
+ 
 
   const formik = useFormik({
     initialValues: {
@@ -33,6 +58,7 @@ const Register = () => {
       answer1: "",
       answer2: "",
       answer3: "",
+      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -188,6 +214,7 @@ const Register = () => {
               marginLeft:"10px"
             }}
           />
+
         </div>
         <Typography component="h1" variant="h5" style={{marginTop:"20px"}}>
           Security Questions
@@ -329,6 +356,7 @@ const Register = () => {
           variant="contained"
           fullWidth
           sx={{ mt: 2 }}
+          onClick={(e) => registerPartcipant(e)}
         >
           {t("auth.register.submit")}
         </Button>
