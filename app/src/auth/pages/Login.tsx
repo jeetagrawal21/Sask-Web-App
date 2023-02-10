@@ -151,7 +151,7 @@ const Login = () => {
               color="primary"
               fullWidth
               sx={{ mt: 2 }}
-              onClick={(e) => handleSubmit(e)}
+              onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => handleSubmit(e)}
             >
               {t("auth.login.requestAccountLink")}
             </Button>

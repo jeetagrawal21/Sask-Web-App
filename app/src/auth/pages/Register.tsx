@@ -375,7 +375,7 @@ const Register = () => {
           variant="contained"
           fullWidth
           sx={{ mt: 2 }}
-          onClick={(e) => registerPartcipant(e)}
+          onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => registerPartcipant(e)}
         >
           {t("auth.register.submit")}
         </Button>
