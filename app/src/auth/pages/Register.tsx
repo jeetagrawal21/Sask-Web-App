@@ -44,7 +44,7 @@ const Register = () => {
       console.log("Registration unsuccesful");
     }
   }
- 
+
 
   const formik = useFormik({
     initialValues: {
@@ -89,6 +89,9 @@ const Register = () => {
         .required(t("common.validations.required")),
       answer3: Yup.string()
         .max(20, t("common.validations.max", { size: 40 }))
+        .required(t("common.validations.required")),
+      password: Yup.string()
+        .min(8, t("common.validations.min", { size: 8 }))
         .required(t("common.validations.required")),
     }),
     onSubmit: (values) => handleRegister(values),
@@ -174,12 +177,7 @@ const Register = () => {
             }}
           />
         </div>
-        <div 
-          style={{
-            display: "flex",
-            width: "100%"
-          }}>
-          <TextField
+        <TextField
             margin="normal"
             required
             fullWidth
@@ -193,10 +191,13 @@ const Register = () => {
             onChange={formik.handleChange}
             error={formik.touched.surname && Boolean(formik.errors.surname)}
             helperText={formik.touched.surname && formik.errors.surname}
-            style={{
-              marginRight:"10px"
-            }}
+            
           />
+        <div 
+          style={{
+            display: "flex",
+            width: "100%"
+          }}>
           <TextField
             margin="normal"
             required
@@ -211,10 +212,28 @@ const Register = () => {
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
             style={{
-              marginLeft:"10px"
+              marginRight:"10px"
             }}
+            
           />
-
+          <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label={t("auth.login.form.password.label")}
+              type="password"
+              id="password"
+              autoComplete="password"
+              disabled={isRegistering}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              style={{
+                marginLeft:"10px"
+              }}
+            />
         </div>
         <Typography component="h1" variant="h5" style={{marginTop:"20px"}}>
           Security Questions
