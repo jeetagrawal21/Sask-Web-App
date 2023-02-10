@@ -27,5 +27,5 @@ export class Users {
   @Column({ nullable: true })
   answer3!: string;
   @Column({ nullable: false })
-  pwdHash!: string; 
+  pwdHash!: string;
 }
