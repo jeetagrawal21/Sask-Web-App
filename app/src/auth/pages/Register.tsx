@@ -2,7 +2,6 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import LoadingButton from "@material-ui/lab/LoadingButton";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
@@ -121,7 +120,7 @@ const Register = () => {
             required
             label="Given Name 1"
             fullWidth
-            name="firstName"
+            name="givenName1"
             autoComplete="given-name"
             disabled={isRegistering}
             value={formik.values.givenName1}
@@ -311,7 +310,8 @@ const Register = () => {
             }}
           />
         </div>
-        <LoadingButton
+        {/* Uncomment and delete the button below when adding authentication */}
+        {/* <LoadingButton
           type="submit"
           fullWidth
           variant="contained"
@@ -321,7 +321,17 @@ const Register = () => {
           sx={{ mt: 2 }}
         >
           {t("auth.register.submit")}
-        </LoadingButton>
+        </LoadingButton> */}
+        <Button
+          component={Link}
+          to={`/${process.env.PUBLIC_URL}/login`}
+          color="primary"
+          variant="contained"
+          fullWidth
+          sx={{ mt: 2 }}
+        >
+          {t("auth.register.submit")}
+        </Button>
         <Button
           component={Link}
           to={`/${process.env.PUBLIC_URL}/login`}
