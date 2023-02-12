@@ -65,7 +65,7 @@ services:
     hostname: covid_selenium_test
     image: selenium/standalone-chrome
     volumes:
-      - ./src:/app
+      - ./selenium_test:/app
     ports:
       - 4444:4444
     tty: true
