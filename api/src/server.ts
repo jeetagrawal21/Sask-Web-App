@@ -1,6 +1,12 @@
+import { ParticipantID } from './entity/ParticipantID';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
+import { AppDataSource } from "./data-source";
+import { Users } from "./entity/Users";
 import path from 'path';
+import { Client } from "pg";
+import dotenv from "dotenv";
+
 import helmet from 'helmet';
 import express, { Request, Response, NextFunction } from 'express';
 
@@ -12,6 +18,8 @@ import EnvVars from '@src/declarations/major/EnvVars';
 import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
 import { NodeEnvs } from '@src/declarations/enums';
 import { RouteError } from '@src/declarations/classes';
+import { createConnection } from 'net';
+import userService from './services/user-service';
 
 
 // **** Init express **** //
@@ -69,10 +77,10 @@ app.use((
 // const staticDir = path.join(__dirname, 'public');
 // app.use(express.static(staticDir));
 
-// // Nav to login pg by default
-// app.get('/', (_: Request, res: Response) => {
-//   res.sendFile('login.html', {root: viewsDir});
-// });
+// Nav to login pg by default
+app.get('/', (_: Request, res: Response) => {
+  res.send("Hello world");
+});
 
 // // Redirect to login if not logged in.
 // app.get('/users', (req: Request, res: Response) => {
@@ -80,13 +88,58 @@ app.use((
 //   if (!jwt) {
 //     res.redirect('/');
 //   } else {
-//     res.sendFile('users.html', {root: viewsDir});
+//     res.send("having a user");
 //   }
 // });
 
 
 // connect db
 
+AppDataSource.initialize().then(async () => {
+
+  
+  // const participantId = new ParticipantID();
+  // participantId.participantid = 1234;
+  // const id = await AppDataSource.manager.find(ParticipantID);
+  // if (id.length != 0) {
+  //   console.log("already have an id");
+  // } else {
+  //   console.log("Inserting a new participant_id into the database...");
+  //   await AppDataSource.manager.save(participantId);
+  // }
+  // console.log(" paticipantID is ", id);
+  // const user = new Users();
+  // user.email = "sean.maxwell@gmail.com";
+  // user.participant_id = 1234;
+  // user.pwdHash = "$2b$12$1mE2OI9hMS/rgH9Mi0s85OM2V5gzm7aF3gJIWH1y0S1MqVBueyjsy";
+  
+  // const users = await AppDataSource.manager.find(Users);
+  // if (users.length != 0) {
+  //   console.log("already has a user: ");
+  // } else {
+  //   console.log("Inserting a new user into the database...");
+  //   await AppDataSource.manager.save(user);
+  // }
+  // console.log(" User is ", await AppDataSource.manager.find(Users));
+  
+  
+  
+  // const user = new User();
+  // user.email = "Timber@usask.ca";
+  // user.surname = '';
+  // user.givename1 = '';
+  // user.givename2 = '';
+  // user.participant_id = 1234;
+  // user.pwdHash = "1234";
+  // await AppDataSource.manager.save(user);
+  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+  // console.log("Saved a new user with id: " + user.id);
+
+  // console.log("Loading users from the database...");
+  // const users = await AppDataSource.manager.find(User);
+  // console.log("Loaded users: ", users);
+
+}).catch(error => console.log(error));
 
 // **** Export default **** //
 

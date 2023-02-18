@@ -11,6 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import { useSnackbar } from "../../core/contexts/SnackbarProvider";
 import { useRegister } from "../hooks/useRegister";
 import { UserInfo } from "../types/userInfo";
+// import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -19,7 +20,31 @@ const Register = () => {
 
   const { isRegistering, register } = useRegister();
 
-  
+  // const baseURL = "http://localhost:3000";
+  // const registerURL = "/api/users/add";
+
+  // const registerPartcipant = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  //   e.preventDefault();
+  //   const participantInfo = {
+  //     surname: formik.values.surname,
+  //     email: formik.values.email,
+  //     givenName1: formik.values.givenName1,
+  //     givenName2: formik.values.givenName2,
+  //     question1: formik.values.question1,
+  //     question2: formik.values.question2,
+  //     question3:formik.values.question3,
+  //     answer1: formik.values.answer1,
+  //     answer2: formik.values.answer2,
+  //     answer3: formik.values.answer3,
+  //     pwdHash: formik.values.password,
+  //   }
+  //   try{
+  //   const response = await axios.post( (baseURL + registerURL), JSON.stringify(participantInfo));
+  //   } catch (err){
+  //     console.log("Registration unsuccesful");
+  //   }
+  // }
+
 
   const formik = useFormik({
     initialValues: {
@@ -33,6 +58,7 @@ const Register = () => {
       answer1: "",
       answer2: "",
       answer3: "",
+      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -63,6 +89,9 @@ const Register = () => {
         .required(t("common.validations.required")),
       answer3: Yup.string()
         .max(20, t("common.validations.max", { size: 40 }))
+        .required(t("common.validations.required")),
+      password: Yup.string()
+        .min(8, t("common.validations.min", { size: 8 }))
         .required(t("common.validations.required")),
     }),
     onSubmit: (values) => handleRegister(values),
@@ -148,12 +177,7 @@ const Register = () => {
             }}
           />
         </div>
-        <div 
-          style={{
-            display: "flex",
-            width: "100%"
-          }}>
-          <TextField
+        <TextField
             margin="normal"
             required
             fullWidth
@@ -167,10 +191,13 @@ const Register = () => {
             onChange={formik.handleChange}
             error={formik.touched.surname && Boolean(formik.errors.surname)}
             helperText={formik.touched.surname && formik.errors.surname}
-            style={{
-              marginRight:"10px"
-            }}
+            
           />
+        <div 
+          style={{
+            display: "flex",
+            width: "100%"
+          }}>
           <TextField
             margin="normal"
             required
@@ -185,9 +212,28 @@ const Register = () => {
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
             style={{
-              marginLeft:"10px"
+              marginRight:"10px"
             }}
+            
           />
+          <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label={t("auth.login.form.password.label")}
+              type="password"
+              id="password"
+              autoComplete="password"
+              disabled={isRegistering}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              style={{
+                marginLeft:"10px"
+              }}
+            />
         </div>
         <Typography component="h1" variant="h5" style={{marginTop:"20px"}}>
           Security Questions
@@ -329,6 +375,7 @@ const Register = () => {
           variant="contained"
           fullWidth
           sx={{ mt: 2 }}
+          // onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => registerPartcipant(e)}
         >
           {t("auth.register.submit")}
         </Button>
