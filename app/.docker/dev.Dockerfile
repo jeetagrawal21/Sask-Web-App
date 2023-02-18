@@ -16,7 +16,7 @@ COPY package*.json ./
 
 # Install dependencies
 #RUN npm install --production=false
-RUN yarn
+RUN yarn add react-scripts && yarn install
 # Copy app files
 COPY . .
 
@@ -25,4 +25,4 @@ EXPOSE 3080
 
 
 # Start the app
-CMD [ "yarn", "run", "start" ]
+#CMD [ "yarn", "run", "start" ]

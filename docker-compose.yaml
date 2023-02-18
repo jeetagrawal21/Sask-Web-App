@@ -25,10 +25,10 @@ services:
     hostname: covid_app
     image: sask-long-covid-app
     build:
-      context: ./client
+      context: ./app
       dockerfile: .docker/dev.Dockerfile
     volumes:
-      - ./client:/app
+      - ./app:/app
       - app_node_modules:/client/node_modules
     working_dir: /app
     ports:
