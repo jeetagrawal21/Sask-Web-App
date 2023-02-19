@@ -28,7 +28,8 @@ const overviewItems = [
     /* Not sure if this is the correct way to do this. Cant find the
     visits variable in another file to change so I am just changing manually,
     this applies for all 4 overview items - Alex */
-    unit: "Vaccinations",
+    // unit: "Vaccinations",
+    unit: "TEST 3",
     value: "4",
   },
   {
