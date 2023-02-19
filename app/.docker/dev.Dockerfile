@@ -12,11 +12,12 @@ LABEL description="This is the base docker image for the Sask Long Covid dev fro
 WORKDIR /app
 
 # copy app dependencies files
-COPY package*.json ./
+COPY package.json ./
+COPY yarn*.lock .
 
 # Install dependencies
 #RUN npm install --production=false
-RUN yarn add react-scripts && yarn install
+RUN yarn install
 # Copy app files
 COPY . .
 
