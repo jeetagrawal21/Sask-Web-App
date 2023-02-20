@@ -1,6 +1,6 @@
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../auth/contexts/AuthProvider";
 import { ReactComponent as WelcomeSvg } from "../../core/assets/welcome.svg";

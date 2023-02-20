@@ -1,5 +1,5 @@
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import AdminAppBar from "../../admin/components/AdminAppBar";

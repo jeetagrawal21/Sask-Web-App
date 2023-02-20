@@ -1,23 +1,23 @@
-import Avatar from "@material-ui/core/Avatar";
-import Box from "@material-ui/core/Box";
-import Checkbox from "@material-ui/core/Checkbox";
-import Chip from "@material-ui/core/Chip";
-import IconButton from "@material-ui/core/IconButton";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import Typography from "@material-ui/core/Typography";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import PersonIcon from "@material-ui/icons/Person";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import PersonIcon from "@mui/icons-material/Person";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Empty from "../../core/components/Empty";
@@ -193,7 +193,7 @@ const UserRow = ({
           aria-expanded={openActions ? "true" : "false"}
           disabled={processing}
           onClick={handleOpenActions}
-        >
+          size="large">
           <MoreVertIcon />
         </IconButton>
         <Menu

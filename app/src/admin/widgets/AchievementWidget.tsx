@@ -1,9 +1,9 @@
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import StarIcon from "@material-ui/icons/Star";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import StarIcon from "@mui/icons-material/Star";
 import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../../auth/contexts/AuthProvider";

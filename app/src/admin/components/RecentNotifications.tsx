@@ -1,15 +1,15 @@
-import Avatar from "@material-ui/core/Avatar";
-import Badge from "@material-ui/core/Badge";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
-import Popover from "@material-ui/core/Popover";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import PersonIcon from "@material-ui/icons/Person";
+import Avatar from "@mui/material/Avatar";
+import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemText from "@mui/material/ListItemText";
+import Popover from "@mui/material/Popover";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import PersonIcon from "@mui/icons-material/Person";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useMemo, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -54,7 +54,7 @@ const RecentNotifications = () => {
         aria-label="show recent notifications"
         color="inherit"
         onClick={handleClick}
-      >
+        size="large">
         <Badge color="error" variant="dot" invisible={!unreadCount}>
           <NotificationsIcon />
         </Badge>

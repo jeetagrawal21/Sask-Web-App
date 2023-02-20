@@ -1,12 +1,12 @@
-import Avatar from "@material-ui/core/Avatar";
-import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import IconButton from "@material-ui/core/IconButton";
-import useTheme from "@material-ui/core/styles/useTheme";
-import Typography from "@material-ui/core/Typography";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import DashboardIcon from "@material-ui/icons/Dashboard";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import IconButton from "@mui/material/IconButton";
+import { useTheme } from '@mui/material/styles';
+import Typography from "@mui/material/Typography";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router-dom";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
@@ -104,7 +104,7 @@ const ViewsWidget = () => {
               aria-label="Go to dashboard"
               component={RouterLink}
               to={`/${process.env.PUBLIC_URL}/admin/dashboard`}
-            >
+              size="large">
               <ChevronRightIcon />
             </IconButton>
           </CardContent>

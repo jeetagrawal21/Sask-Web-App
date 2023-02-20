@@ -3,18 +3,18 @@ import FullCalendar, {
   EventClickArg,
 } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import {
   alpha,
   experimentalStyled as styled,
   useTheme,
-} from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
-import EventIcon from "@material-ui/icons/Event";
+} from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import EventIcon from "@mui/icons-material/Event";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Event, eventColors } from "../types/event";
@@ -140,11 +140,7 @@ const Calendar = ({
           {viewTitle}
         </Typography>
         <Box>
-          <IconButton
-            aria-label="previous"
-            component="span"
-            onClick={handlePrev}
-          >
+          <IconButton aria-label="previous" component="span" onClick={handlePrev} size="large">
             <ArrowLeftIcon />
           </IconButton>
           <Button onClick={handleToday}>{t("common.today")}</Button>
@@ -153,7 +149,7 @@ const Calendar = ({
             component="span"
             edge="end"
             onClick={handleNext}
-          >
+            size="large">
             <ArrowRightIcon />
           </IconButton>
         </Box>

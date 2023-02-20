@@ -1,4 +1,4 @@
-// import Grid from "@material-ui/core/Grid";
+// import Grid from "@mui/material/Grid";
 // import React from "react";
 // import AdminAppBar from "../components/AdminAppBar";
 // import AdminToolbar from "../components/AdminToolbar";
@@ -38,7 +38,7 @@
 
 // export default Home;
 
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import React from "react";
 import AdminAppBar from "../components/AdminAppBar";
 import AdminToolbar from "../components/AdminToolbar";
@@ -50,16 +50,16 @@ import FollowersWidget from "../widgets/FollowersWidget";
 import ViewsWidget from "../widgets/ViewsWidget";
 import WelcomeWidget from "../widgets/WelcomeWidget";
 
-import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Timeline from "@material-ui/lab/Timeline";
-import TimelineConnector from "@material-ui/lab/TimelineConnector";
-import TimelineContent from "@material-ui/lab/TimelineContent";
-import TimelineDot from "@material-ui/lab/TimelineDot";
-import TimelineItem from "@material-ui/lab/TimelineItem";
-import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Timeline from "@mui/lab/Timeline";
+import TimelineConnector from "@mui/lab/TimelineConnector";
+import TimelineContent from "@mui/lab/TimelineContent";
+import TimelineDot from "@mui/lab/TimelineDot";
+import TimelineItem from "@mui/lab/TimelineItem";
+import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { Trans, useTranslation } from "react-i18next";
 import Empty from "../../core/components/Empty";

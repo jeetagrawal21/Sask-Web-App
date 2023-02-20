@@ -1,9 +1,9 @@
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import TextField from "@material-ui/core/TextField";
-import LoadingButton from "@material-ui/lab/LoadingButton";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import TextField from "@mui/material/TextField";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";

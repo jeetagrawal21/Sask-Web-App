@@ -1,9 +1,9 @@
-import AppBar from "@material-ui/core/AppBar";
-import IconButton from "@material-ui/core/IconButton";
-import Paper from "@material-ui/core/Paper";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import SettingsIcon from "@material-ui/icons/Settings";
+import AppBar from "@mui/material/AppBar";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import SettingsIcon from "@mui/icons-material/Settings";
 import React, { useState } from "react";
 import Footer from "../../core/components/Footer";
 import Logo from "../../core/components/Logo";
@@ -33,7 +33,7 @@ const LandingLayout = ({ children }: LandingLayoutProps) => {
             aria-label="settings"
             component="span"
             onClick={handleSettingsToggle}
-          >
+            size="large">
             <SettingsIcon />
           </IconButton>
           <SettingsDrawer

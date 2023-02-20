@@ -1,6 +1,6 @@
-import Card from "@material-ui/core/Card";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
+import Card from "@mui/material/Card";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import AdminAppBar from "../../admin/components/AdminAppBar";

@@ -10,6 +10,7 @@ import SettingsProvider from "./core/contexts/SettingsProvider";
 import SnackbarProvider from "./core/contexts/SnackbarProvider";
 import usePageTracking from "./core/hooks/usePageTracking";
 
+
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_DSN,

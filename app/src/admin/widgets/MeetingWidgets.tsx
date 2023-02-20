@@ -1,12 +1,12 @@
-import Avatar from "@material-ui/core/Avatar";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import AddIcon from "@material-ui/icons/Add";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import AddIcon from "@mui/icons-material/Add";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router-dom";
@@ -60,7 +60,7 @@ const MeetingWidgets = () => {
               aria-label="Go to meeting details"
               component={RouterLink}
               to={`/${process.env.PUBLIC_URL}/admin/calendar`}
-            >
+              size="large">
               <ChevronRightIcon />
             </IconButton>
           </CardContent>

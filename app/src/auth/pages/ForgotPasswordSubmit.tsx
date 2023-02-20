@@ -1,8 +1,8 @@
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import LoadingButton from "@material-ui/lab/LoadingButton";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
