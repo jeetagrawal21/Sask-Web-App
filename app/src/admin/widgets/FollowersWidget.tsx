@@ -58,7 +58,7 @@ const FollowersWidget = () => {
                 {social.value}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="div">
-                {t(social.name)}
+                {t(social.name) as string}
               </Typography>
             </Box>
             {social.trend}

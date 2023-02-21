@@ -20,7 +20,7 @@ const PersonalTargetsWidget = () => {
 
   return (
     <Card sx={{ mb: 4 }}>
-      <CardHeader title={t("admin.home.targets.title")} />
+      <CardHeader title={t("admin.home.targets.title") as string} />
       <CardContent>
         <List>
           {targets.map((target) => (
@@ -28,7 +28,7 @@ const PersonalTargetsWidget = () => {
               <ListItemText>
                 <Box sx={{ display: "flex", mb: 1 }}>
                   <Typography component="div" variant="h6">
-                    {t(target.nameKey)}
+                    {t(target.nameKey) as string}
                   </Typography>
                   <Box sx={{ flexGrow: 1 }} />
                   <Typography component="div" variant="h6">

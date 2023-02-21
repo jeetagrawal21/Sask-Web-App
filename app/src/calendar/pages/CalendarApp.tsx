@@ -95,7 +95,7 @@ const CalendarApp = () => {
   return (
     <React.Fragment>
       <AdminAppBar>
-        <AdminToolbar title={t("calendar.title")}>
+        <AdminToolbar title={t("calendar.title") as string}>
           <Fab
             aria-label="add event"
             color="primary"
@@ -114,12 +114,12 @@ const CalendarApp = () => {
         />
       </Card>
       <ConfirmDialog
-        description={t("calendar.confirmations.delete")}
+        description={t("calendar.confirmations.delete") as string }
         pending={processing}
         onClose={handleCloseConfirmDeleteDialog}
         onConfirm={handleDeleteEvent}
         open={openConfirmDeleteDialog}
-        title={t("common.confirmation")}
+        title={t("common.confirmation") as string }
       />
       {openEventDialog && (
         <EventDialog

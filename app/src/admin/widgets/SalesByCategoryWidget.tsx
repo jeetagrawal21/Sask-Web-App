@@ -29,7 +29,7 @@ const SalesByCategoryWidget = () => {
 
   return (
     <Card>
-      <CardHeader title={t("dashboard.salesByCategory.title")} />
+      <CardHeader title={t("dashboard.salesByCategory.title") as string} />
       <CardContent>
         <ResponsiveContainer width="99%" height={244}>
           <PieChart width={244} height={244}>

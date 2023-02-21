@@ -47,10 +47,10 @@ const ForgotPasswordSubmit = () => {
   return (
     <BoxedLayout>
       <Typography component="h1" variant="h5">
-        {t("auth.forgotPasswordSubmit.title")}
+        {t("auth.forgotPasswordSubmit.title") as string}
       </Typography>
       <Typography marginTop={3}>
-        {t("auth.forgotPasswordSubmit.subTitle")}
+        {t("auth.forgotPasswordSubmit.subTitle") as string}
       </Typography>
       <Box
         component="form"
@@ -63,7 +63,7 @@ const ForgotPasswordSubmit = () => {
           required
           fullWidth
           id="code"
-          label={t("auth.forgotPasswordSubmit.form.code.label")}
+          label={t("auth.forgotPasswordSubmit.form.code.label") as string}
           name="code"
           autoFocus
           disabled={isLoading}
@@ -77,7 +77,7 @@ const ForgotPasswordSubmit = () => {
           required
           fullWidth
           name="newPassword"
-          label={t("auth.forgotPasswordSubmit.form.newPassword.label")}
+          label={t("auth.forgotPasswordSubmit.form.newPassword.label") as string}
           type="password"
           id="newPassword"
           disabled={isLoading}
@@ -93,7 +93,7 @@ const ForgotPasswordSubmit = () => {
           required
           fullWidth
           name="confirmPassword"
-          label={t("auth.forgotPasswordSubmit.form.confirmPassword.label")}
+          label={t("auth.forgotPasswordSubmit.form.confirmPassword.label") as string}
           type="password"
           id="confirmPassword"
           disabled={isLoading}
@@ -116,7 +116,7 @@ const ForgotPasswordSubmit = () => {
           loading={isLoading}
           sx={{ mt: 2 }}
         >
-          {t("auth.forgotPasswordSubmit.form.action")}
+          {t("auth.forgotPasswordSubmit.form.action") as string}
         </LoadingButton>
         <Button
           component={Link}
@@ -125,7 +125,7 @@ const ForgotPasswordSubmit = () => {
           fullWidth
           sx={{ mt: 2 }}
         >
-          {t("auth.forgotPasswordSubmit.form.back")}
+          {t("auth.forgotPasswordSubmit.form.back") as string}
         </Button>
       </Box>
     </BoxedLayout>

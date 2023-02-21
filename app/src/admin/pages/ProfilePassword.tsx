@@ -54,14 +54,15 @@ const ProfilePassword = () => {
   return (
     <form onSubmit={formik.handleSubmit} noValidate>
       <Card>
-        <CardHeader title={t("profile.password.title")} />
+        <CardHeader title={`${t("profile.password.title")}`} />
         <CardContent>
           <TextField
             margin="normal"
             required
             fullWidth
             name="oldPassword"
-            label={t("profile.password.form.current.label")}
+            // label={t("profile.password.form.current.label")}
+            label={`${t("profile.password.form.current.label")}`}
             type="password"
             id="oldPassword"
             autoComplete="current-password"
@@ -78,7 +79,8 @@ const ProfilePassword = () => {
             required
             fullWidth
             name="newPassword"
-            label={t("profile.password.form.new.label")}
+            // label={t("profile.password.form.new.label")}
+            label={`${t("profile.password.form.new.label")}`}
             type="password"
             id="newPassword"
             disabled={isUpdating}
@@ -94,7 +96,8 @@ const ProfilePassword = () => {
             required
             fullWidth
             name="confirmPassword"
-            label={t("profile.password.form.confirm.label")}
+            // label={t("profile.password.form.confirm.label")}
+            label={`${t("profile.password.form.confirm.label")}`}
             type="password"
             id="confirmPassword"
             disabled={isUpdating}
@@ -111,7 +114,8 @@ const ProfilePassword = () => {
         </CardContent>
         <CardActions>
           <LoadingButton type="submit" loading={isUpdating} variant="contained">
-            {t("common.update")}
+            {/* {t("common.update")} */}
+            {`${t("common.update")}`}
           </LoadingButton>
         </CardActions>
       </Card>

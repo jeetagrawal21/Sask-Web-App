@@ -16,13 +16,13 @@ const Forbidden = () => {
           to={`/${process.env.PUBLIC_URL}/admin`}
           variant="contained"
         >
-          {t("common.backHome")}
+          {t("common.backHome") as string }
         </Button>
       }
       image={<ForbiddenSvg />}
       maxWidth="sm"
-      subTitle={t("common.errors.forbidden.subTitle")}
-      title={t("common.errors.unexpected.title")}
+      subTitle={t("common.errors.forbidden.subTitle") as string }
+      title={t("common.errors.unexpected.title") as string }
     />
   );
 };

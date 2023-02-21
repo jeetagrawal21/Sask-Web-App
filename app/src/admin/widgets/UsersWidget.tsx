@@ -44,7 +44,7 @@ const UsersWidget = () => {
 
   return (
     <Card>
-      <CardHeader title={t("dashboard.users.title")} />
+      <CardHeader title={t("dashboard.users.title") as string} />
       <CardContent>
         <List>
           {users.map((user) => (

@@ -45,9 +45,9 @@ const RequestAccount = () => {
   return (
     <BoxedLayout>
       <Typography component="h1" variant="h5">
-        {t("auth.requestAccount.title")}
+        {t("auth.requestAccount.title") as string }
       </Typography>
-      <Typography marginTop={3}>{t("auth.requestAccount.subTitle")}</Typography>
+      <Typography marginTop={3}>{t("auth.requestAccount.subTitle") as string}</Typography>
       <Box
         component="form"
         marginTop={3}
@@ -59,7 +59,7 @@ const RequestAccount = () => {
           required
           fullWidth
           id="participantID"
-          label={t("auth.requestAccount.form.email.label")}
+          label={t("auth.requestAccount.form.email.label") as string}
           name="participantID"
           autoComplete="participantID"
           autoFocus
@@ -78,7 +78,7 @@ const RequestAccount = () => {
           loading={isLoading}
           sx={{ mt: 2 }}
         >
-          {t("auth.requestAccount.form.action")}
+          {t("auth.requestAccount.form.action") as string }
         </LoadingButton>
         <Button
           component={RouterLink}
@@ -87,7 +87,7 @@ const RequestAccount = () => {
           fullWidth
           sx={{ mt: 2 }}
         >
-          {t("auth.requestAccount.form.back")}
+          {t("auth.requestAccount.form.back") as string }
         </Button>
       </Box>
     </BoxedLayout>

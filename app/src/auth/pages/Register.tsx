@@ -65,7 +65,7 @@ const Register = () => {
   return (
     <BoxedLayout>
       <Typography component="h1" variant="h5">
-        {t("auth.register.title")}
+        {t("auth.register.title") as string }
       </Typography>
       <Box
         component="form"
@@ -78,7 +78,7 @@ const Register = () => {
           required
           fullWidth
           id="lastName"
-          label={t("auth.register.form.lastName.label")}
+          label={t("auth.register.form.lastName.label") as string }
           name="lastName"
           autoComplete="family-name"
           autoFocus
@@ -93,7 +93,7 @@ const Register = () => {
           required
           fullWidth
           id="firstName"
-          label={t("auth.register.form.firstName.label")}
+          label={t("auth.register.form.firstName.label") as string}
           name="firstName"
           autoComplete="given-name"
           disabled={isRegistering}
@@ -104,7 +104,7 @@ const Register = () => {
         />
         <FormControl component="fieldset" margin="normal">
           <FormLabel component="legend">
-            {t("auth.register.form.gender.label")}
+            {t("auth.register.form.gender.label") as string}
           </FormLabel>
           <RadioGroup
             row
@@ -118,7 +118,7 @@ const Register = () => {
                 control={<Radio />}
                 key={gender.value}
                 disabled={isRegistering}
-                label={t(gender.label)}
+                label={t(gender.label) as string}
                 value={gender.value}
               />
             ))}
@@ -129,7 +129,7 @@ const Register = () => {
           required
           fullWidth
           id="email"
-          label={t("auth.register.form.email.label")}
+          label={t("auth.register.form.email.label") as string}
           name="email"
           autoComplete="email"
           disabled={isRegistering}
@@ -147,7 +147,7 @@ const Register = () => {
           loading={isRegistering}
           sx={{ mt: 2 }}
         >
-          {t("auth.register.submit")}
+          {t("auth.register.submit") as string}
         </LoadingButton>
         <Button
           component={Link}
@@ -156,7 +156,7 @@ const Register = () => {
           fullWidth
           sx={{ mt: 2 }}
         >
-          {t("auth.register.back")}
+          {t("auth.register.back") as string }
         </Button>
       </Box>
     </BoxedLayout>

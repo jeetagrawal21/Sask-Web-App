@@ -111,13 +111,13 @@ const RecentNotifications = () => {
             </List>
           )}
           {!isLoading && !isError && (!data || data.length === 0) && (
-            <Empty title={t("admin.header.notifications.empty.title")} />
+            <Empty title={t("admin.header.notifications.empty.title") as string} />
           )}
           {isError && (
             <Result
               status="error"
-              subTitle={t("common.errors.unexpected.subTitle")}
-              title={t("common.errors.unexpected.title")}
+              subTitle={t("common.errors.unexpected.subTitle") as string}
+              title={t("common.errors.unexpected.title") as string}
             />
           )}
           {isLoading && <Loader />}
@@ -128,7 +128,7 @@ const RecentNotifications = () => {
               sx={{ bgcolor: "background.default" }}
               variant="contained"
             >
-              {t("admin.header.notifications.seeAll")}
+              {`${t("admin.header.notifications.seeAll")}`}
             </Button>
           </Box>
         </Box>

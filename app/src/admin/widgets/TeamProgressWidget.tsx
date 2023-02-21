@@ -48,7 +48,7 @@ const TeamProgressWidget = () => {
 
   return (
     <Card>
-      <CardHeader title={t("dashboard.teams.title")} />
+      <CardHeader title={t("dashboard.teams.title") as string} />
       <CardContent sx={{ px: 2 }}>
         <TableContainer>
           <Table
@@ -62,10 +62,10 @@ const TeamProgressWidget = () => {
           >
             <TableHead>
               <TableRow>
-                <TableCell>{t("dashboard.teams.columns.team")}</TableCell>
-                <TableCell>{t("dashboard.teams.columns.progress")}</TableCell>
+                <TableCell>{t("dashboard.teams.columns.team") as string}</TableCell>
+                <TableCell>{t("dashboard.teams.columns.progress") as string}</TableCell>
                 <TableCell align="center">
-                  {t("dashboard.teams.columns.value")}
+                  {t("dashboard.teams.columns.value") as string}
                 </TableCell>
               </TableRow>
             </TableHead>

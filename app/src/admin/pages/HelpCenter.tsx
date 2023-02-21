@@ -25,7 +25,7 @@ const HelpCenter = () => {
   return (
     <React.Fragment>
       <AdminAppBar>
-        <AdminToolbar title={t("help.title")} />
+        <AdminToolbar title={t("help.title") as string} />
       </AdminAppBar>
       <Container maxWidth="xs" sx={{ mt: 3 }}>
         <SvgContainer>
@@ -56,7 +56,8 @@ const HelpCenter = () => {
                   }}
                 >
                   <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    {t("help.menu.guide")}
+                    {/* {t("help.menu.guide")} */}
+                    {`${t("help.menu.guide")}`}
                   </Typography>
                 </Badge>
               </CardContent>
@@ -78,7 +79,8 @@ const HelpCenter = () => {
               />
               <CardContent>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                  {t("help.menu.faq")}
+                  {/* {t("help.menu.faq")} */}
+                  {`${t("help.menu.faq")}`}
                 </Typography>
               </CardContent>
             </CardActionArea>
@@ -101,7 +103,8 @@ const HelpCenter = () => {
               />
               <CardContent>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                  {t("help.menu.support")}
+                  {/* {t("help.menu.support")} */}
+                  {`${t("help.menu.support")}`}
                 </Typography>
               </CardContent>
             </CardActionArea>
@@ -122,7 +125,8 @@ const HelpCenter = () => {
               />
               <CardContent>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                  {t("help.menu.contact")}
+                  {/* {t("help.menu.contact")} */}
+                  {`${t("help.menu.contact")}`}
                 </Typography>
               </CardContent>
             </CardActionArea>

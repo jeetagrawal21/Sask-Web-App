@@ -56,24 +56,26 @@ const ProfileInformation = () => {
   const handleSubmit = async (values: Partial<ProfileInfo>) => {
     updateProfileInfo({ ...values, id: data?.id } as ProfileInfo)
       .then(() => {
-        snackbar.success(t("profile.notifications.informationUpdated"));
+        snackbar.success(t("profile.notifications.informationUpdated") as string);
       })
       .catch(() => {
-        snackbar.error(t("common.errors.unexpected.subTitle"));
+        snackbar.error(t("common.errors.unexpected.subTitle") as string);
       });
   };
 
   return (
     <form onSubmit={formik.handleSubmit} noValidate>
       <Card>
-        <CardHeader title={t("profile.info.title")} />
+        {/* <CardHeader title={t("profile.info.title")} /> */}
+        <CardHeader title={`${t("profile.info.title")}`} />
         <CardContent>
           <TextField
             margin="normal"
             required
             fullWidth
             id="lastName"
-            label={t("profile.info.form.lastName.label")}
+            // label={t("profile.info.form.lastName.label")}
+            label={`${t("profile.info.form.lastName.label")}`}
             name="lastName"
             autoComplete="family-name"
             autoFocus
@@ -88,7 +90,8 @@ const ProfileInformation = () => {
             required
             fullWidth
             id="firstName"
-            label={t("profile.info.form.firstName.label")}
+            // label={t("profile.info.form.firstName.label")}
+            label={`${t("profile.info.form.firstName.label")}`}
             name="firstName"
             autoComplete="given-name"
             disabled={isUpdating}
@@ -99,7 +102,8 @@ const ProfileInformation = () => {
           />
           <FormControl component="fieldset" margin="normal">
             <FormLabel component="legend">
-              {t("profile.info.form.gender.label")}
+              {/* {t("profile.info.form.gender.label")} */}
+              {`${t("profile.info.form.gender.label")}`}
             </FormLabel>
             <RadioGroup
               row
@@ -113,7 +117,8 @@ const ProfileInformation = () => {
                   key={gender.value}
                   value={gender.value}
                   control={<Radio />}
-                  label={t(gender.label)}
+                  // label={t(gender.label)}
+                  label={`${t(gender.label)}`}
                 />
               ))}
             </RadioGroup>
@@ -123,7 +128,8 @@ const ProfileInformation = () => {
             required
             fullWidth
             id="email"
-            label={t("profile.info.form.email.label")}
+            // label={t("profile.info.form.email.label")}
+            label={`${t("profile.info.form.email.label")}`}
             name="email"
             autoComplete="email"
             disabled={isUpdating}
@@ -135,10 +141,12 @@ const ProfileInformation = () => {
         </CardContent>
         <CardActions>
           <Button onClick={() => formik.resetForm()}>
-            {t("common.reset")}
+            {/* {t("common.reset")} */}
+            {`${t("common.reset")}`}
           </Button>
           <LoadingButton loading={isUpdating} type="submit" variant="contained">
-            {t("common.update")}
+            {/* {t("common.update")} */}
+            {`${t("common.update")}`}
           </LoadingButton>
         </CardActions>
       </Card>

@@ -44,7 +44,7 @@ const BudgetWidget = () => {
 
   return (
     <Card>
-      <CardHeader title={t("dashboard.budget.title")} />
+      <CardHeader title={t("dashboard.budget.title") as string} />
       <CardContent>
         <ResponsiveContainer width="99%" height={244}>
           <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
@@ -53,7 +53,7 @@ const BudgetWidget = () => {
               tick={{ fill: theme.palette.text.secondary, fontSize: 14 }}
             />
             <Radar
-              name={t("dashboard.budget.legend.unit")}
+              name={t("dashboard.budget.legend.unit") as string }
               dataKey="A"
               stroke={theme.palette.primary.main}
               strokeWidth={8}

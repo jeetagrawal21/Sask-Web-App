@@ -16,13 +16,13 @@ const NotFound = () => {
           to={`/${process.env.PUBLIC_URL}/admin`}
           variant="contained"
         >
-          {t("common.backHome")}
+          {t("common.backHome") as string }
         </Button>
       }
       image={<NotFoundSvg />}
       maxWidth="sm"
-      subTitle={t("common.errors.notFound.subTitle")}
-      title={t("common.errors.notFound.title")}
+      subTitle={t("common.errors.notFound.subTitle") as string }
+      title={t("common.errors.notFound.title") as string }
     />
   );
 };

@@ -82,11 +82,11 @@ function EnhancedTableHead({
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell key={headCell.id} align={headCell.align} sx={{ py: 0 }}>
-            {t(headCell.label)}
+            {t(headCell.label) as string }
           </TableCell>
         ))}
         <TableCell align="right" sx={{ py: 0 }}>
-          {t("userManagement.table.headers.actions")}
+          {t("userManagement.table.headers.actions") as string}
         </TableCell>
       </TableRow>
     </TableHead>
@@ -215,13 +215,13 @@ const UserRow = ({
             <ListItemIcon>
               <EditIcon />
             </ListItemIcon>{" "}
-            {t("common.edit")}
+            {t("common.edit") as string }
           </MenuItem>
           <MenuItem onClick={handleDelete}>
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>{" "}
-            {t("common.delete")}
+            {t("common.delete") as string }
           </MenuItem>
         </Menu>
       </TableCell>

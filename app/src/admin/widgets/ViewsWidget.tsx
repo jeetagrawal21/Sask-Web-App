@@ -45,7 +45,7 @@ const ViewsWidget = () => {
           marginBottom={2}
           variant="body2"
         >
-          {t("admin.home.views.unit")}
+          {t("admin.home.views.unit") as string}
         </Typography>
         <Typography align="center" component="div" variant="h2">
           {views}
@@ -97,7 +97,7 @@ const ViewsWidget = () => {
             </Avatar>
             <Box sx={{ flexGrow: 1 }}>
               <Typography component="div" variant="h6">
-                {t("admin.home.views.action")}
+                {t("admin.home.views.action") as string}
               </Typography>
             </Box>
             <IconButton

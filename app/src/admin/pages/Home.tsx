@@ -74,7 +74,7 @@ const Home = () => {
   const { data } = useActivityLogs();
 
   if (!data || data.length === 0) {
-    return <Empty title={t("profile.activity.empty")} />;
+    return <Empty title={t("profile.activity.empty") as string } />;
   }
   return (
     <React.Fragment>
@@ -98,7 +98,8 @@ const Home = () => {
         </Grid> */}
         <Grid item xs={12} md={6} lg={4}>
           <Typography variant="h4" component="h2" align="center">
-            {t("My Story Timeline")}
+            {/* {t("My Story Timeline")} */}
+            {`${t("My Story Timeline")}`}
           </Typography>
           <Box sx={{ "& .MuiTimelineItem-root:before": { content: "none" } }}>
             <Timeline>

@@ -103,8 +103,8 @@ const EventDialog = ({
       <form onSubmit={formik.handleSubmit} noValidate>
         <DialogTitle id="event-dialog-title">
           {editMode
-            ? t("calendar.modal.edit.title")
-            : t("calendar.modal.add.title")}
+            ? t("calendar.modal.edit.title") as string
+            : t("calendar.modal.add.title") as string}
         </DialogTitle>
         <DialogContent>
           <TextField
@@ -112,7 +112,7 @@ const EventDialog = ({
             required
             fullWidth
             id="title"
-            label={t("calendar.form.title.label")}
+            label={t("calendar.form.title.label") as string }
             name="title"
             autoFocus
             disabled={processing}
@@ -125,7 +125,7 @@ const EventDialog = ({
             margin="normal"
             fullWidth
             id="description"
-            label={t("calendar.form.description.label")}
+            label={t("calendar.form.description.label") as string}
             name="description"
             disabled={processing}
             value={formik.values.description}
@@ -136,7 +136,7 @@ const EventDialog = ({
             helperText={formik.touched.description && formik.errors.description}
           />
           <MobileDateTimePicker
-            label={t("calendar.form.start.label")}
+            label={t("calendar.form.start.label") as string}
             inputFormat="dd/MM/yyyy H:mm"
             value={formik.values.start}
             onChange={(date: Date | null) =>
@@ -171,7 +171,7 @@ const EventDialog = ({
           />
           <FormControl component="fieldset" margin="normal">
             <FormLabel component="legend">
-              {t("calendar.form.color.label")}
+              {t("calendar.form.color.label") as string }
             </FormLabel>
             <RadioGroup
               row
@@ -207,11 +207,11 @@ const EventDialog = ({
             </IconButton>
           )}
           <Box sx={{ flexGrow: 1 }} />
-          <Button onClick={onClose}>{t("common.cancel")}</Button>
+          <Button onClick={onClose}>{t("common.cancel") as string}</Button>
           <LoadingButton loading={processing} type="submit" variant="contained">
             {editMode
-              ? t("calendar.modal.edit.action")
-              : t("calendar.modal.add.action")}
+              ? t("calendar.modal.edit.action") as string
+              : t("calendar.modal.add.action") as string }
           </LoadingButton>
         </DialogActions>
       </form>

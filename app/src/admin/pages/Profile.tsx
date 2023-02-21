@@ -86,7 +86,8 @@ const Profile = () => {
           </Box>
           <CircleProgressWidget
             height={244}
-            title={t("profile.completion.title")}
+            // title={t("profile.completion.title")}
+            title={`${t("profile.completion.title")}`}
             value={75}
           />
         </Grid>
@@ -99,7 +100,8 @@ const Profile = () => {
                   activeClassName="Mui-selected"
                   end={true}
                   component={NavLink}
-                  label={t(item.key)}
+                  // label={t(item.key)} 
+                  label={`${t(item.key)}`}
                   to={item.path}
                 />
               ))}

@@ -45,7 +45,7 @@ const SalesWidget = ({ value }: SalesWidgetProps) => {
 
   return (
     <Card>
-      <CardHeader title={t("dashboard.salesHistory.title")} />
+      <CardHeader title={t("dashboard.salesHistory.title") as string} />
       <CardContent>
         <ResponsiveContainer width="99%" height={124}>
           <BarChart
@@ -70,7 +70,7 @@ const SalesWidget = ({ value }: SalesWidgetProps) => {
               {value}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="div">
-              {t("dashboard.salesHistory.unit")}
+              {t("dashboard.salesHistory.unit") as string}
             </Typography>
           </Box>
           <TrendingUpIcon sx={{ color: "text.secondary" }} />

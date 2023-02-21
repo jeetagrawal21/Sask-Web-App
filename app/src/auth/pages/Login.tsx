@@ -62,7 +62,7 @@ const Login = () => {
       <Grid item xs={12} sm={8} md={5} component={Paper} square>
         <BoxedLayout>
           <Typography component="h1" variant="h5">
-            {t("auth.login.title")}
+            {t("auth.login.title") as string }
           </Typography>
           <Box
             component="form"
@@ -76,7 +76,7 @@ const Login = () => {
               required
               fullWidth
               id="email"
-              label={t("auth.login.form.email.label")}
+              label={t("auth.login.form.email.label") as string }
               name="email"
               autoComplete="email"
               autoFocus
@@ -92,7 +92,7 @@ const Login = () => {
               required
               fullWidth
               name="password"
-              label={t("auth.login.form.password.label")}
+              label={t("auth.login.form.password.label") as string}
               type="password"
               id="password"
               autoComplete="current-password"
@@ -108,7 +108,7 @@ const Login = () => {
                 to={`/${process.env.PUBLIC_URL}/forgot-password`}
                 variant="body2"
               >
-                {t("auth.login.forgotPasswordLink")}
+                {t("auth.login.forgotPasswordLink") as string}
               </Link>
             </Box>
             <LoadingButton
@@ -118,7 +118,7 @@ const Login = () => {
               variant="contained"
               sx={{ mt: 3 }}
             >
-              {t("auth.login.submit")}
+              {t("auth.login.submit") as string }
             </LoadingButton>
             <Button
               component={RouterLink}
@@ -127,7 +127,7 @@ const Login = () => {
               fullWidth
               sx={{ mt: 2 }}
             >
-              {t("auth.login.newAccountLink")}
+              {t("auth.login.newAccountLink") as string }
             </Button>
             <Button
               component={RouterLink}
@@ -136,7 +136,7 @@ const Login = () => {
               fullWidth
               sx={{ mt: 2 }}
             >
-              {t("auth.login.requestAccountLink")}
+              {t("auth.login.requestAccountLink") as string}
             </Button>
           </Box>
         </BoxedLayout>

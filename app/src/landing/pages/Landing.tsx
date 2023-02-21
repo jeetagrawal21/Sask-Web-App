@@ -45,7 +45,7 @@ const Landing = () => {
               color="text.primary"
               marginBottom={4}
             >
-              {t("landing.title")}
+              {t("landing.title") as string }
             </Typography>
             <Stack
               sx={{ pt: 3 }}
@@ -60,7 +60,7 @@ const Landing = () => {
                 target="_blank"
                 variant="outlined"
               >
-                {t("landing.cta.secondary")}
+                {t("landing.cta.secondary") as string}
               </Button>
               {userInfo ? (
                 <Button
@@ -68,7 +68,7 @@ const Landing = () => {
                   to={`/${process.env.PUBLIC_URL}/admin`}
                   variant="contained"
                 >
-                  {t("landing.cta.mainAuth", { name: userInfo.firstName })}
+                  {t("landing.cta.mainAuth", { name: userInfo.firstName }) as string}
                 </Button>
               ) : (
                 <Button
@@ -76,7 +76,7 @@ const Landing = () => {
                   to={`/${process.env.PUBLIC_URL}/login`}
                   variant="contained"
                 >
-                  {t("landing.cta.main")}
+                  {t("landing.cta.main") as string }
                 </Button>
               )}
             </Stack>
@@ -103,7 +103,7 @@ const Landing = () => {
               color="text.primary"
               gutterBottom
             >
-              {t("landing.features.title")}
+              {t("landing.features.title") as string }
             </Typography>
             <List sx={{ pt: 3 }}>
               {features.map((feature, index) => (
@@ -125,7 +125,7 @@ const Landing = () => {
               sx={{ mt: 3 }}
               variant="outlined"
             >
-              {t("landing.features.more")}
+              {t("landing.features.more") as string }
             </Button>
           </Stack>
         </Container>

@@ -40,7 +40,7 @@ const SalesByAgeWidget = () => {
 
   return (
     <Card>
-      <CardHeader title={t("dashboard.salesByAge.title")} />
+      <CardHeader title={t("dashboard.salesByAge.title") as string} />
       <CardContent>
         <ResponsiveContainer width="99%" height={244}>
           <RadialBarChart

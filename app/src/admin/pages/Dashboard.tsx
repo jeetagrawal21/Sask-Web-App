@@ -42,7 +42,7 @@ const Dashboard = () => {
   return (
     <React.Fragment>
       <AdminAppBar>
-        <AdminToolbar title={t("dashboard.title")} />
+        <AdminToolbar title={t("dashboard.title") as string} />
       </AdminAppBar>
       <Grid container spacing={2}>
         {overviewItems.map((item, index) => (
@@ -63,25 +63,25 @@ const Dashboard = () => {
           <ProgressWidget
             avatar={<SupervisorAccountIcon />}
             mb={2}
-            title={t("dashboard.visitProgress.title")}
+            title={t("dashboard.visitProgress.title") as string }
             value={75}
           />
           <ProgressWidget
             avatar={<ShoppingBasketIcon />}
             mb={2}
-            title={t("dashboard.orderProgress.title")}
+            title={t("dashboard.orderProgress.title") as string }
             value={50}
           />
           <ProgressWidget
             avatar={<AttachMoneyIcon />}
-            title={t("dashboard.salesProgress.title")}
+            title={t("dashboard.salesProgress.title") as string }
             value={25}
           />
         </Grid>
         <Grid item xs={12} md={4}>
           <CircleProgressWidget
             height={204}
-            title={t("dashboard.progress.title")}
+            title={t("dashboard.progress.title") as string }
             value={75}
           />
         </Grid>

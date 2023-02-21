@@ -48,18 +48,21 @@ const Faq = () => {
       </AdminAppBar>
       <Container maxWidth="sm">
         <Typography align="center" marginBottom={6} variant="h2">
-          {t("faq.title")}
+          {/* {t("faq.title")} */}
+          {`${t("faq.title")}`}
         </Typography>
         {questions.map((question, index) => (
           <Accordion key={index}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Typography component="p" variant="h6">
-                {t(question.title)}
+                {/* {t(question.title)} */}
+                {`${t(question.title)}`}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography color="text.secondary">
-                {t(question.answer)}
+                {/* {t(question.answer)} */}
+                {`${t(question.answer)}`}
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -69,7 +72,8 @@ const Faq = () => {
           to={`/${process.env.PUBLIC_URL}/admin/help`}
           variant="body2"
         >
-          {t("faq.noAnswerLink")}
+          {/* {t("faq.noAnswerLink")} */}
+          {`${t("faq.noAnswerLink")}`}
         </Link>
       </Container>
     </React.Fragment>

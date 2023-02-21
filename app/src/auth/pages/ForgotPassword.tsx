@@ -44,9 +44,9 @@ const ForgotPassword = () => {
   return (
     <BoxedLayout>
       <Typography component="h1" variant="h5">
-        {t("auth.forgotPassword.title")}
+        {t("auth.forgotPassword.title") as string}
       </Typography>
-      <Typography marginTop={3}>{t("auth.forgotPassword.subTitle")}</Typography>
+      <Typography marginTop={3}>{t("auth.forgotPassword.subTitle") as string}</Typography>
       <Box
         component="form"
         marginTop={3}
@@ -58,7 +58,7 @@ const ForgotPassword = () => {
           required
           fullWidth
           id="email"
-          label={t("auth.forgotPassword.form.email.label")}
+          label={t("auth.forgotPassword.form.email.label") as string}
           name="email"
           autoComplete="email"
           autoFocus
@@ -77,7 +77,7 @@ const ForgotPassword = () => {
           loading={isLoading}
           sx={{ mt: 2 }}
         >
-          {t("auth.forgotPassword.form.action")}
+          {t("auth.forgotPassword.form.action") as string}
         </LoadingButton>
         <Button
           component={RouterLink}
@@ -86,7 +86,7 @@ const ForgotPassword = () => {
           fullWidth
           sx={{ mt: 2 }}
         >
-          {t("auth.forgotPassword.form.back")}
+          {t("auth.forgotPassword.form.back") as string}
         </Button>
       </Box>
     </BoxedLayout>

@@ -74,7 +74,7 @@ const Calendar = ({
   const [viewTitle, setViewTitle] = useState("");
   const [calendarRef, setCalendarRef] = useState<FullCalendar | null>(null);
 
-  const onCalendarRefSet = useCallback((ref) => {
+  const onCalendarRefSet = useCallback((ref: FullCalendar | null) => {
     if (ref !== null) {
       setCalendarRef(ref);
     }
@@ -143,7 +143,7 @@ const Calendar = ({
           <IconButton aria-label="previous" component="span" onClick={handlePrev} size="large">
             <ArrowLeftIcon />
           </IconButton>
-          <Button onClick={handleToday}>{t("common.today")}</Button>
+          <Button onClick={handleToday}>{t("common.today") as string}</Button>
           <IconButton
             aria-label="next"
             component="span"

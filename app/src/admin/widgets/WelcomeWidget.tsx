@@ -14,14 +14,14 @@ const WelcomeWidget = () => {
     <Card elevation={0} sx={{ backgroundColor: "transparent", mb: 2 }}>
       <CardContent>
         <Typography component="div" gutterBottom variant="h1">
-          {t("admin.home.welcome.title", { name: userInfo?.firstName })}
+          {t("admin.home.welcome.title", { name: userInfo?.firstName }) as string}
         </Typography>
         <Typography
           component="div"
           sx={{ fontWeight: 300, mb: 3 }}
           variant="h1"
         >
-          {t("admin.home.welcome.subTitle")}
+          {t("admin.home.welcome.subTitle") as string}
         </Typography>
         <Typography
           color="textSecondary"
@@ -30,7 +30,7 @@ const WelcomeWidget = () => {
           marginBottom={2}
           variant="subtitle1"
         >
-          {t("admin.home.welcome.message")}
+          {t("admin.home.welcome.message") as string}
         </Typography>
         <SvgContainer>
           <WelcomeSvg />

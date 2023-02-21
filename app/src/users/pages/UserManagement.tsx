@@ -106,7 +106,7 @@ const UserManagement = () => {
     <React.Fragment>
       <AdminAppBar>
         {!selected.length ? (
-          <AdminToolbar title={t("userManagement.toolbar.title")}>
+          <AdminToolbar title={t("userManagement.toolbar.title") as string }>
             <Fab
               aria-label="logout"
               color="primary"
@@ -135,12 +135,12 @@ const UserManagement = () => {
         users={data}
       />
       <ConfirmDialog
-        description={t("userManagement.confirmations.delete")}
+        description={t("userManagement.confirmations.delete") as string }
         pending={processing}
         onClose={handleCloseConfirmDeleteDialog}
         onConfirm={handleDeleteUsers}
         open={openConfirmDeleteDialog}
-        title={t("common.confirmation")}
+        title={t("common.confirmation") as string }
       />
       {openUserDialog && (
         <UserDialog

@@ -42,7 +42,8 @@ const ActivityWidget = () => {
 
   return (
     <Card>
-      <CardHeader title={t("dashboard.activity.title")} />
+      {/* <CardHeader title={t("dashboard.activity.title")} /> */}
+      <CardHeader title={`${t("dashboard.activity.title")}`} />
       <CardContent>
         <ResponsiveContainer width="99%" height={244}>
           <LineChart

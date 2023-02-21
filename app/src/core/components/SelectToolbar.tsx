@@ -27,7 +27,7 @@ const SelectToolbar = ({
     <Toolbar sx={{ ml: 1, px: { xs: 3, sm: 6 } }}>
       <Fab color="secondary" onClick={onCancel} variant="extended">
         <CloseIcon sx={{ mr: 1 }} />
-        {numSelected} {t("common.selected")}
+        {numSelected} {t("common.selected") as string }
       </Fab>
       <Box sx={{ flexGrow: 1 }} />
 

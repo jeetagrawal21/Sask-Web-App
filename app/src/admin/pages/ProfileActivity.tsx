@@ -22,7 +22,7 @@ const ProfileActivity = () => {
   const { data } = useActivityLogs();
 
   if (!data || data.length === 0) {
-    return <Empty title={t("profile.activity.empty")} />;
+    return <Empty title={t("profile.activity.empty") as string } />;
   }
 
   return (

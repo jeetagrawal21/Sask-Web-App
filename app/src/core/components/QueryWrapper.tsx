@@ -21,12 +21,12 @@ const QueryWrapper = ({ children }: QueryWrapperProps) => {
         <Result
           extra={
             <Button onClick={() => resetErrorBoundary()} variant="contained">
-              {t("common.retry")}
+              {t("common.retry") as string }
             </Button>
           }
           status="error"
-          subTitle={t("common.errors.unexpected.subTitle")}
-          title={t("common.errors.unexpected.title")}
+          subTitle={t("common.errors.unexpected.subTitle") as string }
+          title={t("common.errors.unexpected.title") as string }
         />
       )}
     >

@@ -38,7 +38,7 @@ const MeetingWidgets = () => {
   return (
     <React.Fragment>
       <Typography component="h2" marginBottom={3} variant="h4">
-        {t("admin.home.meeting.title")}
+        {t("admin.home.meeting.title") as string}
       </Typography>
       {meetings.map((meeting) => (
         <Card key={meeting.id} sx={{ mb: 2 }}>

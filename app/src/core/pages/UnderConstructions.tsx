@@ -16,13 +16,13 @@ const UnderConstructions = () => {
           to={`/${process.env.PUBLIC_URL}/admin`}
           variant="contained"
         >
-          {t("common.backHome")}
+          {t("common.backHome") as string }
         </Button>
       }
       image={<ConstructionsSvg />}
       maxWidth="sm"
-      subTitle={t("common.errors.underConstructions.subTitle")}
-      title={t("common.errors.underConstructions.title")}
+      subTitle={t("common.errors.underConstructions.subTitle") as string }
+      title={t("common.errors.underConstructions.title") as string }
     />
   );
 };

@@ -49,14 +49,14 @@ const ConfirmDialog = ({
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>{t("common.cancel")}</Button>
+        <Button onClick={onClose}>{t("common.cancel") as string }</Button>
         <LoadingButton
           autoFocus
           onClick={onConfirm}
           loading={pending}
           variant="contained"
         >
-          {t("common.confirm")}
+          {t("common.confirm") as string}
         </LoadingButton>
       </DialogActions>
     </Dialog>
