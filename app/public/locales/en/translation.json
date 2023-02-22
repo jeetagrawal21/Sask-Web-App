@@ -225,7 +225,7 @@
   },
   "dashboard": {
     "activity": {
-      "title": "Activity"
+      "title": "My Story Timeline"
     },
     "budget": {
       "legend": {
@@ -265,11 +265,11 @@
     },
     "teams": {
       "columns": {
-        "progress": "Progress",
-        "team": "Team",
+        "progress": "Severity",
+        "team": "Symptom",
         "value": "Value"
       },
-      "title": "Teams Progress"
+      "title": "Reported Symptoms"
     },
     "users": {
       "title": "Recent Users"
@@ -326,10 +326,10 @@
     "activity": {
       "empty": "Logs of your activity will show up here!",
       "logs": {
-        "eventAdded": "<bold>You</bold> added a new event: <bold>{{resource}}</bold>",
-        "eventUpdated": "<bold>You</bold> updated event: <bold>{{resource}}</bold>",
-        "userAdded": "<bold>You</bold> added a new user: <bold>{{resource}}</bold>",
-        "userDeleted": "<bold>You</bold> deleted user: <bold>{{resource}}</bold>",
+        "eventAdded": "<bold>You</bold> reported a new symptom: <bold>Headache</bold>",
+        "eventUpdated": "<bold>You</bold> seeked care for: <bold>Anxiety</bold>",
+        "userAdded": "<bold>You reported a new activity: <bold>Jousting</bold>",
+        "userDeleted": "<bold>You</bold> reported a new event: <bold>Booster Shot</bold>",
         "userUpdated": "<bold>You</bold> updated user: <bold>{{resource}}</bold>"
       }
     },

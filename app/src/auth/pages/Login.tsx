@@ -13,12 +13,37 @@ import * as Yup from "yup";
 import BoxedLayout from "../../core/components/BoxedLayout";
 import { useSnackbar } from "../../core/contexts/SnackbarProvider";
 import { useAuth } from "../contexts/AuthProvider";
+// import axios from "axios";
 
 const Login = () => {
   const { isLoggingIn, login } = useAuth();
   const navigate = useNavigate();
   const snackbar = useSnackbar();
   const { t } = useTranslation();
+
+  
+  // const baseURL = "http://localhost:3000";
+  // const loginURL = "/api/users/add";
+
+  // const handleSubmit = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  //   e.preventDefault();
+
+  //   const loginInfo = {
+  //     email: formik.values.email,
+  //     pwdHash: formik.values.password,
+  //   }
+  //   try {
+  //     const response = await axios.post(
+  //      baseURL + loginURL,
+  //       JSON.stringify(loginInfo),
+  //     );
+  //     const accessToken = response?.data?.accessToken;
+  //     const roles = response?.data?.roles;
+     
+  //   } catch (err) {
+  //       console.log("Login failed");
+  //   }
+  // }
 
   const handleLogin = (email: string, password: string) => {
     login(email, password)
@@ -120,15 +145,6 @@ const Login = () => {
             >
               {t("auth.login.submit") as string }
             </LoadingButton>
-            <Button
-              component={RouterLink}
-              to={`/${process.env.PUBLIC_URL}/register`}
-              color="primary"
-              fullWidth
-              sx={{ mt: 2 }}
-            >
-              {t("auth.login.newAccountLink") as string }
-            </Button>
             <Button
               component={RouterLink}
               to={`/${process.env.PUBLIC_URL}/request-account`}

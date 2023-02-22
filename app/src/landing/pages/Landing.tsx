@@ -54,10 +54,8 @@ const Landing = () => {
               justifyContent="center"
             >
               <Button
-                component="a"
-                href={process.env.REACT_APP_SOURCE_LINK}
-                rel="noopener noreferrer"
-                target="_blank"
+                component={RouterLink}
+                to={`/${process.env.PUBLIC_URL}/request-account`}
                 variant="outlined"
               >
                 {t("landing.cta.secondary") as string}

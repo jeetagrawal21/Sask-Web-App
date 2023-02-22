@@ -17,7 +17,7 @@ COPY yarn*.lock .
 
 # Install dependencies
 #RUN npm install --production=false
-RUN yarn
+RUN yarn install
 # Copy app files
 COPY . .
 
@@ -26,4 +26,4 @@ EXPOSE 3080
 
 
 # Start the app
-CMD [ "yarn", "run", "start" ]
+#CMD [ "yarn", "run", "start" ]
