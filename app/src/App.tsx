@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import WelcomePage from './pages/welcomePage';
 import Register from './pages/RegisterPage';
+import TestPage from './pages/TestPage';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import Dashboard from './components/layout/defaultLayout';
 
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/Register" element={<Register />} />
+        <Route path="/TestPage" element={<TestPage/>} />
       </Routes>
     </Router>
   );
