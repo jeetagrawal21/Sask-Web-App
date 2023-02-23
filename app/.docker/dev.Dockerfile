@@ -16,8 +16,7 @@ COPY package*.json ./
 COPY yarn*.lock .
 
 # Install dependencies
-#RUN npm install --production=false
-RUN yarn install
+RUN yarn install --network-timeout 1000000000
 # Copy app files
 COPY . .
 
