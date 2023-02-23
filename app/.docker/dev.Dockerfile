@@ -16,7 +16,8 @@ COPY package*.json ./
 COPY yarn*.lock .
 
 # Install dependencies
-RUN yarn install --network-timeout 1000000000
+RUN npm install
+
 # Copy app files
 COPY . .
 
@@ -25,4 +26,4 @@ EXPOSE 3080
 
 
 # Start the app
-# CMD [ "yarn", "run", "start" ]
+CMD [ "npm", "run", "start" ]

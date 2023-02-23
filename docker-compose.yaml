@@ -20,7 +20,7 @@ services:
     depends_on:
       - api
     env_file:
-      - ./app/.env.development
+      - ./app/.env
 
   api:
     container_name: covid_api
