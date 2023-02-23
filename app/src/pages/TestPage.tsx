@@ -4,9 +4,10 @@ function Quotes() {
   const [text, setText] = useState("");
   const [author, setAuthor] = useState("");
 function getQuote() {
-    axios.get("http://localhost:3000/").then(response => {
-      setText(response.data.text);
-      setAuthor(response.data.author);
+    axios.get("http://localhost:3000/TestPage").then(response => {
+      alert(response.data);
+    //   setText(response.data.text);
+    //   setAuthor(response.data.author);
     });
   }
 return (

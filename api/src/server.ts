@@ -25,10 +25,11 @@ import userService from './services/user-service';
 // **** Init express **** //
 
 const app = express();
-
+const cors = require('cors');
 
 // **** Set basic express settings **** //
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser(EnvVars.cookieProps.secret));
@@ -80,6 +81,10 @@ app.use((
 // Nav to login pg by default
 app.get('/', (_: Request, res: Response) => {
   res.send("Hello world");
+});
+
+app.get("/TestPage", function(req, res) {
+  res.send("This is a test");
 });
 
 // // Redirect to login if not logged in.
