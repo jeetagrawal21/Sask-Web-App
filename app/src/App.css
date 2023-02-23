@@ -1,38 +1,23 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Open+Sans:ital,wght@0,700;1,400&family=Source+Sans+Pro:ital@1&display=swap');
+
+body {
+  background-color: #fff;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.welcome-message {
+  padding-top: 30px;
+  width: 50%;
+  font-family: 'Source Sans Pro', sans-serif;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.welcome-text-heading {
+  font-size: 50px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.welcome-text-body {
+  font-size: 30px;
 }
