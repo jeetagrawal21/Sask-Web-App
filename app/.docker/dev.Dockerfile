@@ -25,4 +25,4 @@ EXPOSE 3080
 
 
 # Start the app
-CMD [ "yarn", "run", "start" ]
+# CMD [ "yarn", "run", "start" ]
