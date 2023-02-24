@@ -7,7 +7,7 @@ import Register from './pages/RegisterPage';
 import TestPage from './pages/TestPage';
 import RequestAccount from './pages/RequestAccountPage';
 // import 'bootstrap/dist/css/bootstrap.min.css';
-// import Dashboard from './components/layout/defaultLayout';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
         <Route path="/" element={<WelcomePage />} />
         <Route path="/RequestAccount" element={<RequestAccount />} />
         <Route path="/Register" element={<Register />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/TestPage" element={<TestPage />} />
       </Routes>
     </Router>

@@ -43,7 +43,7 @@ class SignIn extends Component {
             ></input>
           </div>
           <div className="button-div">
-            <Link to="dashboard">
+            <Link to="Dashboard">
               <button className="signin-button" onClick={authenticateLogin}>
                 SIGN IN
               </button>
