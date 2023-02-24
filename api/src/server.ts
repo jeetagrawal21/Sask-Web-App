@@ -66,10 +66,11 @@ app.use(
     return res.status(status).json({ error: err.message });
   }
 );
-
+// test get function
 app.get('/TestPage', function (req, res) {
   res.send('This is a test');
 });
+
 // post request to post registration data to database
 app.post('/postregistrationinfo', (req, res) => {
   const data = req.body;
@@ -78,6 +79,22 @@ app.post('/postregistrationinfo', (req, res) => {
   // call function to post data to the database
 
   res.send('success');
+});
+/**
+ * Gets login data from the user
+ * req: login data as a string array containing email and password
+ * res: success or error message
+ */
+app.post('/login', (req, res) => {
+  const data = JSON.parse(req.body);
+
+  // send data as JSON object to the function that aunthenticates login
+  // send response if login was successful or not( we might not actually need the get request below)
+});
+
+app.get('/login', (req, res) => {
+  // this function communicates with the login authentication function to check if login info is correct and return a response if it is found in the DB
+  res.send(req);
 });
 
 // **** Serve front-end content **** //
