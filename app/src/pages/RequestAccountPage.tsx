@@ -8,6 +8,21 @@ import axios from 'axios';
 
 class RequestAccount extends Component {
   render() {
+    /**
+     * Sends the participant id for client requesting an account to the backend,
+     */
+    function requestAccount() {
+      const ParticipantId = {
+        participantId: (document.getElementById('pID') as HTMLInputElement)
+          .value,
+      };
+      // send the participant data to the backend using an axios post request
+      axios
+        .post('http://localhost:3000/requestAccount', ParticipantId)
+        .then((response) => {
+          alert(response);
+        });
+    }
     return (
       <div className="requestAccount">
         <Header />
@@ -22,7 +37,9 @@ class RequestAccount extends Component {
             ></input>
           </div>
           <Link to="/Register">
-            <button className="signin-button">Request</button>
+            <button className="signin-button" onClick={requestAccount}>
+              Request
+            </button>
           </Link>
         </form>
       </div>

@@ -44,7 +44,9 @@ class SignIn extends Component {
           </div>
           <div className="button-div">
             <Link to="dashboard">
-              <button className="signin-button">SIGN IN</button>
+              <button className="signin-button" onClick={authenticateLogin}>
+                SIGN IN
+              </button>
             </Link>
 
             <p>Do not have an account?</p>

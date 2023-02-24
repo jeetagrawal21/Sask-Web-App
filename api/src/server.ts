@@ -86,7 +86,8 @@ app.post('/postregistrationinfo', (req, res) => {
  * res: success or error message
  */
 app.post('/login', (req, res) => {
-  const data = JSON.parse(req.body);
+  const data = JSON.stringify(req.body);
+  console.log(data);
 
   // send data as JSON object to the function that aunthenticates login
   // send response if login was successful or not( we might not actually need the get request below)
@@ -94,7 +95,15 @@ app.post('/login', (req, res) => {
 
 app.get('/login', (req, res) => {
   // this function communicates with the login authentication function to check if login info is correct and return a response if it is found in the DB
-  res.send(req);
+  // res.send(req);
+});
+/**
+ * for now this would not really do any work on the backend other than store participant id with the rest of particiapnt info on the registration page
+ * in the future we plan for it to send this participnat id to the admin who then verifies and send a unique link to the participant for registration
+ */
+app.post('/requestAccount', (req, res) => {
+  const particpantId = req.body;
+  console.log(particpantId);
 });
 
 // **** Serve front-end content **** //
