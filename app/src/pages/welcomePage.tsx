@@ -4,8 +4,10 @@ import '../App.css';
 import Header from '../components/header';
 import SignIn from '../components/signin';
 import Navbar from '../components/navbar';
+import axios from 'axios';
 
 function WelcomePage() {
+
   return (
     <div className="App">
       <Header />
