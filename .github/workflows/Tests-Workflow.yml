@@ -29,10 +29,10 @@ jobs:
         run: docker compose up -d
       
       - name: Test Frontend
-        run: docker exec covid_app npm run test
+        run: docker exec covid_app npm run test:ci
       
       - name: Test Backend
-        run: docker exec covid_api npm run test
+        run: docker exec covid_api npm run test:no-reloading
       
       - name: Stop The Stacks
         if: always()
