@@ -4,6 +4,7 @@ body {
   background-color: #fff;
 }
 
+/*make the contents in the div to be centered*/
 .container {
   display: flex;
   justify-content: space-between;

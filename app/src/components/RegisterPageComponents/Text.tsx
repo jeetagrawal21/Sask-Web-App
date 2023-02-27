@@ -77,52 +77,54 @@ function Text() {
           ></input>
         </div>
 
-        {/* Textfield to enter First security question */}
-        <div>
-          <input
-            placeholder="Enter security question 1"
-            id="securityQuestion1"
-          ></input>
-        </div>
+        <div className="security-questions">
+          {/* Textfield to enter First security question */}
+          <div>
+            <input
+              placeholder="Enter security question 1"
+              id="securityQuestion1"
+            ></input>
+          </div>
 
-        {/* Textfield to enter First security answer */}
-        <div>
-          <input
-            placeholder="Enter security answer 1"
-            id="securityAnswer1"
-          ></input>
-        </div>
+          {/* Textfield to enter First security answer */}
+          <div>
+            <input
+              placeholder="Enter security answer 1"
+              id="securityAnswer1"
+            ></input>
+          </div>
 
-        {/* Textfield to enter second security question */}
-        <div>
-          <input
-            placeholder="Enter security question 2"
-            id="securityQuestion2"
-          ></input>
-        </div>
+          {/* Textfield to enter second security question */}
+          <div>
+            <input
+              placeholder="Enter security question 2"
+              id="securityQuestion2"
+            ></input>
+          </div>
 
-        {/* Textfield to enter second security answer */}
-        <div>
-          <input
-            placeholder="Enter security answer 2"
-            id="securityAnswer2"
-          ></input>
-        </div>
+          {/* Textfield to enter second security answer */}
+          <div>
+            <input
+              placeholder="Enter security answer 2"
+              id="securityAnswer2"
+            ></input>
+          </div>
 
-        {/* Textfield to enter third security question */}
-        <div>
-          <input
-            placeholder="Enter security question 3"
-            id="securityQuestion3"
-          ></input>
-        </div>
+          {/* Textfield to enter third security question */}
+          <div>
+            <input
+              placeholder="Enter security question 3"
+              id="securityQuestion3"
+            ></input>
+          </div>
 
-        {/* Textfield to enter third security answer */}
-        <div>
-          <input
-            placeholder="Enter security answer 3"
-            id="securityAnswer3"
-          ></input>
+          {/* Textfield to enter third security answer */}
+          <div>
+            <input
+              placeholder="Enter security answer 3"
+              id="securityAnswer3"
+            ></input>
+          </div>
         </div>
 
         <div className="register-page-button-div">
