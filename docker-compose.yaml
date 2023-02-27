@@ -65,7 +65,7 @@ services:
     hostname: covid_selenium_test
     image: selenium/standalone-chrome
     build:
-      dockerfile: .docker/Sel.Dockerfile
+      dockerfile: /selenium_test/.docker/Sel.Dockerfile
     volumes:
       - ./selenium_test:/app
     ports:
