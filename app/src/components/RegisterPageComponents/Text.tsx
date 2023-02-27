@@ -36,9 +36,7 @@ function Text() {
     // send the participant data to the backend using an axios post request
     axios
       .post('http://localhost:3000/postregistrationinfo', participantInfo)
-      .then((response) => {
-        alert(response);
-      });
+      .then((response) => {});
     // } else {
     //   alert('Error, password is not consistent in both fields');
     // }
