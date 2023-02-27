@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css';
+import '../stylings/DashboardStyles/Dashboard.css';
 import Header from '../components/header';
 import Sidebar from '../components/DashboardComponents/Sidebar';
 import MainComponent from '../components/DashboardComponents/MainComponent';
@@ -10,10 +10,17 @@ import axios from 'axios';
 class Dashboard extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="dashboard">
         <Header />
-        <Sidebar />
-        <MainComponent />
+        <br></br>
+        <div className="dashboard-body">
+          <div className="sidebar dashboard-component">
+            <Sidebar />
+          </div>
+          <div className="main-component dashboard-component">
+            <MainComponent />
+          </div>
+        </div>
       </div>
     );
   }
