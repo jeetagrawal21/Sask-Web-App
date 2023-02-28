@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import { AppDataSource } from './data-source';
 import { Users } from './entity/Users';
 import path from 'path';
-import { Client } from 'pg';
+import { Client, Pool } from 'pg';
 import dotenv from 'dotenv';
 
 import helmet from 'helmet';
@@ -44,6 +44,142 @@ if (EnvVars.nodeEnv === NodeEnvs.Production) {
   app.use(helmet());
 }
 
+//**** Database Query Functions ***//
+const credentials= {
+  user: "postgres",
+  host: "postgres",
+  database: "postgres",
+  password: "ThisIsASuperLongAndCoolPassword4DevelopmentToKeepOutHackersSoIfYoureAHackerPleaseLeave>:3",
+  port: 5432,
+};
+
+//createtable();
+
+// Connect with a connection pool.
+
+async function poolDemo() {
+  const pool = new Pool(credentials);
+  const now = await pool.query("SELECT * FROM users");
+  console.log(now.rows);
+  await pool.end();
+
+  return now;
+}
+
+// Connect with a client.
+
+async function clientDemo() {
+  const client = new Client(credentials);
+  await client.connect();
+  const now = await client.query("SELECT NOW()");
+  await client.end();
+
+  return now;
+}
+
+//function to create database and table 
+async function createtable(){
+  const pool = new Pool(credentials);
+  pool.query("CREATE TABLE users(id serial NOT NULL, username character varying(80) NOT NULL, pass character(40) NOT NULL, email character varying(100) NOT NULL, privilege integer NOT NULL DEFAULT 0, securityQuestion1 character(40) NOT NULL, securityAnswer1 character(40) NOT NULL, securityQuestion2 character(40) NOT NULL, securityAnswer2 character(40) NOT NULL, securityQuestion3 character(40) NOT NULL, securityAnswer3 character(40) NOT NULL, CONSTRAINT utilisateur_pkey PRIMARY KEY (id))", (err, res) => {
+    //console.log(err, res);
+    pool.end();
+});
+}
+
+//Checks if user exists (using email) return true if 1 user is found and felse otherwise
+async function checkifuser(email:string){
+  const pool = new Pool(credentials);
+  const now = await pool.query(                    //query looks for all users with email
+    `SELECT * FROM users WHERE email = $1`, 
+        [email]);
+  pool.end();
+  if(now.rows.length == 1){          //if more then 1 user is returned from query, returns false for user not found (there should only be 1 user with the info)
+    return (true);
+  }else{
+    return false;
+  }
+}
+
+//Gets user and return user info. Returmns user info if 1 user is found, false otherwise
+async function getuser (email:string, pass:string){
+  const pool = new Pool(credentials);
+  const now = await pool.query(               //query looks for all users with email
+    `SELECT * FROM users WHERE email = $1`, 
+        [email]);
+  await pool.end();
+  if(now.rows.length == 1){         //if more then 1 user is returned from query, returns false for user not found (there should only be 1 user with the info)
+    return now;                    //user data returned 
+  }else{
+    return false;
+  }
+} 
+
+//Checks password for the associated email. Returns true for correct combo, false otherswise
+async function checkpass(email:string, pass:string){
+  const pool = new Pool(credentials);
+  const now = await pool.query(                   //query looks for all users with email
+    `SELECT * FROM users WHERE email = $1`, 
+        [email]);
+  pool.end();
+  if(now.rows.length == 1){     //if more then 1 user is returned from query, returns false for user not found (there should only be 1 user with the info)
+    console.log(now);
+    return (true);
+  }else{
+    return false;
+  }
+}
+
+//Creates account for admins (admins have a privilege of 1 as opposed to 0)
+async function accountcreationadmin(username:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
+  const pool = new Pool(credentials);
+  if (await checkifuser(email)){                     //calls check if user exist (using email) if returns true he exist account not created else account created
+    console.log('account not created');
+  }else{
+    const now = await pool.query(               //account created
+      `INSERT INTO users (username, pass, email, privilege, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3  )  
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`, [username, pass, email, 1, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3]);
+  }
+  await pool.end();
+}
+
+//Creates account for users (users dont need a privilige variable because it is 0 by default)
+async function accountcreationuser(ID:number, username:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
+  const pool = new Pool(credentials);
+  if (await checkifuser(email)){              //calls check if user exist (using email) if returns true he exist account not created else account created
+    console.log("account not created");
+  }else{
+    const now = await pool.query(            //account created         
+      `INSERT INTO users (id, username, pass, email, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3  )  
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9 $10)`, [ID, username, pass, email, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3]);
+    console.log("Account not created");
+  }
+  await pool.end();
+} 
+
+
+//changes password, returns true if succesful 
+async function changepass(email:string, pass:string){
+  const pool = new Pool(credentials);
+  if (await checkifuser(email)){             //calls check if user exist (using email) if returns true he exist account not created else account created
+    const now = await pool.query(           //
+      `INSERT INTO users (pass)  
+       VALUES ($1)`, [pass]);
+  }else{
+    console.log("user not found");
+  }
+  await pool.end();
+}
+
+
+// //Sending query to the server
+// poolDemo();
+
+//accountcreationuser('testuser8', 'testpass8', 'testuser2@email.com', "hello who?", "World!", "Whats my name", "Testuser8", "Whats my purpose", "Testing");
+//account('testuser8', 'testpass8', 'testuser2@email.com', "hello who?", "World!", "Whats my name", "Testuser8", "Whats my purpose", "Testing");
+
+//console.log(checkifuser('testuser2@email.com'));
+
+
 // **** Add API routes **** //
 
 // Add APIs
@@ -71,9 +207,23 @@ app.get('/TestPage', function (req, res) {
   res.send('This is a test');
 });
 
+/**
+ * for now this would not really do any work on the backend other than store participant id with the rest of particiapnt info on the registration page
+ * in the future we plan for it to send this participnat id to the admin who then verifies and send a unique link to the participant for registration
+ */
+ var partIDnum:number;
+ app.post('/requestAccount', (req, res) => {
+   const particpantId = req.body;
+   partIDnum = 12345; //Number(particpantId['participantId']);
+   console.log(partIDnum);
+ });
+
+
 // post request to post registration data to database
 app.post('/postregistrationinfo', (req, res) => {
   const data = req.body;
+  //console.log(partIDnum, data['surname'] + data['givenName1'], data['password'], data['email'], data['question1'], data['answer1'], data['question2'], data['answer2'], data['question3'], data['answer3'])
+  //accountcreationuser(partIDnum, data['surname'] + data['givenName1'], data['password'], data['email'], data['question1'], data['answer1'], data['question2'], data['answer2'], data['question3'], data['answer3'])
   console.log(data);
 
   // call function to post data to the database
@@ -97,79 +247,7 @@ app.get('/login', (req, res) => {
   // this function communicates with the login authentication function to check if login info is correct and return a response if it is found in the DB
   // res.send(req);
 });
-/**
- * for now this would not really do any work on the backend other than store participant id with the rest of particiapnt info on the registration page
- * in the future we plan for it to send this participnat id to the admin who then verifies and send a unique link to the participant for registration
- */
-app.post('/requestAccount', (req, res) => {
-  const particpantId = req.body;
-  console.log(particpantId);
-});
 
-// **** Serve front-end content **** //
-
-// // not need(we using react for front-end. this need to be removed)
-// // Set views directory (html)
-// const viewsDir = path.join(__dirname, 'views');
-// app.set('views', viewsDir);
-
-// // Set static directory (js and css).
-// const staticDir = path.join(__dirname, 'public');
-// app.use(express.static(staticDir));
-
-// Nav to login pg by default
-
-// // Redirect to login if not logged in.
-// app.get('/users', (req: Request, res: Response) => {
-//   const jwt = req.signedCookies[EnvVars.cookieProps.key];
-//   if (!jwt) {
-//     res.redirect('/');
-//   } else {
-//     res.send("having a user");
-//   }
-// });
-
-// connect db
-
-AppDataSource.initialize()
-  .then(async () => {
-    // const participantId = new ParticipantID();
-    // participantId.participantid = 1234;
-    // const id = await AppDataSource.manager.find(ParticipantID);
-    // if (id.length != 0) {
-    //   console.log("already have an id");
-    // } else {
-    //   console.log("Inserting a new participant_id into the database...");
-    //   await AppDataSource.manager.save(participantId);
-    // }
-    // console.log(" paticipantID is ", id);
-    // const user = new Users();
-    // user.email = "sean.maxwell@gmail.com";
-    // user.participant_id = 1234;
-    // user.pwdHash = "$2b$12$1mE2OI9hMS/rgH9Mi0s85OM2V5gzm7aF3gJIWH1y0S1MqVBueyjsy";
-    // const users = await AppDataSource.manager.find(Users);
-    // if (users.length != 0) {
-    //   console.log("already has a user: ");
-    // } else {
-    //   console.log("Inserting a new user into the database...");
-    //   await AppDataSource.manager.save(user);
-    // }
-    // console.log(" User is ", await AppDataSource.manager.find(Users));
-    // const user = new User();
-    // user.email = "Timber@usask.ca";
-    // user.surname = '';
-    // user.givename1 = '';
-    // user.givename2 = '';
-    // user.participant_id = 1234;
-    // user.pwdHash = "1234";
-    // await AppDataSource.manager.save(user);
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    // console.log("Saved a new user with id: " + user.id);
-    // console.log("Loading users from the database...");
-    // const users = await AppDataSource.manager.find(User);
-    // console.log("Loaded users: ", users);
-  })
-  .catch((error) => console.log(error));
 
 // **** Export default **** //
 
