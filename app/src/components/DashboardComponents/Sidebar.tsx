@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../stylings/DashboardStyles/Sidebar.css';
+import '../../stylings/DashboardStyles/sidebar.css';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 
