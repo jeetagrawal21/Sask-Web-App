@@ -145,13 +145,12 @@ async function accountcreationuser(ID:number, surname:string, givenname2:string,
 } 
 
 
-//changes password, returns true if succesful    *****NEEEEDSS TESTING/REWRITE NOT SURE IF WORKS******
-async function changepass(email:string, pass:string){
+//changes password, returns true if succesful   
+async function changepass(email:string, newpass:string){
   const pool = new Pool(credentials);
   if (await checkifuser(email)){             //calls check if user exist (using email) if returns true he exist account not created else account created
     const now = await pool.query(           //
-      `INSERT INTO users (pass)  
-       VALUES ($1)`, [pass]);
+      `UPDATE users SET pass=$2 WHERE email=$1`, [email, newpass]);
   }else{
     console.log("user not found");
   }
