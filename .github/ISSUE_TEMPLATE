@@ -1,0 +1,27 @@
+---
+name: Task
+about: Create a task for your project
+title: "[TASK]"
+labels: task
+assignees: ''
+
+---
+
+## Description
+
+Please provide a clear and concise description of what the task is.
+
+## Subtasks
+- [ ] Subtask 1
+- [ ] Subtask 2
+- [ ] Subtask 3
+
+## Time tracking
+
+Estimated: 00h00m
+
+Actual: 00h00m
+
+## Due date
+
+dd/mm/yyyy
