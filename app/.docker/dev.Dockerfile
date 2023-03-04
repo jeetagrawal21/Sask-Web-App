@@ -13,7 +13,6 @@ WORKDIR /app
 
 # copy app dependencies files
 COPY package*.json ./
-COPY yarn*.lock .
 
 # Install dependencies
 RUN npm install --production=false
