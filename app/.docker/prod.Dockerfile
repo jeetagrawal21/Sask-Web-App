@@ -4,7 +4,7 @@
 # ==== CONFIGURE =====
 # Use a Node 19 base image
 FROM node:19-alpine AS production
-
+ENV NODE_ENV production
 # Set the working directory to /app inside the container
 WORKDIR /app
 
@@ -12,13 +12,13 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
-RUN npm ci
+RUN yarn install
 
 # Copy app files
 COPY . .
 
 #Build application
-RUN npm build
+RUN yarn build
 
 # Stage: 2 — the production environment (Allows for smaller production image)
 # Webserver base image
