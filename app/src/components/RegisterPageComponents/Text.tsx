@@ -1,5 +1,7 @@
 import '../../stylings/RegisterPageStyles/Text.css';
 import axios from 'axios';
+import React from 'react';
+
 
 // post request using axios to post user registration data
 function Text() {
