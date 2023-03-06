@@ -211,7 +211,7 @@ app.post('/postregistrationinfo', (req, res) => {
 
   // call function to post data to the database
 
-  res.send('success');
+  res.send(true);   // needs failure handling
 });
 
 
@@ -226,8 +226,10 @@ app.post('/login', (req, res) => {
     var result:boolean = await checkpass(req.body.email, req.body.password);    //async function is required to make it wait for reply (await used below to specific what we wait for)
     if (result){     //calls check password to see if pass and email match a database entry
       console.log("login success!");
+      res.send(result);
     }else{
       console.log("login failed");
+      res.send(result);
     }
   }
   checking(); //Calling above function with data from page
