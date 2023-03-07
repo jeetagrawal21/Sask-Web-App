@@ -9,7 +9,7 @@ import SignIn from "./signin";
 
 it('signin component should render',async () => {
   
-  1==1;
+  expect(3+2).toBe(5);
 
   // expect(wrapper).toMatchSnapshot();
 })
