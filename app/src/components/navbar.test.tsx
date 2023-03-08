@@ -23,13 +23,23 @@ describe('Navbar component', () => {
       expect(container).toMatchSnapshot();
     });
   
-    // Test Case 1 : Checks if all links renders correctly
-    it('should render all links properly', () => {
+    // Test Case 2 : Checks if About link renders correctly
+    it('should render About link properly', () => {
       const { getByText } = render(<Navbar />);
       expect(getByText('About')).toBeInTheDocument();
-      expect(getByText('Contact us')).toBeInTheDocument();
-      expect(getByText('Help')).toBeInTheDocument();
     });
+
+    // Test Case 3 : Checks if Contact Us link renders correctly
+    it('should render Contact Us link properly', () => {
+        const { getByText } = render(<Navbar />);
+        expect(getByText('Contact us')).toBeInTheDocument();
+      });
+
+    // Test Case 4 : Checks if Help link renders correctly
+    it('should render Help link properly', () => {
+        const { getByText } = render(<Navbar />);
+        expect(getByText('Help')).toBeInTheDocument();
+      });
   });
 
 
