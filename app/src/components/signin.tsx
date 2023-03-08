@@ -23,6 +23,10 @@ function SignIn() {
       });
   }
 
+  function requestAccount(){
+    navigate('RequestAccount');
+  }
+
   return (
     <div className="signin">
       <form className="Auth-form">
@@ -49,7 +53,7 @@ function SignIn() {
           </button>
 
           <p>Do not have an account?</p>
-          <button type="button" className="signin-button">REQUEST AN ACCOUNT</button>
+          <button type="button" className="signin-button" onClick ={requestAccount}>REQUEST AN ACCOUNT</button>
 
         </div>
       </form>
