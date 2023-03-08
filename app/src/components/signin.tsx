@@ -16,8 +16,9 @@ function SignIn() {
     axios
       .post('http://localhost:3000/login', participantInfo)
       .then((response) => {
-        if (response.data == true) {
-          navigate('/Dashboard');
+        if (response.data) {  
+          console.log(response.data);
+          navigate('Dashboard');
         }
       });
   }
@@ -48,9 +49,8 @@ function SignIn() {
           </button>
 
           <p>Do not have an account?</p>
-          <Link to="Dashbaords">
-            <button className="signin-button">REQUEST AN ACCOUNT</button>
-          </Link>
+          <button type="button" className="signin-button">REQUEST AN ACCOUNT</button>
+
         </div>
       </form>
     </div>
