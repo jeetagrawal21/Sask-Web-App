@@ -19,12 +19,14 @@ function SignIn() {
         if (response.data) {  
           console.log(response.data);
           navigate('Dashboard');
+        }else{
+          alert("User/Password Doesn't exist");
         }
       });
   }
 
   function requestAccount(){
-    navigate('RequestAccount');
+    navigate('RequestAccountPage');
   }
 
   return (
