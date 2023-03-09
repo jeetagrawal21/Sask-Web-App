@@ -9,6 +9,7 @@ import RequestAccount from './pages/RequestAccountPage';
 import Timeline from './pages/Timeline';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import Dashboard from './pages/Dashboard';
+import AdminPage from './pages/AdminPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Timeline" element={<Timeline />} />
         <Route path="/TestPage" element={<TestPage />} />
+        <Route path="/AdminPage" element={<AdminPage />} />
       </Routes>
     </Router>
   );

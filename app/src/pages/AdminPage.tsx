@@ -13,18 +13,20 @@ interface UserRequest {
   requestDate: Date;
 }
 
-const users: User[] = [
+// initialize sample data
+const initUsers: User[] = [
     { id: 1, name: "John Doe", email: "john.doe@example.com"},
     { id: 2, name: "Jane Smith", email: "jane.smith@example.com"},
     { id: 3, name: "Bob Johnson", email: "bob.johnson@example.com"},
   ];
   
-  const userRequests: UserRequest[] = [
+  const initUserRequests: UserRequest[] = [
     { id: 1, name: "Jack Black", email: "jack.black@example.com", requestDate: new Date() },
     { id: 2, name: "Mary White", email: "mary.white@example.com", requestDate: new Date() },
   ];
 
 const AdminPage: React.FC = () => {
+  // set up state hooks
   const [userRequests, setUserRequests] = useState<UserRequest[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);
 
@@ -33,26 +35,43 @@ const AdminPage: React.FC = () => {
     fetchAllUsers();
   }, []);
 
+  // load initial data
   const fetchUserRequests = async () => {
-    setUserRequests(userRequests);
+    setUserRequests(initUserRequests);
   };
 
+  // simulate fetching user requests from server
   const fetchAllUsers = async () => {
-    setAllUsers(users);
+    setAllUsers(initUsers);
   };
 
+  // handle approving a user request
   const handleApproveUserRequest = async (userId: number) => {
-    
+    // find the user request by ID and create a new User object with its data
+    let newUser: User = {id: 0, name: "null", email: "null"};
+    let newUsers = allUsers
+    userRequests.map(req => req.id === userId ? (newUser = {id: req.id, name: req.name, email: req.email}) : (null))
+    // remove the user request from the state
+    setUserRequests(userRequests.filter(req => req.id !== userId))
+    // add the new user to the state if it exists
+    if (newUser.id !== 0){
+      newUsers.push(newUser)
+      setAllUsers(newUsers)
+    }
   };
 
+  // handle rejecting a user request
   const handleRejectUserRequest = async (userId: number) => {
-    await rejectUserRequest(userId);
-    fetchUserRequests();
+    // remove the user request from the state
+    const newRequests = userRequests.filter(req => req.id !== userId)
+    setUserRequests(newRequests)
   };
 
+  // handle removing a user from the list
   const handleRemoveUser = async (userId: number) => {
-    await removeUser(userId);
-    fetchAllUsers();
+    // remove the user from the state
+    const newUsers = allUsers.filter(u => u.id !== userId)
+    setAllUsers(newUsers)
   };
 
   return (
@@ -75,7 +94,7 @@ const AdminPage: React.FC = () => {
               <td>{userRequest.id}</td>
               <td>{userRequest.name}</td>
               <td>{userRequest.email}</td>
-              <td>{userRequest.requestDate}</td>
+              <td>{userRequest.requestDate.toString()}</td>
               <td>
                 <button onClick={() => handleApproveUserRequest(userRequest.id)}>Approve</button>
               </td>
