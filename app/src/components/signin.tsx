@@ -1,38 +1,33 @@
-import '../stylings/signin.css';
-import React, { Component } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import "../stylings/signin.css";
+import React, { Component } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function SignIn() {
   const navigate = useNavigate();
 
   function authenticateLogin() {
     const participantInfo = {
-      email: (document.getElementById('email') as HTMLInputElement).value,
-      password: (document.getElementById('password') as HTMLInputElement)
-        .value,
+      email: (document.getElementById("email") as HTMLInputElement).value,
+      password: (document.getElementById("password") as HTMLInputElement).value,
     };
 
     axios
-      .post('http://localhost:3000/login', participantInfo)
+      .post("http://localhost:3000/login", participantInfo)
       .then((response) => {
-        if (response.data) {  
+        if (response.data) {
           console.log(response.data);
-          navigate('Dashboard');
-        }else{
+          navigate("Dashboard");
+        } else {
           alert("User/Password Doesn't exist");
         }
       });
   }
 
-  function requestAccount(){
-    navigate('RequestAccountPage');
-  }
-
   return (
     <div className="signin">
       <form className="Auth-form">
-        <h3>Sign In!</h3>
+        <h2 className="signin-heading">Sign In</h2>
         <div className="participantId">
           <input
             type="id"
@@ -50,13 +45,25 @@ function SignIn() {
           ></input>
         </div>
         <div className="button-div">
-          <button type="button" className="signin-button" onClick={authenticateLogin}>
+          <button
+            type="button"
+            className="signin-button"
+            onClick={authenticateLogin}
+          >
             SIGN IN
           </button>
 
-          <p>Do not have an account?</p>
-          <button type="button" className="signin-button" onClick ={requestAccount}>REQUEST AN ACCOUNT</button>
-
+          <p>
+            {" "}
+            Do not have an account?
+            <a
+              onClick={() => navigate("RequestAccount")}
+              className="request-account-link"
+            >
+              {" "}
+              Request one.{" "}
+            </a>
+          </p>
         </div>
       </form>
     </div>
