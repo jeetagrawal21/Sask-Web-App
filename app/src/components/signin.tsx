@@ -16,8 +16,8 @@ function SignIn() {
     axios
       .post('http://localhost:3000/login', participantInfo)
       .then((response) => {
-        if (response.data) {  
-          console.log(response.data);
+        if (response.data.exist) {  
+          console.log(response.data.exist);
           navigate('Dashboard');
         }else{
           alert("User/Password Doesn't exist");
