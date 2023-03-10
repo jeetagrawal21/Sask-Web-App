@@ -6,6 +6,7 @@ import Register from "./pages/RegisterPage";
 import TestPage from "./pages/TestPage";
 import RequestAccount from "./pages/RequestAccountPage";
 import Timeline from "./pages/Timeline";
+import AdminPage from "./pages/AdminPage";
 import Dashboard from "./pages/Dashboard";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Timeline" element={<Timeline />} />
         <Route path="/TestPage" element={<TestPage />} />
+        <Route path="/AdminPage" element={<AdminPage />} />
       </Routes>
     </Router>
   );
