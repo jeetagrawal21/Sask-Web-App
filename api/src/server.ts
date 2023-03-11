@@ -1,11 +1,6 @@
-import { ParticipantID } from './entity/ParticipantID';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import { AppDataSource } from './data-source';
-import { Users } from './entity/Users';
-import path from 'path';
 import { Client, Pool } from 'pg';
-import dotenv from 'dotenv';
 
 import helmet from 'helmet';
 import express, { Request, Response, NextFunction } from 'express';
@@ -76,15 +71,33 @@ async function clientDemo() {
   return now;
 }
 
+//Gets user and return user info.
+async function getdata (id:Number){
+  const pool = new Pool(credentials);
+  const result = await pool.query(               //query looks for all users with email
+  'SELECT "Response Time", "[18_SAQ] In the past 30 days how often have you experienced" FROM "userdata" WHERE "[18_SAQ] In the past 30 days how often have you experienced" IS NOT NULL AND "id" = $1', [id]);
+  await pool.end();
+  return result.rows;
+} 
+
+async function test () {
+  const data = await getdata(42176)
+  console.log("Result: ", data); //print the result of the query  
+}
+
+test();
+
 //createtable();  // RUN ONLY ONCE (if you have no tables on your computer otherwise dont run at all)
 async function checkiftable(){
   const pool = new Pool(credentials);
   const tablename = 'users'
   const { rows } = await pool.query("SELECT EXISTS(SELECT FROM pg_catalog.pg_tables WHERE tablename  = $1)", [tablename]);
   const exists = rows[0].exists;
-  pool.end();
+  pool.end(); 
   return Boolean(exists);
 }
+
+
 
 
 //function to creates table under current database 
@@ -135,6 +148,8 @@ async function checkifuser(email:string){
   // if the user is not an admin or does not exist, return false
   return false;
 }
+
+
 
 //Gets user and return user info.
 async function getuser (email:string, pass:string){
@@ -302,6 +317,20 @@ app.post('/postregistrationinfo', (req, res) => {
   res.send(true);   // needs failure handling
 });
 
+// post request to post registration data to database
+app.post('/data', (req, res) => {
+  const data = req.body;
+  //console.log(partIDnum, data['surname'] + data['givenName1'], data['password'], data['email'], data['question1'], data['answer1'], data['question2'], data['answer2'], data['question3'], data['answer3'])
+  accountcreationuser(partIDnum, data['surname'], data['givenName1'], data['givenName2'], data['password'], data['email'], data['question1'], data['answer1'], data['question2'], data['answer2'], data['question3'], data['answer3'])
+  console.log(data);
+
+  // call function to post data to the database
+
+  res.send(true);   // needs failure handling
+});
+
+
+
 
 /**
  * Gets login data from the user
@@ -334,6 +363,9 @@ app.post('/login', (req, res) => {
   // send data as JSON object to the function that aunthenticates login
   // send response if login was successful or not( we might not actually need the get request below)
 });
+
+
+
 
 
 app.get('/login', (req, res) => {
