@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "/app/src/stylings/AdminPage.css";
 
 export interface User {
   id: number;
@@ -14,16 +15,16 @@ export interface UserRequest {
 }
 
 // initialize sample data
+const initUserRequests: UserRequest[] = [
+  { id: 2735, name: "Jack Black", email: "jack.black@example.com", requestDate: new Date() },
+  { id: 1892, name: "Mary White", email: "mary.white@example.com", requestDate: new Date() },
+];
+
 const initUsers: User[] = [
-    { id: 1, name: "John Doe", email: "john.doe@example.com"},
-    { id: 2, name: "Jane Smith", email: "jane.smith@example.com"},
-    { id: 3, name: "Bob Johnson", email: "bob.johnson@example.com"},
-  ];
-  
-  const initUserRequests: UserRequest[] = [
-    { id: 1, name: "Jack Black", email: "jack.black@example.com", requestDate: new Date() },
-    { id: 2, name: "Mary White", email: "mary.white@example.com", requestDate: new Date() },
-  ];
+  { id: 3921, name: "John Doe", email: "john.doe@example.com"},
+  { id: 2012, name: "Jane Smith", email: "jane.smith@example.com"},
+  { id: 3289, name: "Bob Johnson", email: "bob.johnson@example.com"},
+];
 
 const AdminPage: React.FC = () => {
   // set up state hooks
@@ -96,10 +97,10 @@ const AdminPage: React.FC = () => {
               <td>{userRequest.email}</td>
               <td>{userRequest.requestDate.toString()}</td>
               <td>
-                <button onClick={() => handleApproveUserRequest(userRequest.id)}>Approve</button>
+              <button onClick={() => handleApproveUserRequest(userRequest.id)} data-testid={`approve-user-${userRequest.id}`}>Approve</button>
               </td>
               <td>
-                <button onClick={() => handleRejectUserRequest(userRequest.id)}>Reject</button>
+                <button onClick={() => handleRejectUserRequest(userRequest.id)} data-testid={`reject-user-${userRequest.id}`}>Reject</button>
               </td>
             </tr>
           ))}
@@ -123,7 +124,7 @@ const AdminPage: React.FC = () => {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>
-                <button onClick={() => handleRemoveUser(user.id)}>Remove</button>
+                <button onClick={() => handleRemoveUser(user.id)} data-testid={`remove-user-${user.id}`}>Remove</button>
               </td>
             </tr>
           ))}
