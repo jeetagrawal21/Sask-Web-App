@@ -261,7 +261,7 @@ async function initiatedb() {
       console.log("Table was created successfully.");
       // Call the "accountcreationuser" function with some parameters.
       await accountcreationuser(12345678, 'testuser1', 'testusergiven1-1', 'testusergiven2-1', 'testpass1', 'testuser1@email.com', "hello who?", "World!", "Whats my name", "Testuser1", "Whats my purpose", "Testing");
-      await accountcreationadmin('testadmin1', 'testadmingiven1-1', 'testadmingiven2-1', 'testpass1', 'testadmin1@email.com', "With great power comes what?", "Great responsability", "Who died?", "Uncle Ben", "Whats my purpose", "Freindly Neighbourhood admin");
+      await accountcreationadmin('testadmin1', 'testadmingiven1-1', 'testadmingiven2-1', 'testpass2', 'testadmin1@email.com', "With great power comes what?", "Great responsability", "Who died?", "Uncle Ben", "Whats my purpose", "Freindly Neighbourhood admin");
 
     } catch (error) {
       // If an error occurs, log it to the console.
