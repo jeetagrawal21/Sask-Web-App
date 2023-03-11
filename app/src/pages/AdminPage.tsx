@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-interface User {
+export interface User {
   id: number;
   name: string;
   email: string;
 }
 
-interface UserRequest {
+export interface UserRequest {
   id: number;
   name: string;
   email: string;
