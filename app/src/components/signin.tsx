@@ -17,7 +17,11 @@ function SignIn() {
       .then((response) => {
         if (response.data.exist) {
           console.log(response.data.exist);
-          navigate("Dashboard");
+          if(response.data.isadmin){
+            navigate("AdminPage");
+          }else{
+            navigate("Dashboard");
+          }
         } else {
           alert("User/Password Doesn't exist");
         }

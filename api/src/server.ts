@@ -222,7 +222,7 @@ async function initiatedb() {
       console.log("Table was created successfully.");
       // Call the "accountcreationuser" function with some parameters.
       await accountcreationuser(12345678, 'testuser1', 'testusergiven1-1', 'testusergiven2-1', 'testpass1', 'testuser1@email.com', "hello who?", "World!", "Whats my name", "Testuser1", "Whats my purpose", "Testing");
-
+      await accountcreationadmin('testadmin1', 'testadmingiven1-1', 'testadmingiven2-1', 'testpass1', 'testadmin1@email.com', "With great power comes what?", "Great responsability", "Who died?", "Uncle Ben", "Whats my purpose", "Freindly Neighbourhood admin");
 
     } catch (error) {
       // If an error occurs, log it to the console.
@@ -304,21 +304,22 @@ app.post('/postregistrationinfo', (req, res) => {
 
 
 /**
- * Gets login data from the user
+ * Gets login data from the user (sign in page)
  * req: login data as a string array containing email and password
  * res: success or error message
  */
 app.post('/login', (req, res) => {
   const data = JSON.stringify(req.body);
   async function checking () {  
-    var result:boolean = await checkpass(req.body.email, req.body.password);    //async function is required to make it wait for reply (await used below to specific what we wait for)
-    if (result){     //calls check password to see if pass and email match a database entry
+    var result:boolean = await checkpass(req.body.email, req.body.password);  //calls check password to see if pass and email match a database entry
+    if (result){     // if passed 
       console.log("login success!");
-      const isadminresult = checkifadmin(req.body.email)
-      const userdata = {
+      const isadminresult = await checkifadmin(req.body.email)   //checks if the user is an admin 
+      const userdata = {                                 //returns all the information as data pair 
         exist: result,
         isadmin: isadminresult
       }
+      console.log('Is he admin?  ' + isadminresult);
       res.send(userdata);
     }else{
       const userdata = {
