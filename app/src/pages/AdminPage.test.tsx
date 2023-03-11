@@ -38,7 +38,7 @@ describe("AdminPage", () => {
     );
   });
 
-  // Test that the page renders the correct headings
+  // test that the page renders the correct headings
   it("renders user requests and all users", async () => {
     const { getByText } = render(<AdminPage />);
     await waitFor(() => {
@@ -48,7 +48,7 @@ describe("AdminPage", () => {
     });
   });
 
-  // Test that a user is added to the all users table when approved
+  // test that a user is added to the all users table when approved
   it("should approve a user request and add user to all users table", async () => {
     const { getByText, getByTestId, queryByText } = render(<AdminPage />);
     // wait for initial data to load
@@ -69,7 +69,7 @@ describe("AdminPage", () => {
     });
   });
 
-  // Test that a user is removed from the user requests table when rejected
+  // test that a user is removed from the user requests table when rejected
   it("should reject a user request and remove it from user requests table", async () => {
     const { getByText, getByTestId, queryByText } = render(<AdminPage />);
     // wait for initial data to load
@@ -90,7 +90,7 @@ describe("AdminPage", () => {
     });
   });
 
-  // Test that a user is removed from the all users table
+  // test that a user is removed from the all users table
   it("should remove a user from the all users table", async () => {
     const { getByTestId, queryByText } = render(<AdminPage />);
 
@@ -104,7 +104,7 @@ describe("AdminPage", () => {
     });
   });
 
-  // Test that all users can be removed from the users table
+  // test that all users can be removed from the users table
   it("should remove multiple users from the all users table", async () => {
     const { getByText, getByTestId, queryByText } = render(<AdminPage />);
     // wait for initial data to load

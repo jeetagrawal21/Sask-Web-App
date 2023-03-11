@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "/app/src/stylings/AdminPage.css";
+import "../stylings/AdminPage.css";
 
 export interface User {
   id: number;
@@ -16,14 +16,24 @@ export interface UserRequest {
 
 // initialize sample data
 const initUserRequests: UserRequest[] = [
-  { id: 2735, name: "Jack Black", email: "jack.black@example.com", requestDate: new Date() },
-  { id: 1892, name: "Mary White", email: "mary.white@example.com", requestDate: new Date() },
+  {
+    id: 2735,
+    name: "Jack Black",
+    email: "jack.black@example.com",
+    requestDate: new Date(),
+  },
+  {
+    id: 1892,
+    name: "Mary White",
+    email: "mary.white@example.com",
+    requestDate: new Date(),
+  },
 ];
 
 const initUsers: User[] = [
-  { id: 3921, name: "John Doe", email: "john.doe@example.com"},
-  { id: 2012, name: "Jane Smith", email: "jane.smith@example.com"},
-  { id: 3289, name: "Bob Johnson", email: "bob.johnson@example.com"},
+  { id: 3921, name: "John Doe", email: "john.doe@example.com" },
+  { id: 2012, name: "Jane Smith", email: "jane.smith@example.com" },
+  { id: 3289, name: "Bob Johnson", email: "bob.johnson@example.com" },
 ];
 
 const AdminPage: React.FC = () => {
@@ -49,30 +59,34 @@ const AdminPage: React.FC = () => {
   // handle approving a user request
   const handleApproveUserRequest = async (userId: number) => {
     // find the user request by ID and create a new User object with its data
-    let newUser: User = {id: 0, name: "null", email: "null"};
-    let newUsers = allUsers
-    userRequests.map(req => req.id === userId ? (newUser = {id: req.id, name: req.name, email: req.email}) : (null))
+    let newUser: User = { id: 0, name: "null", email: "null" };
+    let newUsers = allUsers;
+    userRequests.map((req) =>
+      req.id === userId
+        ? (newUser = { id: req.id, name: req.name, email: req.email })
+        : null
+    );
     // remove the user request from the state
-    setUserRequests(userRequests.filter(req => req.id !== userId))
+    setUserRequests(userRequests.filter((req) => req.id !== userId));
     // add the new user to the state if it exists
-    if (newUser.id !== 0){
-      newUsers.push(newUser)
-      setAllUsers(newUsers)
+    if (newUser.id !== 0) {
+      newUsers.push(newUser);
+      setAllUsers(newUsers);
     }
   };
 
   // handle rejecting a user request
   const handleRejectUserRequest = async (userId: number) => {
     // remove the user request from the state
-    const newRequests = userRequests.filter(req => req.id !== userId)
-    setUserRequests(newRequests)
+    const newRequests = userRequests.filter((req) => req.id !== userId);
+    setUserRequests(newRequests);
   };
 
   // handle removing a user from the list
   const handleRemoveUser = async (userId: number) => {
     // remove the user from the state
-    const newUsers = allUsers.filter(u => u.id !== userId)
-    setAllUsers(newUsers)
+    const newUsers = allUsers.filter((u) => u.id !== userId);
+    setAllUsers(newUsers);
   };
 
   return (
@@ -97,10 +111,20 @@ const AdminPage: React.FC = () => {
               <td>{userRequest.email}</td>
               <td>{userRequest.requestDate.toString()}</td>
               <td>
-              <button onClick={() => handleApproveUserRequest(userRequest.id)} data-testid={`approve-user-${userRequest.id}`}>Approve</button>
+                <button
+                  onClick={() => handleApproveUserRequest(userRequest.id)}
+                  data-testid={`approve-user-${userRequest.id}`}
+                >
+                  Approve
+                </button>
               </td>
               <td>
-                <button onClick={() => handleRejectUserRequest(userRequest.id)} data-testid={`reject-user-${userRequest.id}`}>Reject</button>
+                <button
+                  onClick={() => handleRejectUserRequest(userRequest.id)}
+                  data-testid={`reject-user-${userRequest.id}`}
+                >
+                  Reject
+                </button>
               </td>
             </tr>
           ))}
@@ -124,7 +148,12 @@ const AdminPage: React.FC = () => {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>
-                <button onClick={() => handleRemoveUser(user.id)} data-testid={`remove-user-${user.id}`}>Remove</button>
+                <button
+                  onClick={() => handleRemoveUser(user.id)}
+                  data-testid={`remove-user-${user.id}`}
+                >
+                  Remove
+                </button>
               </td>
             </tr>
           ))}
