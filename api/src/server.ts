@@ -244,6 +244,24 @@ app.get('/login', (req, res) => {
   // res.send(req);
 });
 
+// define an interface for the log report data
+interface LogReport {
+  message: string;
+  level: string;
+  timestamp: number;
+}
+
+// Define a route for accepting log reports
+app.post("/logs", (req, res) => {
+  // Parse the request body as JSON
+  const logData = req.body;
+
+  // Do something with the log data, such as saving it to a database or file
+  console.log(logData);
+
+  // Send back a response
+  res.status(200).send("Log received");
+});
 
 
 

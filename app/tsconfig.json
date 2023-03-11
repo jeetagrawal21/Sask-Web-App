@@ -23,6 +23,8 @@
   },
   "include": [
     "src",
-    "loglevel.d.ts"
+    "src/types/loglevel.d.ts",
+    "src/types/loglevel-plugin-remote.d.ts",
+    
   ]
 }

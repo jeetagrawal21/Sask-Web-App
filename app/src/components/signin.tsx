@@ -2,25 +2,31 @@ import '../stylings/signin.css';
 import React, { Component } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import log from "loglevel";
 
 function SignIn() {
   const navigate = useNavigate();
 
   function authenticateLogin() {
+    log.error("This is an error");
+    log.warn("This is a warning");
+    log.info("This is an info");
+    log.debug("This is a debug");
+    log.trace("This is a trace");
     const participantInfo = {
       email: (document.getElementById('email') as HTMLInputElement).value,
       password: (document.getElementById('password') as HTMLInputElement)
         .value,
     };
 
-    axios
-      .post('http://localhost:3000/login', participantInfo)
-      .then((response) => {
-        if (response.data) {  
-          console.log(response.data);
-          navigate('Dashboard');
-        }
-      });
+    // axios
+    //   .post('http://localhost:3000/login', participantInfo)
+    //   .then((response) => {
+    //     if (response.data) {  
+    //       console.log(response.data);
+    //       navigate('Dashboard');
+    //     }
+    //   });
   }
 
   function requestAccount(){
