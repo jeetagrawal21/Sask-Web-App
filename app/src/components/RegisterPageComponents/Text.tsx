@@ -1,16 +1,72 @@
 import '../../stylings/RegisterPageStyles/Text.css';
 import axios from 'axios';
-import React from 'react';
+import React, { Component, useState } from 'react';
 
 
 // post request using axios to post user registration data
 function Text() {
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [isValidPassword, setIsValidPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [isValidSecurityQuestion1, setIsValidSecurityQuestion1] = useState(false);
+  const [isValidSecurityQuestion2, setIsValidSecurityQuestion2] = useState(false);
+  const [isValidSecurityQuestion3, setIsValidSecurityQuestion3] = useState(false);
+  const [securityQuestion1, setSecurityQuestion1] = useState("");
+  const [securityQuestion2, setSecurityQuestion2] = useState("");
+  const [securityQuestion3, setSecurityQuestion3] = useState("");
+
+  const [isValidSecurityAnswer1, setIsValidSecurityAnswer1] = useState(false);
+  const [isValidSecurityAnswer2, setIsValidSecurityAnswer2] = useState(false);
+  const [isValidSecurityAnswer3, setIsValidSecurityAnswer3] = useState(false);
+  const [securityAnswer1, setSecurityAnswer1] = useState("");
+  const [securityAnswer2, setSecurityAnswer2] = useState("");
+  const [securityAnswer3, setSecurityAnswer3] = useState("");
+
+  const [isValidSurname, setIsValidSurname] = useState(false);
+  const [isValidGivenName1, setIsValidGivenName1] = useState(false);
+  const [isValidGivenName2, setIsValidGivenName2] = useState(false);
+
+  const [surname, setSurname] = useState("");
+  const [givenName1, setGivenName1] = useState("");
+  const [givenName2, setGivenName2] = useState("");
+
+  function checkEmail(e:any){
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    setEmail(e.target.value);
+    setIsValidEmail(emailRegex.test(e.target.value));
+  }
+
+  function checkPassword(e:any){
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    setPassword(e.target.value);
+    setIsValidPassword(passwordRegex.test(e.target.value));
+  }
+
+  function checkSurname(e:any) {
+    const SurnameRegex=/^[a-zA-Z\s]{1,}$/;
+    setSurname(e.target.value);
+    setIsValidSurname(SurnameRegex.test(e.target.value));
+  }
+
+  function checkName(e:any){
+    const nameRegex=/^[a-zA-Z\s]{1,}$/;
+    setGivenName1(e.target.value);
+    setIsValidGivenName1(nameRegex.test(e.target.value));
+  }
+
+  function handleDisable():boolean{
+    let result=!isValidEmail || !isValidPassword || !isValidGivenName1 || !isValidSurname || !isValidSecurityQuestion1 || !isValidSecurityQuestion2 || !isValidSecurityQuestion3 || !isValidSecurityAnswer1 || !isValidSecurityAnswer2 || !isValidSecurityAnswer3;
+    return result;
+  }
+
   function postRegistrationData() {
     // checks if the passwords put in password and confirm password fields are exactly the same
-    // if (
-    //   (document.getElementById('password') as HTMLInputElement).value ===
-    //   (document.getElementById('confirm') as HTMLInputElement).value
-    // ) {
+    if (
+      (document.getElementById('password') as HTMLInputElement).value ===
+      (document.getElementById('confirm') as HTMLInputElement).value
+    ) {
     const participantInfo = {
       surname: (document.getElementById('surname') as HTMLInputElement).value,
       email: (document.getElementById('email') as HTMLInputElement).value,
@@ -39,42 +95,65 @@ function Text() {
     axios
       .post('http://localhost:3000/postregistrationinfo', participantInfo)
       .then((response) => {});
-    // } else {
-    //   alert('Error, password is not consistent in both fields');
-    // }
+    } else {
+      alert('Error, password is not consistent in both fields');
+    }
   }
   return (
     <div className="register">
       <form>
         {/* Textfield to enter surname */}
         <div>
-          <input placeholder="Enter your surname" id="surname"></input>
+          <input placeholder="Enter your surname*" id="surname" type="text" value={surname} onChange={(e) => {checkSurname(e)}}>  
+          </input>
         </div>
+
+        {/* If the given name is not valid, this will display an error message. */}
+        {!isValidSurname && surname!=="" &&<>
+        <p>Please enter a valid surname. It must not be less than 1 characters and cannot include numbers or special characters</p></>}
 
         {/* Textfield to enter Given name 1 */}
         <div>
-          <input placeholder="Enter your Given Name 1" id="givenName1"></input>
+          <input placeholder="Enter your Given Name 1*" id="givenName1" type="text" value={givenName1} onChange={(e) => {checkName(e)}}></input>
         </div>
+
+        {/* If the given name is not valid, this will display an error message. */}
+        {!isValidGivenName1 && givenName1!=="" &&<>
+        <p>Please enter a Name. It must not be less than 1 characters and cannot include numbers or special characters</p></>}
 
         {/* Textfield to enter Given name 2 */}
         <div>
           <input placeholder="Enter your Given Name 2" id="givenName2"></input>
         </div>
 
+        
         {/* Textfield to enter email */}
-        <div>
-          <input placeholder="Enter your email" id="email" type="text"></input>
+        <div className="Email">
+          <input placeholder="Enter your email*" 
+          className="input-fields" 
+          id="email" 
+          type="text" 
+          value={email} 
+          onChange={(e) => {checkEmail(e)}}></input>
         </div>
+
+        {/* If the given email is not valid, this will display an error message. */}
+        {!isValidEmail && email!=="" ?<>
+        <p>Please enter a valid email</p></>:<></>}
 
         {/* Textfield to enter password */}
         <div>
-          <input placeholder="Enter your password" id="password"></input>
+          <input placeholder="Enter your password*" id="password" value={password} onChange={(e) => {checkPassword(e)}}></input>
         </div>
+
+        {/* If the typed password does not meet the criteria, this will display an error message. */}
+        {!isValidPassword && password!=="" &&<>
+        <p>Please enter valid password. It must not be less than 8 characters and must include a special character</p></>}
 
         {/* Textfield to confirm password */}
         <div>
           <input
-            placeholder="Confirm your password"
+            placeholder="Confirm your password*"
             id="confirm-password"
           ></input>
         </div>
@@ -130,13 +209,14 @@ function Text() {
         </div>
 
         <div className="register-page-button-div">
-          <button className="signin-button" onClick={postRegistrationData}>
+          <button disabled={handleDisable()} className="signin-button" onClick={postRegistrationData}>
             REGISTER
           </button>
         </div>
       </form>
     </div>
   );
+  
 }
 
 export default Text;
