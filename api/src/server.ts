@@ -76,15 +76,29 @@ async function clientDemo() {
   return now;
 }
 
-//createtable();  // RUN ONLY ONCE (if you have no tables on your computer otherwise dont run at all)
-async function checkiftable(){
+
+/**
+ * Check if the table exists in the database
+ * @returns {Promise<boolean>} - A promise that resolves to a boolean value indicating if the table exists or not
+ */
+async function checkiftable() {
+  // create a new pool using the credentials for the database
   const pool = new Pool(credentials);
-  const tablename = 'users'
+
+  const tablename = 'users';
+
+  // use the pool to query the database for the existence of the table with the given name
   const { rows } = await pool.query("SELECT EXISTS(SELECT FROM pg_catalog.pg_tables WHERE tablename  = $1)", [tablename]);
+
+  // get the boolean value indicating if the table exists or not
   const exists = rows[0].exists;
+
+  // close the connection pool
   pool.end();
+
   return Boolean(exists);
 }
+
 
 
 //function to creates table under current database 
@@ -184,6 +198,32 @@ async function accountcreationuser(ID:number, surname:string, givenname2:string,
   await pool.end();
 } 
 
+/**
+ * Delete a user from the "users" table with the given email
+ * @param {string} email - The email of the user to delete
+ * @returns {Promise<void>} - A promise that resolves when the user is deleted or rejects when an error occurs
+ */
+async function deleteUser(email:String) {
+  const pool = new Pool(credentials);
+
+  try {                          
+    const result = await pool.query(
+      `DELETE FROM users WHERE email=$1 RETURNING *`,          // Delete the user from the "users" table
+      [email]
+    );
+
+    if (result.rowCount === 0) {         // If the user was not found
+      console.log("User not found");
+    } else {
+      console.log("User deleted");
+    }
+  } catch (error) {            // If an error occurred
+    console.error(error);
+  }
+
+  pool.end();
+}
+
 
 //changes password, returns true if succesful   
 async function changepass(email:string, newpass:string){
@@ -198,8 +238,7 @@ async function changepass(email:string, newpass:string){
 }
 
 
-//used to create account  Use webpage instead if needed
-//accountcreationuser(12345678, 'testuser8', 'testusergiven1-8', 'testusergiven2-8', 'testpass8', 'testuser2@email.com', "hello who?", "World!", "Whats my name", "Testuser8", "Whats my purpose", "Testing");
+
 /**
  * This is an async function that checks if the "users" table exists in the database.
  * If the table does not exist, it creates the table and inserts a new user.
@@ -235,7 +274,7 @@ async function initiatedb() {
 
 }
 
-initiatedb();
+initiatedb(); //initiates the db 
 
 // async function runCheckifadmin() {
 //   try {
