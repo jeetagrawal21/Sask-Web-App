@@ -2,17 +2,11 @@ import "../stylings/signin.css";
 import React, { Component } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import log from "loglevel";
 
 function SignIn() {
   const navigate = useNavigate();
 
   function authenticateLogin() {
-    log.error("This is an error: OH NO!!!");
-    log.warn("WARNING");
-    log.debug("DEBUG");
-    log.info("INFO");
-    log.trace("TRACE");
     const participantInfo = {
       email: (document.getElementById("email") as HTMLInputElement).value,
       password: (document.getElementById("password") as HTMLInputElement).value,
@@ -23,7 +17,11 @@ function SignIn() {
       .then((response) => {
         if (response.data.exist) {
           console.log(response.data.exist);
-          navigate("Dashboard");
+          if(response.data.isadmin){
+            navigate("AdminPage");
+          }else{
+            navigate("Dashboard");
+          }
         } else {
           alert("User/Password Doesn't exist");
         }

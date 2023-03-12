@@ -76,15 +76,29 @@ async function clientDemo() {
   return now;
 }
 
-//createtable();  // RUN ONLY ONCE (if you have no tables on your computer otherwise dont run at all)
-async function checkiftable(){
+
+/**
+ * Check if the table exists in the database
+ * @returns {Promise<boolean>} - A promise that resolves to a boolean value indicating if the table exists or not
+ */
+async function checkiftable() {
+  // create a new pool using the credentials for the database
   const pool = new Pool(credentials);
-  const tablename = 'users'
+
+  const tablename = 'users';
+
+  // use the pool to query the database for the existence of the table with the given name
   const { rows } = await pool.query("SELECT EXISTS(SELECT FROM pg_catalog.pg_tables WHERE tablename  = $1)", [tablename]);
+
+  // get the boolean value indicating if the table exists or not
   const exists = rows[0].exists;
+
+  // close the connection pool
   pool.end();
+
   return Boolean(exists);
 }
+
 
 
 //function to creates table under current database 
@@ -184,6 +198,32 @@ async function accountcreationuser(ID:number, surname:string, givenname2:string,
   await pool.end();
 } 
 
+/**
+ * Delete a user from the "users" table with the given email
+ * @param {string} email - The email of the user to delete
+ * @returns {Promise<void>} - A promise that resolves when the user is deleted or rejects when an error occurs
+ */
+async function deleteUser(email:String) {
+  const pool = new Pool(credentials);
+
+  try {                          
+    const result = await pool.query(
+      `DELETE FROM users WHERE email=$1 RETURNING *`,          // Delete the user from the "users" table
+      [email]
+    );
+
+    if (result.rowCount === 0) {         // If the user was not found
+      console.log("User not found");
+    } else {
+      console.log("User deleted");
+    }
+  } catch (error) {            // If an error occurred
+    console.error(error);
+  }
+
+  pool.end();
+}
+
 
 //changes password, returns true if succesful   
 async function changepass(email:string, newpass:string){
@@ -198,8 +238,7 @@ async function changepass(email:string, newpass:string){
 }
 
 
-//used to create account  Use webpage instead if needed
-//accountcreationuser(12345678, 'testuser8', 'testusergiven1-8', 'testusergiven2-8', 'testpass8', 'testuser2@email.com', "hello who?", "World!", "Whats my name", "Testuser8", "Whats my purpose", "Testing");
+
 /**
  * This is an async function that checks if the "users" table exists in the database.
  * If the table does not exist, it creates the table and inserts a new user.
@@ -222,7 +261,7 @@ async function initiatedb() {
       console.log("Table was created successfully.");
       // Call the "accountcreationuser" function with some parameters.
       await accountcreationuser(12345678, 'testuser1', 'testusergiven1-1', 'testusergiven2-1', 'testpass1', 'testuser1@email.com', "hello who?", "World!", "Whats my name", "Testuser1", "Whats my purpose", "Testing");
-
+      await accountcreationadmin('testadmin1', 'testadmingiven1-1', 'testadmingiven2-1', 'testpass2', 'testadmin1@email.com', "With great power comes what?", "Great responsability", "Who died?", "Uncle Ben", "Whats my purpose", "Freindly Neighbourhood admin");
 
     } catch (error) {
       // If an error occurs, log it to the console.
@@ -235,7 +274,7 @@ async function initiatedb() {
 
 }
 
-initiatedb();
+initiatedb(); //initiates the db 
 
 // async function runCheckifadmin() {
 //   try {
@@ -304,21 +343,22 @@ app.post('/postregistrationinfo', (req, res) => {
 
 
 /**
- * Gets login data from the user
+ * Gets login data from the user (sign in page)
  * req: login data as a string array containing email and password
  * res: success or error message
  */
 app.post('/login', (req, res) => {
   const data = JSON.stringify(req.body);
   async function checking () {  
-    var result:boolean = await checkpass(req.body.email, req.body.password);    //async function is required to make it wait for reply (await used below to specific what we wait for)
-    if (result){     //calls check password to see if pass and email match a database entry
+    var result:boolean = await checkpass(req.body.email, req.body.password);  //calls check password to see if pass and email match a database entry
+    if (result){     // if passed 
       console.log("login success!");
-      const isadminresult = checkifadmin(req.body.email)
-      const userdata = {
+      const isadminresult = await checkifadmin(req.body.email)   //checks if the user is an admin 
+      const userdata = {                                 //returns all the information as data pair 
         exist: result,
         isadmin: isadminresult
       }
+      console.log('Is he admin?  ' + isadminresult);
       res.send(userdata);
     }else{
       const userdata = {
