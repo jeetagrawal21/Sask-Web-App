@@ -18,9 +18,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "types": ["node"]
   },
   "include": [
-    "src"
+    "src",
+    "src/types/loglevel.d.ts",
+    "src/types/loglevel-plugin-remote.d.ts",
+    
   ]
 }
