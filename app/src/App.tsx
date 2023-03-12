@@ -8,6 +8,21 @@ import RequestAccount from "./pages/RequestAccountPage";
 import Timeline from "./pages/Timeline";
 import AdminPage from "./pages/AdminPage";
 import Dashboard from "./pages/Dashboard";
+import log from "loglevel";
+import remotePlugin from 'loglevel-plugin-remote';
+
+const remoteOptions = {
+  url: "http://localhost:3000/logs",
+  format: remotePlugin.json,
+  method: "POST",
+  level: "trace", // Only send trace level messages and above
+};
+
+remotePlugin.apply(log, remoteOptions); // use remotePlugin.apply() here
+
+log.enableAll();
+
+
 
 function App() {
   return (

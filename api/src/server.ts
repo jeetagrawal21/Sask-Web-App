@@ -319,6 +319,10 @@ async function changepass(email: string, newpass: string) {
 async function initiatedb() {
   const pool = new Pool(credentials);
   const tablename = 'users';
+  if (await checkifuser('testuser1@email.com')){
+    changepass('testuser1@email.com', 'testpasslonger1!');
+    changepass('testadmin1@email.com', 'testpasslonger2!')
+  }
   // Call "checkiftable" function and wait for it to complete, storing the result in "tablecheck" variable.
   const tablecheck = await checkiftable();
   if (!tablecheck) {
@@ -335,33 +339,9 @@ async function initiatedb() {
       console.log(res.rows[0].exists);
       console.log('Table was created successfully.');
       // Call the "accountcreationuser" function with some parameters.
-      await accountcreationuser(
-        12345678,
-        'testuser1',
-        'testusergiven1-1',
-        'testusergiven2-1',
-        'testpass1',
-        'testuser1@email.com',
-        'hello who?',
-        'World!',
-        'Whats my name',
-        'Testuser1',
-        'Whats my purpose',
-        'Testing'
-      );
-      await accountcreationadmin(
-        'testadmin1',
-        'testadmingiven1-1',
-        'testadmingiven2-1',
-        'testpass2',
-        'testadmin1@email.com',
-        'With great power comes what?',
-        'Great responsability',
-        'Who died?',
-        'Uncle Ben',
-        'Whats my purpose',
-        'Freindly Neighbourhood admin'
-      );
+      await accountcreationuser(12345678, 'testuser1', 'testusergiven1-1', 'testusergiven2-1', 'testpasslonger1!', 'testuser1@email.com', "hello who?", "World!", "Whats my name", "Testuser1", "Whats my purpose", "Testing");
+      await accountcreationadmin('testadmin1', 'testadmingiven1-1', 'testadmingiven2-1', 'testpasslonger2!', 'testadmin1@email.com', "With great power comes what?", "Great responsability", "Who died?", "Uncle Ben", "Whats my purpose", "Freindly Neighbourhood admin");
+
     } catch (error) {
       // If an error occurs, log it to the console.
       console.error(error);
@@ -486,6 +466,101 @@ app.get('/login', (req, res) => {
   // this function communicates with the login authentication function to check if login info is correct and return a response if it is found in the DB
   // res.send(req);
 });
+
+// Define the log interface
+interface Log {
+  message: string;
+  level: string;
+  logger?: string;
+  timestamp: Date;
+  stacktrace?: string;
+}
+
+// Define a route for accepting log reports
+// Define the post route handler
+app.post("/logs", async (req, res) => {
+  
+  // Create a client object with your credentials
+  const client = new Client(credentials);
+  try {
+    // Get the log objects from the request body
+    const logs: Log[] = req.body.logs;
+
+    // Validate each log object
+    for (const log of logs) {
+      if (!log.message || !log.level || !log.timestamp) {
+        return res.status(400).send("Invalid log object");
+      }
+    }
+
+    // Connect to the database
+    await client.connect();
+
+    // Insert the log objects into the database table
+    const values = logs.map((log) => [
+      log.message,
+      log.level,
+      log.logger,
+      new Date(log.timestamp).toISOString(),
+      log.stacktrace,
+    ]);
+    for (const value of values) {
+      await client.query(
+        "INSERT INTO logs (message, level, logger, timestamp, stacktrace) VALUES ($1, $2, $3, $4, $5)",
+        value
+      );
+    }
+
+    // Send a success response
+    return res.status(200).send("Logs added successfully");
+  } catch (error) {
+    // Handle any database or server errors
+    console.error(error);
+    return res.status(500).send("Something went wrong");
+  } finally {
+    // Close the database connection
+    await client.end();
+  }
+});
+
+initiatelogdb();
+
+/**
+ * This is an async function that checks if the "logs" table exists in the database.
+ * If the table does not exist, it creates the table.
+ * @returns {Promise<void>} Nothing is returned from this function.
+ */
+// This is an async function named "test".
+async function initiatelogdb() {
+  const pool = new Pool(credentials);
+  const tablename = 'logs';
+
+  try {
+    console.log("here");
+    // Execute a SQL query to create a table named "users" if it doesn't already exist.
+    await pool.query('CREATE TABLE IF NOT EXISTS logs ( \
+                        id serial PRIMARY KEY, \
+                        message text, \
+                        level varchar(10), \
+                        logger varchar(255), \
+                        timestamp timestamp, \
+                        stacktrace text \
+                      );');
+    
+    console.log("Table was created successfully.");
+    // Call the "accountcreationuser" function with some parameters.
+
+  } catch (error) {
+    // If an error occurs, log it to the console.
+    console.error(error);
+  } finally {
+    pool.end();
+  }
+
+
+}
+
+
 
 // **** Export default **** //
 
