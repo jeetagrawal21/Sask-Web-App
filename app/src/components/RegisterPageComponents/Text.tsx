@@ -53,11 +53,49 @@ function Text() {
   function checkName(e:any){
     const nameRegex=/^[a-zA-Z\s]{1,}$/;
     setGivenName1(e.target.value);
+    setGivenName2(e.target.value);
     setIsValidGivenName1(nameRegex.test(e.target.value));
+    setIsValidGivenName2(nameRegex.test(e.target.value));
+  }
+
+  function checkSecurityQuestion1(e:any){
+    const securityQuestionRegex=/^.+\?$/;
+    setSecurityQuestion1(e.target.value);
+    setIsValidSecurityQuestion1(securityQuestionRegex.test(e.target.value));
+  }
+
+  function checkSecurityAnswer1(e:any){
+    const securityAnswerRegex=/^[a-zA-Z0-9\s]{1,20}$/;
+    setSecurityAnswer1(e.target.value);
+    setIsValidSecurityAnswer1(securityAnswerRegex.test(e.target.value));
+  }
+  
+  function checkSecurityQuestion2(e:any){
+    const securityQuestionRegex=/^.+\?$/;
+    setSecurityQuestion2(e.target.value);
+    setIsValidSecurityQuestion2(securityQuestionRegex.test(e.target.value));
+  }
+
+  function checkSecurityAnswer2(e:any){
+    const securityAnswerRegex=/^[a-zA-Z0-9\s]{1,20}$/;
+    setSecurityAnswer2(e.target.value);
+    setIsValidSecurityAnswer2(securityAnswerRegex.test(e.target.value));
+  }
+
+  function checkSecurityQuestion3(e:any){
+    const securityQuestionRegex=/^.+\?$/;
+    setSecurityQuestion3(e.target.value);
+    setIsValidSecurityQuestion3(securityQuestionRegex.test(e.target.value));
+  }
+  
+  function checkSecurityAnswer3(e:any){
+    const securityAnswerRegex=/^[a-zA-Z0-9\s]{1,20}$/;
+    setSecurityAnswer3(e.target.value);
+    setIsValidSecurityAnswer3(securityAnswerRegex.test(e.target.value));
   }
 
   function handleDisable():boolean{
-    let result=!isValidEmail || !isValidPassword || !isValidGivenName1 || !isValidSurname || !isValidSecurityQuestion1 || !isValidSecurityQuestion2 || !isValidSecurityQuestion3 || !isValidSecurityAnswer1 || !isValidSecurityAnswer2 || !isValidSecurityAnswer3;
+    let result=!isValidEmail || !isValidPassword || !isValidGivenName1 || !isValidGivenName2 || !isValidSurname || !isValidSecurityQuestion1 || !isValidSecurityQuestion2 || !isValidSecurityQuestion3 || !isValidSecurityAnswer1 || !isValidSecurityAnswer2 || !isValidSecurityAnswer3;
     return result;
   }
 
@@ -123,10 +161,13 @@ function Text() {
 
         {/* Textfield to enter Given name 2 */}
         <div>
-          <input placeholder="Enter your Given Name 2" id="givenName2"></input>
+          <input placeholder="Enter your Given Name 2*" id="givenName2"></input>
         </div>
 
-        
+        {/* If the given name is not valid, this will display an error message. */}
+        {!isValidGivenName2 && givenName2!=="" &&<>
+        <p>Please enter a Name. It must not be less than 1 characters and cannot include numbers or special characters</p></>}
+
         {/* Textfield to enter email */}
         <div className="Email">
           <input placeholder="Enter your email*" 
@@ -162,51 +203,87 @@ function Text() {
           {/* Textfield to enter First security question */}
           <div>
             <input
-              placeholder="Enter security question 1"
-              id="securityQuestion1"
+              placeholder="Enter security question 1*"
+              id="securityQuestion1" 
+              value={securityQuestion1} 
+              onChange={(e) => {checkSecurityQuestion1(e)}}
             ></input>
           </div>
+
+        {/* If the given Security question is not valid, this will display an error message. */}
+        {!isValidSecurityQuestion1 && securityQuestion1!=="" &&<>
+        <p>Please enter a security question. It cannot be blank and it should have a question mark at the end!</p></>}
 
           {/* Textfield to enter First security answer */}
           <div>
             <input
-              placeholder="Enter security answer 1"
+              placeholder="Enter security answer 1*"
               id="securityAnswer1"
+              value={securityAnswer1} 
+              onChange={(e) => {checkSecurityAnswer1(e)}}
             ></input>
           </div>
+
+        {/* If the given security answer is not valid, this will display an error message. */}
+        {!isValidSecurityAnswer1 && securityAnswer1!=="" &&<>
+        <p>Please enter a valid security answer. It cannot be blank and it should only be upto 20 characters!</p></>}
 
           {/* Textfield to enter second security question */}
           <div>
             <input
-              placeholder="Enter security question 2"
+              placeholder="Enter security question 2*"
               id="securityQuestion2"
+              value={securityQuestion2} 
+              onChange={(e) => {checkSecurityQuestion2(e)}}
             ></input>
           </div>
+
+          {/* If the given name is not valid, this will display an error message. */}
+        {!isValidSecurityQuestion2 && securityQuestion2!=="" &&<>
+        <p>Please enter a security question. It cannot be blank and it should have a question mark at the end!</p></>}
 
           {/* Textfield to enter second security answer */}
           <div>
             <input
-              placeholder="Enter security answer 2"
+              placeholder="Enter security answer 2*"
               id="securityAnswer2"
+              value={securityAnswer2} 
+              onChange={(e) => {checkSecurityAnswer2(e)}}
             ></input>
           </div>
+
+          {/* If the given security answer is not valid, this will display an error message. */}
+        {!isValidSecurityAnswer2 && securityAnswer2!=="" &&<>
+        <p>Please enter a valid security answer. It cannot be blank and it should only be upto 20 characters!</p></>}
 
           {/* Textfield to enter third security question */}
           <div>
             <input
-              placeholder="Enter security question 3"
+              placeholder="Enter security question 3*"
               id="securityQuestion3"
+              value={securityQuestion3} 
+              onChange={(e) => {checkSecurityQuestion3(e)}}
             ></input>
           </div>
+
+          {/* If the given name is not valid, this will display an error message. */}
+        {!isValidSecurityQuestion3 && securityQuestion3!=="" &&<>
+        <p>Please enter a security question. It cannot be blank and it should have a question mark at the end!</p></>}
 
           {/* Textfield to enter third security answer */}
           <div>
             <input
-              placeholder="Enter security answer 3"
+              placeholder="Enter security answer 3*"
               id="securityAnswer3"
+              value={securityAnswer3} 
+              onChange={(e) => {checkSecurityAnswer3(e)}}
             ></input>
           </div>
         </div>
+
+        {/* If the given security answer is not valid, this will display an error message. */}
+        {!isValidSecurityAnswer3 && securityAnswer3!=="" &&<>
+        <p>Please enter a valid security answer. It cannot be blank and it should only be upto 20 characters!</p></>}
 
         <div className="register-page-button-div">
           <button disabled={handleDisable()} className="signin-button" onClick={postRegistrationData}>
