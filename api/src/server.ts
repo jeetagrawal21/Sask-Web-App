@@ -45,20 +45,20 @@ if (EnvVars.nodeEnv === NodeEnvs.Production) {
 }
 
 //**** Database Query Functions ***//
-const credentials= {
-  user: "postgres",
-  host: "postgres",
-  database: "postgres",
-  password: "ThisIsASuperLongAndCoolPassword4DevelopmentToKeepOutHackersSoIfYoureAHackerPleaseLeave>:3",
+const credentials = {
+  user: 'postgres',
+  host: 'postgres',
+  database: 'postgres',
+  password:
+    'ThisIsASuperLongAndCoolPassword4DevelopmentToKeepOutHackersSoIfYoureAHackerPleaseLeave>:3',
   port: 5432,
 };
-
 
 // Connect with a connection pool.
 
 async function poolDemo() {
   const pool = new Pool(credentials);
-  const now = await pool.query("SELECT * FROM users");
+  const now = await pool.query('SELECT * FROM users');
   console.log(now.rows);
   await pool.end();
 
@@ -70,12 +70,11 @@ async function poolDemo() {
 async function clientDemo() {
   const client = new Client(credentials);
   await client.connect();
-  const now = await client.query("SELECT NOW()");
+  const now = await client.query('SELECT NOW()');
   await client.end();
 
   return now;
 }
-
 
 /**
  * Check if the table exists in the database
@@ -88,7 +87,10 @@ async function checkiftable() {
   const tablename = 'users';
 
   // use the pool to query the database for the existence of the table with the given name
-  const { rows } = await pool.query("SELECT EXISTS(SELECT FROM pg_catalog.pg_tables WHERE tablename  = $1)", [tablename]);
+  const { rows } = await pool.query(
+    'SELECT EXISTS(SELECT FROM pg_catalog.pg_tables WHERE tablename  = $1)',
+    [tablename]
+  );
 
   // get the boolean value indicating if the table exists or not
   const exists = rows[0].exists;
@@ -99,25 +101,28 @@ async function checkiftable() {
   return Boolean(exists);
 }
 
-
-
-//function to creates table under current database 
-async function createtable(){
+//function to creates table under current database
+async function createtable() {
   const pool = new Pool(credentials);
-  await pool.query("CREATE TABLE users(id serial NOT NULL, surname character varying(80) NOT NULL, givenname2 character varying(80) NOT NULL, givenname3 character varying(80) NOT NULL, pass character varying(40) NOT NULL, email character varying(100) NOT NULL, privilege integer NOT NULL DEFAULT 0, securityQuestion1 character(40) NOT NULL, securityAnswer1 character(40) NOT NULL, securityQuestion2 character(40) NOT NULL, securityAnswer2 character(40) NOT NULL, securityQuestion3 character(40) NOT NULL, securityAnswer3 character(40) NOT NULL, CONSTRAINT utilisateur_pkey PRIMARY KEY (id))", (err, res) => {
-    //console.log(err, res);
-    pool.end();
-});
+  await pool.query(
+    'CREATE TABLE users(id serial NOT NULL, surname character varying(80) NOT NULL, givenname2 character varying(80) NOT NULL, givenname3 character varying(80) NOT NULL, pass character varying(40) NOT NULL, email character varying(100) NOT NULL, privilege integer NOT NULL DEFAULT 0, securityQuestion1 character(40) NOT NULL, securityAnswer1 character(40) NOT NULL, securityQuestion2 character(40) NOT NULL, securityAnswer2 character(40) NOT NULL, securityQuestion3 character(40) NOT NULL, securityAnswer3 character(40) NOT NULL, CONSTRAINT utilisateur_pkey PRIMARY KEY (id))',
+    (err, res) => {
+      //console.log(err, res);
+      pool.end();
+    }
+  );
 }
 
-
 //Checks if user exists (using email) return true if 1 user is found and felse otherwise
-async function checkifuser(email:string){
+async function checkifuser(email: string) {
   const pool = new Pool(credentials);
-  const now = await pool.query(                   //query looks for all users with email and password
-    `SELECT EXISTS(SELECT 1 FROM users WHERE email=$1)`, [email]);
+  const now = await pool.query(
+    //query looks for all users with email and password
+    `SELECT EXISTS(SELECT 1 FROM users WHERE email=$1)`,
+    [email]
+  );
   pool.end();
-  return Boolean(((now['rows'])[0])['exists']);  // typecast the return value to bool. Came back in array sorta thing thus all the nonsense
+  return Boolean(now['rows'][0]['exists']); // typecast the return value to bool. Came back in array sorta thing thus all the nonsense
 }
 
 /**
@@ -125,7 +130,7 @@ async function checkifuser(email:string){
  * @param {string} email - The email of the user to check
  * @returns {Promise<boolean>} - A promise that resolves to a boolean value indicating if the user is an admin or not
  */
- async function checkifadmin(email:string) {
+async function checkifadmin(email: string) {
   // create a new pool using the credentials for the database
   const pool = new Pool(credentials);
 
@@ -151,93 +156,159 @@ async function checkifuser(email:string){
 }
 
 //Gets user and return user info.
-async function getuser (email:string, pass:string){
+async function getuser(email: string, pass: string) {
   const pool = new Pool(credentials);
-  const result = await pool.query(               //query looks for all users with email
-    `SELECT 1 FROM users WHERE email = $1`, 
-        [email]);
+  const result = await pool.query(
+    //query looks for all users with email
+    `SELECT 1 FROM users WHERE email = $1`,
+    [email]
+  );
   await pool.end();
   return result;
-} 
+}
 
 //Checks password for the associated email. Returns true for correct combo, false otherswise
-async function checkpass(email:string, pass:string){
+async function checkpass(email: string, pass: string) {
   const pool = new Pool(credentials);
-  const result = await pool.query(                   //query looks for all users with email and password
-    `SELECT EXISTS(SELECT 1 FROM users WHERE email=$1 AND pass=$2)`, [email, pass]);
+  const result = await pool.query(
+    //query looks for all users with email and password
+    `SELECT EXISTS(SELECT 1 FROM users WHERE email=$1 AND pass=$2)`,
+    [email, pass]
+  );
   pool.end();
-  return Boolean(((result['rows'])[0])['exists']);  // typecast the return value to bool. Came back in array sorta thing thus all the nonsense
-
+  return Boolean(result['rows'][0]['exists']); // typecast the return value to bool. Came back in array sorta thing thus all the nonsense
 }
 
 //Creates account for admins (admins have a privilege of 1 as opposed to 0)
-async function accountcreationadmin(surname:string, givenname2:string, givenname3:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
+async function accountcreationadmin(
+  surname: string,
+  givenname2: string,
+  givenname3: string,
+  pass: string,
+  email: string,
+  securityQuestion1: string,
+  securityAnswer1: string,
+  securityQuestion2: string,
+  securityAnswer2: string,
+  securityQuestion3: string,
+  securityAnswer3: string
+) {
   const pool = new Pool(credentials);
-  if (await checkifuser(email)){                     //calls check if user exist (using email) if returns true he exist account not created else account created
+  if (await checkifuser(email)) {
+    //calls check if user exist (using email) if returns true he exist account not created else account created
     console.log('account not created');
-  }else{
-    const result = await pool.query(               //account created
+  } else {
+    const result = await pool.query(
+      //account created
       `INSERT INTO users (surname, givenname2, givenname3, pass, email, privilege, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3)  
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`, [surname, givenname2, givenname3, pass, email, 1, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3]);
-       console.log("Account created");
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+      [
+        surname,
+        givenname2,
+        givenname3,
+        pass,
+        email,
+        1,
+        securityQuestion1,
+        securityAnswer1,
+        securityQuestion2,
+        securityAnswer2,
+        securityQuestion3,
+        securityAnswer3,
+      ]
+    );
+    console.log('Account created');
   }
   await pool.end();
 }
 
 //Creates account for users (users dont need a privilige variable because it is 0 by default)
-async function accountcreationuser(ID:number, surname:string, givenname2:string, givenname3:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
+async function accountcreationuser(
+  ID: number,
+  surname: string,
+  givenname2: string,
+  givenname3: string,
+  pass: string,
+  email: string,
+  securityQuestion1: string,
+  securityAnswer1: string,
+  securityQuestion2: string,
+  securityAnswer2: string,
+  securityQuestion3: string,
+  securityAnswer3: string
+) {
   const pool = new Pool(credentials);
-  if (await checkifuser(email)){              //calls check if user exist (using email) if returns true he exist account not created else account created
-    console.log("account not created");
-  }else{
-    const result = await pool.query(            //account created         
+  if (await checkifuser(email)) {
+    //calls check if user exist (using email) if returns true he exist account not created else account created
+    console.log('account not created');
+  } else {
+    const result = await pool.query(
+      //account created
       `INSERT INTO users (id, surname, givenname2, givenname3, pass, email, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3)  
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`, [ID, surname, givenname2, givenname3, pass, email, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3]);
-    console.log("Account created");
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+      [
+        ID,
+        surname,
+        givenname2,
+        givenname3,
+        pass,
+        email,
+        securityQuestion1,
+        securityAnswer1,
+        securityQuestion2,
+        securityAnswer2,
+        securityQuestion3,
+        securityAnswer3,
+      ]
+    );
+    console.log('Account created');
   }
   await pool.end();
-} 
+}
 
 /**
  * Delete a user from the "users" table with the given email
  * @param {string} email - The email of the user to delete
  * @returns {Promise<void>} - A promise that resolves when the user is deleted or rejects when an error occurs
  */
-async function deleteUser(email:String) {
+async function deleteUser(email: String) {
   const pool = new Pool(credentials);
 
-  try {                          
+  try {
     const result = await pool.query(
-      `DELETE FROM users WHERE email=$1 RETURNING *`,          // Delete the user from the "users" table
+      `DELETE FROM users WHERE email=$1 RETURNING *`, // Delete the user from the "users" table
       [email]
     );
 
-    if (result.rowCount === 0) {         // If the user was not found
-      console.log("User not found");
+    if (result.rowCount === 0) {
+      // If the user was not found
+      console.log('User not found');
     } else {
-      console.log("User deleted");
+      console.log('User deleted');
     }
-  } catch (error) {            // If an error occurred
+  } catch (error) {
+    // If an error occurred
     console.error(error);
   }
 
   pool.end();
 }
 
-
-//changes password, returns true if succesful   
-async function changepass(email:string, newpass:string){
+//changes password, returns true if succesful
+async function changepass(email: string, newpass: string) {
   const pool = new Pool(credentials);
-  if (await checkifuser(email)){             //calls check if user exist (using email) if returns true he exist account not created else account created
-    const result = await pool.query(           //
-      `UPDATE users SET pass=$2 WHERE email=$1`, [email, newpass]);
-  }else{
-    console.log("user not found");
+  if (await checkifuser(email)) {
+    //calls check if user exist (using email) if returns true he exist account not created else account created
+    const result = await pool.query(
+      //
+      `UPDATE users SET pass=$2 WHERE email=$1`,
+      [email, newpass]
+    );
+  } else {
+    console.log('user not found');
   }
   await pool.end();
 }
-
-
 
 /**
  * This is an async function that checks if the "users" table exists in the database.
@@ -250,31 +321,57 @@ async function initiatedb() {
   const tablename = 'users';
   // Call "checkiftable" function and wait for it to complete, storing the result in "tablecheck" variable.
   const tablecheck = await checkiftable();
-  if (!tablecheck){
+  if (!tablecheck) {
     try {
       // Execute a SQL query to create a table named "users" if it doesn't already exist.
-      await pool.query('CREATE TABLE IF NOT EXISTS users (id serial NOT NULL, surname character varying(80) NOT NULL, givenname2 character varying(80) NOT NULL, givenname3 character varying(80) NOT NULL, pass character varying(40) NOT NULL, email character varying(100) NOT NULL, privilege integer NOT NULL DEFAULT 0, securityQuestion1 character(40) NOT NULL, securityAnswer1 character(40) NOT NULL, securityQuestion2 character(40) NOT NULL, securityAnswer2 character(40) NOT NULL, securityQuestion3 character(40) NOT NULL, securityAnswer3 character(40) NOT NULL, CONSTRAINT utilisateur_pkey PRIMARY KEY (id));');
+      await pool.query(
+        'CREATE TABLE IF NOT EXISTS users (id serial NOT NULL, surname character varying(80) NOT NULL, givenname2 character varying(80) NOT NULL, givenname3 character varying(80) NOT NULL, pass character varying(40) NOT NULL, email character varying(100) NOT NULL, privilege integer NOT NULL DEFAULT 0, securityQuestion1 character(40) NOT NULL, securityAnswer1 character(40) NOT NULL, securityQuestion2 character(40) NOT NULL, securityAnswer2 character(40) NOT NULL, securityQuestion3 character(40) NOT NULL, securityAnswer3 character(40) NOT NULL, CONSTRAINT utilisateur_pkey PRIMARY KEY (id));'
+      );
       // Execute a SQL query to check if the "users" table exists, and store the result in "res".
-      const res = await pool.query(`SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='${tablename}')`);
+      const res = await pool.query(
+        `SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='${tablename}')`
+      );
       // Log the value of the "exists" column in the first row of the "res" result.
       console.log(res.rows[0].exists);
-      console.log("Table was created successfully.");
+      console.log('Table was created successfully.');
       // Call the "accountcreationuser" function with some parameters.
-      await accountcreationuser(12345678, 'testuser1', 'testusergiven1-1', 'testusergiven2-1', 'testpass1', 'testuser1@email.com', "hello who?", "World!", "Whats my name", "Testuser1", "Whats my purpose", "Testing");
-      await accountcreationadmin('testadmin1', 'testadmingiven1-1', 'testadmingiven2-1', 'testpass2', 'testadmin1@email.com', "With great power comes what?", "Great responsability", "Who died?", "Uncle Ben", "Whats my purpose", "Freindly Neighbourhood admin");
-
+      await accountcreationuser(
+        12345678,
+        'testuser1',
+        'testusergiven1-1',
+        'testusergiven2-1',
+        'testpass1',
+        'testuser1@email.com',
+        'hello who?',
+        'World!',
+        'Whats my name',
+        'Testuser1',
+        'Whats my purpose',
+        'Testing'
+      );
+      await accountcreationadmin(
+        'testadmin1',
+        'testadmingiven1-1',
+        'testadmingiven2-1',
+        'testpass2',
+        'testadmin1@email.com',
+        'With great power comes what?',
+        'Great responsability',
+        'Who died?',
+        'Uncle Ben',
+        'Whats my purpose',
+        'Freindly Neighbourhood admin'
+      );
     } catch (error) {
       // If an error occurs, log it to the console.
       console.error(error);
     } finally {
       pool.end();
     }
-
   }
-
 }
 
-initiatedb(); //initiates the db 
+initiatedb(); //initiates the db
 
 // async function runCheckifadmin() {
 //   try {
@@ -286,9 +383,6 @@ initiatedb(); //initiates the db
 // }
 
 // runCheckifadmin();
-
-
-
 
 // **** Add API routes **** //
 
@@ -321,26 +415,37 @@ app.get('/TestPage', function (req, res) {
  * for now this would not really do any work on the backend other than store participant id with the rest of particiapnt info on the registration page
  * in the future we plan for it to send this participnat id to the admin who then verifies and send a unique link to the participant for registration
  */
- var partIDnum:number;
- app.post('/requestAccount', (req, res) => {
-   const particpantId = req.body;
-   partIDnum = Number(particpantId['participantId']);
-   console.log(partIDnum);
- });
-
+var partIDnum: number;
+app.post('/requestAccount', (req, res) => {
+  const particpantId = req.body;
+  partIDnum = Number(particpantId['participantId']);
+  console.log(partIDnum);
+});
 
 // post request to post registration data to database
 app.post('/postregistrationinfo', (req, res) => {
   const data = req.body;
   //console.log(partIDnum, data['surname'] + data['givenName1'], data['password'], data['email'], data['question1'], data['answer1'], data['question2'], data['answer2'], data['question3'], data['answer3'])
-  accountcreationuser(partIDnum, data['surname'], data['givenName1'], data['givenName2'], data['password'], data['email'], data['question1'], data['answer1'], data['question2'], data['answer2'], data['question3'], data['answer3'])
+  accountcreationuser(
+    partIDnum,
+    data['surname'],
+    data['givenName1'],
+    data['givenName2'],
+    data['password'],
+    data['email'],
+    data['question1'],
+    data['answer1'],
+    data['question2'],
+    data['answer2'],
+    data['question3'],
+    data['answer3']
+  );
   console.log(data);
 
   // call function to post data to the database
 
   res.send('success');
 });
-
 
 /**
  * Gets login data from the user (sign in page)
@@ -349,23 +454,25 @@ app.post('/postregistrationinfo', (req, res) => {
  */
 app.post('/login', (req, res) => {
   const data = JSON.stringify(req.body);
-  async function checking () {  
-    var result:boolean = await checkpass(req.body.email, req.body.password);  //calls check password to see if pass and email match a database entry
-    if (result){     // if passed 
-      console.log("login success!");
-      const isadminresult = await checkifadmin(req.body.email)   //checks if the user is an admin 
-      const userdata = {                                 //returns all the information as data pair 
+  async function checking() {
+    var result: boolean = await checkpass(req.body.email, req.body.password); //calls check password to see if pass and email match a database entry
+    if (result) {
+      // if passed
+      console.log('login success!');
+      const isadminresult = await checkifadmin(req.body.email); //checks if the user is an admin
+      const userdata = {
+        //returns all the information as data pair
         exist: result,
-        isadmin: isadminresult
-      }
+        isadmin: isadminresult,
+      };
       console.log('Is he admin?  ' + isadminresult);
       res.send(userdata);
-    }else{
+    } else {
       const userdata = {
         exist: false,
         isadmin: false,
-      }
-      console.log("login failed");
+      };
+      console.log('login failed');
       res.send(userdata);
     }
   }
@@ -375,14 +482,10 @@ app.post('/login', (req, res) => {
   // send response if login was successful or not( we might not actually need the get request below)
 });
 
-
 app.get('/login', (req, res) => {
   // this function communicates with the login authentication function to check if login info is correct and return a response if it is found in the DB
   // res.send(req);
 });
-
-
-
 
 // **** Export default **** //
 

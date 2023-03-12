@@ -1,26 +1,26 @@
-import "../stylings/signin.css";
-import React, { Component } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import '../stylings/signin.css';
+import React, { Component } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function SignIn() {
   const navigate = useNavigate();
 
   function authenticateLogin() {
     const participantInfo = {
-      email: (document.getElementById("email") as HTMLInputElement).value,
-      password: (document.getElementById("password") as HTMLInputElement).value,
+      email: (document.getElementById('email') as HTMLInputElement).value,
+      password: (document.getElementById('password') as HTMLInputElement).value,
     };
 
     axios
-      .post("http://localhost:3000/login", participantInfo)
+      .post('http://localhost:3000/login', participantInfo)
       .then((response) => {
         if (response.data.exist) {
           console.log(response.data.exist);
-          if(response.data.isadmin){
-            navigate("AdminPage");
-          }else{
-            navigate("Dashboard");
+          if (response.data.isadmin) {
+            navigate('AdminPage');
+          } else {
+            navigate('Dashboard');
           }
         } else {
           alert("User/Password Doesn't exist");
@@ -52,20 +52,21 @@ function SignIn() {
           <button
             type="button"
             className="signin-button"
+            id="sign-in"
             onClick={authenticateLogin}
           >
             SIGN IN
           </button>
 
           <p>
-            {" "}
+            {' '}
             Do not have an account?
             <a
-              onClick={() => navigate("RequestAccount")}
+              onClick={() => navigate('RequestAccount')}
               className="request-account-link"
             >
-              {" "}
-              Request one.{" "}
+              {' '}
+              Request one.{' '}
             </a>
           </p>
         </div>
