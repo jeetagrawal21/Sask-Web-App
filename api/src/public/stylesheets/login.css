@@ -1,28 +1,23 @@
-/* Set padding and font for the entire page */
 body {
   padding: 100px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-/* Style for login block */
 body .login-block {
   display: inline-block;
   margin-right: 2em;
   vertical-align: top;
 }
 
-/* Style for login block header */
 body .login-block .login-header {
   font-weight: bold;
   margin-bottom: 1em;
 }
 
-/* Style for login input fields */
 body .login-block .login-input {
   margin-bottom: 1em;
 }
 
-/* Style for default login user */
 body .login-block .default-login-user {
   margin-top: 1em;
   color: #909090;

@@ -1,83 +1,41 @@
 .Auth-form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 50px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    padding: 50px;
+    margin: auto;
+  }
+  
+  .input-fields {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+  
+.button-div{
+    padding-top: 10px;
 }
-
-.input-fields {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 20px;
-  box-sizing: border-box;
-  font-size: 1.2rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.signin-heading {
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 2rem;
-  margin-bottom: 30px;
-  color: #000000;
-}
-
-.button-div {
-  margin-top: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-}
-
 .signin-button {
-  padding: 15px 30px;
-  font-size: 1.2rem;
-  color: #a067f6;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  text-transform: uppercase;
+ 
+    padding: 15px 30px;
+    font-size: 1.0rem;
+    background-color: #f7f7f8;
+    color: rgb(11, 11, 11);
+    border-radius: 40px;
+    box-shadow: 0px 5px 10px #B2BABB;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
+
+
 
 .signin-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0px 10px 20px #B2BABB;
 }
 
 .signin-button:active {
-  transform: scale(0.95);
-  box-shadow: none;
-}
-
-.signin-button:disabled{
-  border: 1px solid black;
-      background-color: grey;
-      color: white;
-      padding: 15px;
-      cursor: not-allowed;
-}
-
-.signin-button.request {
-  margin-top: 20px;
-  background: #fff;
-  color: #0072c6;
-  border: 2px solid #0072c6;
-}
-
-.signin-button.request:hover {
-  background: #0072c6;
-  color: #fff;
-}
-
-.request-account-link {
-  color: #636568;
-  text-decoration: underline;
-  cursor: pointer;
-  margin-left: 5px;
+    transform: translateY(2px);
+    box-shadow: 0px 0px 0px;
 }

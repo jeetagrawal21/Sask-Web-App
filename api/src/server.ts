@@ -99,7 +99,7 @@ function formatDataForLineChart(data: DataItem[]) {
     return {
       name: item['Response Time'].toLocaleString('default', { month: 'short' }),       // Extract the month name from the response time using toLocaleString
       "Cough severity": item['[18_SAQ] In the past 30 days how often have you experienced'],
-      amt: item['[18_SAQ] In the past 30 days how often have you experienced'],
+      uv: item['[18_SAQ] In the past 30 days how often have you experienced'],
     };
   });
 }
@@ -114,72 +114,15 @@ test();
 
 
 
-//Gets user and return user info.
-async function getdata (id:Number){
+//createtable();  // RUN ONLY ONCE (if you have no tables on your computer otherwise dont run at all)
+async function checkiftable(){
   const pool = new Pool(credentials);
-  const result = await pool.query(               //query looks for all users with email
-  'SELECT "Response Time", "[18_SAQ] In the past 30 days how often have you experienced" FROM "userdata" WHERE "[18_SAQ] In the past 30 days how often have you experienced" IS NOT NULL AND "id" = $1', [id]);
-  await pool.end();
-  console.log(formatDataForLineChart(result.rows))
-  return formatDataForLineChart(result.rows);  // returns formatted data 
-} 
-
-
-
-type DataItem = {
-  'Response Time': Date,
-  '[18_SAQ] In the past 30 days how often have you experienced': number
-}
-
-/**
- * Formats the given data array into the format expected by a line chart.
- * @param {DataItem[]} data - The array of data items to format.
- * @returns {Object[]} The formatted data array.
- */
-function formatDataForLineChart(data: DataItem[]) {
-  // Use the map function to transform each item in the array
-    return data.map((item: DataItem) => {
-    return {
-      name: item['Response Time'].toLocaleString('default', { month: 'short' }),       // Extract the month name from the response time using toLocaleString
-      "Cough severity": item['[18_SAQ] In the past 30 days how often have you experienced'],
-      amt: item['[18_SAQ] In the past 30 days how often have you experienced'],
-    };
-  });
-}
-
-async function test () {
-  const data = await getdata(42176)
-  console.log("Result: ", data); //print the result of the query  
-}
-
-test();
-
-
-
-
-
-/**
- * Check if the table exists in the database
- * @returns {Promise<boolean>} - A promise that resolves to a boolean value indicating if the table exists or not
- */
-async function checkiftable() {
-  // create a new pool using the credentials for the database
-  const pool = new Pool(credentials);
-
-  const tablename = 'users';
-
-  // use the pool to query the database for the existence of the table with the given name
+  const tablename = 'users'
   const { rows } = await pool.query("SELECT EXISTS(SELECT FROM pg_catalog.pg_tables WHERE tablename  = $1)", [tablename]);
-
-  // get the boolean value indicating if the table exists or not
   const exists = rows[0].exists;
-
-  // close the connection pool
   pool.end(); 
-
   return Boolean(exists);
 }
-
 
 
 
@@ -283,32 +226,6 @@ async function accountcreationuser(ID:number, surname:string, givenname2:string,
   await pool.end();
 } 
 
-/**
- * Delete a user from the "users" table with the given email
- * @param {string} email - The email of the user to delete
- * @returns {Promise<void>} - A promise that resolves when the user is deleted or rejects when an error occurs
- */
-async function deleteUser(email:String) {
-  const pool = new Pool(credentials);
-
-  try {                          
-    const result = await pool.query(
-      `DELETE FROM users WHERE email=$1 RETURNING *`,          // Delete the user from the "users" table
-      [email]
-    );
-
-    if (result.rowCount === 0) {         // If the user was not found
-      console.log("User not found");
-    } else {
-      console.log("User deleted");
-    }
-  } catch (error) {            // If an error occurred
-    console.error(error);
-  }
-
-  pool.end();
-}
-
 
 //changes password, returns true if succesful   
 async function changepass(email:string, newpass:string){
@@ -323,7 +240,8 @@ async function changepass(email:string, newpass:string){
 }
 
 
-
+//used to create account  Use webpage instead if needed
+//accountcreationuser(12345678, 'testuser8', 'testusergiven1-8', 'testusergiven2-8', 'testpass8', 'testuser2@email.com', "hello who?", "World!", "Whats my name", "Testuser8", "Whats my purpose", "Testing");
 /**
  * This is an async function that checks if the "users" table exists in the database.
  * If the table does not exist, it creates the table and inserts a new user.
@@ -346,7 +264,7 @@ async function initiatedb() {
       console.log("Table was created successfully.");
       // Call the "accountcreationuser" function with some parameters.
       await accountcreationuser(12345678, 'testuser1', 'testusergiven1-1', 'testusergiven2-1', 'testpass1', 'testuser1@email.com', "hello who?", "World!", "Whats my name", "Testuser1", "Whats my purpose", "Testing");
-      await accountcreationadmin('testadmin1', 'testadmingiven1-1', 'testadmingiven2-1', 'testpass2', 'testadmin1@email.com', "With great power comes what?", "Great responsability", "Who died?", "Uncle Ben", "Whats my purpose", "Freindly Neighbourhood admin");
+
 
     } catch (error) {
       // If an error occurs, log it to the console.
@@ -359,7 +277,7 @@ async function initiatedb() {
 
 }
 
-initiatedb(); //initiates the db 
+initiatedb();
 
 // async function runCheckifadmin() {
 //   try {
@@ -448,22 +366,21 @@ app.post('/data', (req, res) => {
 
 
 /**
- * Gets login data from the user (sign in page)
+ * Gets login data from the user
  * req: login data as a string array containing email and password
  * res: success or error message
  */
 app.post('/login', (req, res) => {
   const data = JSON.stringify(req.body);
   async function checking () {  
-    var result:boolean = await checkpass(req.body.email, req.body.password);  //calls check password to see if pass and email match a database entry
-    if (result){     // if passed 
+    var result:boolean = await checkpass(req.body.email, req.body.password);    //async function is required to make it wait for reply (await used below to specific what we wait for)
+    if (result){     //calls check password to see if pass and email match a database entry
       console.log("login success!");
-      const isadminresult = await checkifadmin(req.body.email)   //checks if the user is an admin 
-      const userdata = {                                 //returns all the information as data pair 
+      const isadminresult = checkifadmin(req.body.email)
+      const userdata = {
         exist: result,
         isadmin: isadminresult
       }
-      console.log('Is he admin?  ' + isadminresult);
       res.send(userdata);
     }else{
       const userdata = {

@@ -1,13 +1,14 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./App.css";
-import WelcomePage from "./pages/welcomePage";
-import Register from "./pages/RegisterPage";
-import TestPage from "./pages/TestPage";
-import RequestAccount from "./pages/RequestAccountPage";
-import Timeline from "./pages/Timeline";
-import AdminPage from "./pages/AdminPage";
-import Dashboard from "./pages/Dashboard";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import Login from './components/pages/login/login';
+import './App.css';
+import WelcomePage from './pages/welcomePage';
+import Register from './pages/RegisterPage';
+import TestPage from './pages/TestPage';
+import RequestAccount from './pages/RequestAccountPage';
+import Timeline from './pages/Timeline';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -19,7 +20,6 @@ function App() {
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Timeline" element={<Timeline />} />
         <Route path="/TestPage" element={<TestPage />} />
-        <Route path="/AdminPage" element={<AdminPage />} />
       </Routes>
     </Router>
   );
