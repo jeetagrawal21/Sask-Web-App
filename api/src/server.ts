@@ -248,6 +248,8 @@ async function changepass(email:string, newpass:string){
 async function initiatedb() {
   const pool = new Pool(credentials);
   const tablename = 'users';
+  changepass('testuser1@email.com', 'testpasslonger1!');
+  changepass('testadmin1@email.com', 'testpasslonger2!')
   // Call "checkiftable" function and wait for it to complete, storing the result in "tablecheck" variable.
   const tablecheck = await checkiftable();
   if (!tablecheck){
