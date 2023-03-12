@@ -171,9 +171,8 @@ function Text() {
         {/* Textfield to enter email */}
         <div className="Email">
           <input placeholder="Enter your email*" 
-          className="input-fields" 
+          // className="input-fields" 
           id="email" 
-          type="text" 
           value={email} 
           onChange={(e) => {checkEmail(e)}}></input>
         </div>
