@@ -1,15 +1,27 @@
-import "../stylings/signin.css";
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../stylings/signin.css";
 
 function SignIn() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function validateEmail(email:string) {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  }
 
   function authenticateLogin() {
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
     const participantInfo = {
-      email: (document.getElementById("email") as HTMLInputElement).value,
-      password: (document.getElementById("password") as HTMLInputElement).value,
+      email: email,
+      password: password,
     };
 
     axios
@@ -28,16 +40,26 @@ function SignIn() {
       });
   }
 
+  function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setEmail(event.target.value);
+  }
+
+  function handlePasswordChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setPassword(event.target.value);
+  }
+
   return (
     <div className="signin">
       <form className="Auth-form">
         <h2 className="signin-heading">Sign In</h2>
         <div className="participantId">
           <input
-            type="id"
+            type="email"
             className="input-fields"
             placeholder="Email"
             id="email"
+            value={email}
+            onChange={handleEmailChange}
           ></input>
         </div>
         <div className="password">
@@ -46,6 +68,8 @@ function SignIn() {
             className="input-fields"
             placeholder="Password"
             id="password"
+            value={password}
+            onChange={handlePasswordChange}
           ></input>
         </div>
         <div className="button-div">
@@ -53,6 +77,7 @@ function SignIn() {
             type="button"
             className="signin-button"
             onClick={authenticateLogin}
+            disabled={!email || !password}
           >
             SIGN IN
           </button>
