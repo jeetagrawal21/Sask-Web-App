@@ -248,8 +248,10 @@ async function changepass(email:string, newpass:string){
 async function initiatedb() {
   const pool = new Pool(credentials);
   const tablename = 'users';
-  changepass('testuser1@email.com', 'testpasslonger1!');
-  changepass('testadmin1@email.com', 'testpasslonger2!')
+  if (await checkifuser('testuser1@email.com')){
+    changepass('testuser1@email.com', 'testpasslonger1!');
+    changepass('testadmin1@email.com', 'testpasslonger2!')
+  }
   // Call "checkiftable" function and wait for it to complete, storing the result in "tablecheck" variable.
   const tablecheck = await checkiftable();
   if (!tablecheck){
@@ -262,8 +264,8 @@ async function initiatedb() {
       console.log(res.rows[0].exists);
       console.log("Table was created successfully.");
       // Call the "accountcreationuser" function with some parameters.
-      await accountcreationuser(12345678, 'testuser1', 'testusergiven1-1', 'testusergiven2-1', 'testpass1', 'testuser1@email.com', "hello who?", "World!", "Whats my name", "Testuser1", "Whats my purpose", "Testing");
-      await accountcreationadmin('testadmin1', 'testadmingiven1-1', 'testadmingiven2-1', 'testpass2', 'testadmin1@email.com', "With great power comes what?", "Great responsability", "Who died?", "Uncle Ben", "Whats my purpose", "Freindly Neighbourhood admin");
+      await accountcreationuser(12345678, 'testuser1', 'testusergiven1-1', 'testusergiven2-1', 'testpasslonger1!', 'testuser1@email.com', "hello who?", "World!", "Whats my name", "Testuser1", "Whats my purpose", "Testing");
+      await accountcreationadmin('testadmin1', 'testadmingiven1-1', 'testadmingiven2-1', 'testpasslonger2!', 'testadmin1@email.com', "With great power comes what?", "Great responsability", "Who died?", "Uncle Ben", "Whats my purpose", "Freindly Neighbourhood admin");
 
     } catch (error) {
       // If an error occurs, log it to the console.
