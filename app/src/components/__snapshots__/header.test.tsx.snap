@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`header component should render 1`] = `
+exports[`Header component header component should render 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>

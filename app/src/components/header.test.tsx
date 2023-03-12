@@ -1,28 +1,47 @@
-import React from "react";
-// import ReactDom from 'react-dom';
-import Header from "./header";
-import { render, screen } from "@testing-library/react";
-// import { isTSAnyKeyword} from '@label/types';
+// TEST FILE FOR HEADER COMPONENT 
+// HAS CASES FOR SNAPSHOT TESTING
 
-it("header component should render", async () => {
-  const view = render(<Header />);
+import React from 'react';
+import Header from './header';
+import {render, screen} from '@testing-library/react';
 
-  expect(view).toMatchSnapshot();
-  // expect(<Header></Header>).toBe(<Header></Header>);
-});
+/**
+ * Descrpition: Test function for Header component.
+ * 
+ * Pre-Condition: None
+ * 
+ * Post-Condition: None
+ * 
+ * Return: None
+ */
 
-it("H1 tag should have the right text (SASK)", async () => {
-  render(<Header />);
+describe('Header component', () => {
 
-  const heading = await screen.findAllByText("SASK");
+    // Test Case 1 : Checks if the header component renders correctly
+    it('header component should render',async () => {
+        const view = render(<Header/>);
 
-  expect(heading).toBeTruthy();
-});
+        expect(view).toMatchSnapshot();
+    
+    });
 
-it("H2 tag should have the right text (LONGCOVID)", async () => {
-  render(<Header />);
+    // Test Case 2 : Checks if Sask text appears correctly
+    it('H1 tag should have the right text (SASK)',async () => {
+        render(<Header/>);
 
-  const heading = await screen.findAllByText("LONGCOVID");
+        const heading = await screen.findAllByText('SASK');
 
-  expect(heading).toBeTruthy();
+        expect(heading).toBeTruthy();
+
+    });
+
+    // Test Case 3 : Checks if Longcovid text appears correctly
+    it('H2 tag should have the right text (LONGCOVID)',async () => {
+        render(<Header/>);
+
+        const heading = await screen.findAllByText('LONGCOVID');
+
+        expect(heading).toBeTruthy();
+
+    });
 });
