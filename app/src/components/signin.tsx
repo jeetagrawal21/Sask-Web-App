@@ -8,11 +8,11 @@ function SignIn() {
   const navigate = useNavigate();
 
   function authenticateLogin() {
-    log.error("This is an error");
-    log.warn("This is a warning");
-    log.info("This is an info");
-    log.debug("This is a debug");
-    log.trace("This is a trace");
+    log.error("This is an error: OH NO!!!");
+    log.warn("WARNING");
+    log.debug("DEBUG");
+    log.info("INFO");
+    log.trace("TRACE");
     const participantInfo = {
       email: (document.getElementById("email") as HTMLInputElement).value,
       password: (document.getElementById("password") as HTMLInputElement).value,

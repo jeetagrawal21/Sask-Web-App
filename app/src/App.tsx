@@ -15,13 +15,13 @@ const remoteOptions = {
   url: "http://localhost:3000/logs",
   format: remotePlugin.json,
   method: "POST",
-  level: process.env.NODE_ENV === "development"?
-                                  "trace": // Send trace level messages and above when in development
-                                  "error", // Only send error level messages when in production
+  level: "trace", // Only send trace level messages and above
 };
-log.enableAll();
 
 remotePlugin.apply(log, remoteOptions); // use remotePlugin.apply() here
+
+log.enableAll();
+
 
 
 function App() {

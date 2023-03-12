@@ -35,6 +35,9 @@ module.exports = {
 			'./loglevel': path.resolve(__dirname, './src/types/loglevel.d.ts'),
 			'./loglevel-plugin-remote': path.resolve(__dirname, './src/types/loglevel-plugin-remote.d.ts'),
 		  },
+		  fallback: {
+			util: require.resolve('util/')
+		  }
 	},
 	mode: 'development',
 	output: {
