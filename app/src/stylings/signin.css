@@ -55,6 +55,14 @@
   box-shadow: none;
 }
 
+.signin-button:disabled{
+  border: 1px solid black;
+      background-color: grey;
+      color: white;
+      padding: 15px;
+      cursor: not-allowed;
+}
+
 .signin-button.request {
   margin-top: 20px;
   background: #fff;
