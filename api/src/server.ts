@@ -390,42 +390,6 @@ interface Log {
   stacktrace?: string;
 }
 
-// // Define a route for accepting log reports
-// // Define the post route handler
-// app.post("/logs", async (req, res) => {
-//   // Create a client object with your credentials
-//   const client = new Client(credentials);
-//   try {
-//     // Get the log object from the request body
-//     const log: Log = req.body;
-
-//     // Validate the log object
-//     if (!log.message || !log.level || !log.timestamp) {
-//       return res.status(400).send("Invalid log object");
-//     }
-
-    
-
-//     // Connect to the database
-//     await client.connect();
-
-//     // Insert the log object into the database table
-//     await client.query(
-//       "INSERT INTO logs (message, level, logger, timestamp, stacktrace) VALUES ($1, $2, $3, $4, $5)",
-//       [log.message, log.level, log.logger, log.timestamp.toISOString(), log.stacktrace]
-//     );
-
-//     // Send a success response
-//     return res.status(201).send("Log added successfully");
-//   } catch (error) {
-//     // Handle any database or server errors
-//     console.error(error);
-//     return res.status(500).send("Something went wrong");
-//   } finally {
-//     // Close the database connection
-//     await client.end();
-//   }
-// });
 // Define a route for accepting log reports
 // Define the post route handler
 app.post("/logs", async (req, res) => {
@@ -476,8 +440,8 @@ app.post("/logs", async (req, res) => {
 initiatelogdb();
 
 /**
- * This is an async function that checks if the "users" table exists in the database.
- * If the table does not exist, it creates the table and inserts a new user.
+ * This is an async function that checks if the "logs" table exists in the database.
+ * If the table does not exist, it creates the table.
  * @returns {Promise<void>} Nothing is returned from this function.
  */
 // This is an async function named "test".
