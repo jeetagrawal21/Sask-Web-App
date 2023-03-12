@@ -1,46 +1,28 @@
-import { Line } from '@nivo/line';
 import React from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-const commonProperties = {
-    width: 800,
-    height: 400,
-    margin: { top: 50, right: 110, bottom: 50, left: 60 },
-    enableGridX: false,
-    enableGridY: false,
+type DataItem = {
+  name: string,
+  uv: number,
+  pv: number,
+  amt: number,
+}
+
+type Props = {
+  data: DataItem[],
+}
+
+const SimpleLineChart = ({ data }: Props) => {
+  return (
+    <LineChart width={800} height={400} data={data}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <Line type="monotone" dataKey="Cough severity" stroke="#82ca9d" />
+    </LineChart>
+  );
 };
 
-const MyLineChart = () => (
-    <Line
-        {...commonProperties}
-        curve="monotoneX"
-        data={[
-            {
-                id: 'fake corp. A',
-                data: [
-                    { x: 0, y: 7 },
-                    { x: 1, y: 5 },
-                    { x: 2, y: 11 },
-                    { x: 3, y: 9 },
-                    { x: 4, y: 13 },
-                    { x: 7, y: 16 },
-                    { x: 9, y: 12 },
-                ],
-            },
-        ]}
-        xScale={{
-            type: 'linear',
-            min: 0,
-            max: 'auto',
-        }}
-        axisLeft={{
-            legend: 'linear scale',
-            legendOffset: 12,
-        }}
-        axisBottom={{
-            legend: 'linear scale',
-            legendOffset: -12,
-        }}
-    />
-);
-
-export default MyLineChart;
+export default SimpleLineChart;

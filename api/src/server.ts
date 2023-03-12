@@ -77,8 +77,32 @@ async function getdata (id:Number){
   const result = await pool.query(               //query looks for all users with email
   'SELECT "Response Time", "[18_SAQ] In the past 30 days how often have you experienced" FROM "userdata" WHERE "[18_SAQ] In the past 30 days how often have you experienced" IS NOT NULL AND "id" = $1', [id]);
   await pool.end();
-  return result.rows;
+  console.log(formatDataForLineChart(result.rows))
+  return formatDataForLineChart(result.rows);  // returns formatted data 
 } 
+
+
+
+type DataItem = {
+  'Response Time': Date,
+  '[18_SAQ] In the past 30 days how often have you experienced': number
+}
+
+/**
+ * Formats the given data array into the format expected by a line chart.
+ * @param {DataItem[]} data - The array of data items to format.
+ * @returns {Object[]} The formatted data array.
+ */
+function formatDataForLineChart(data: DataItem[]) {
+  // Use the map function to transform each item in the array
+    return data.map((item: DataItem) => {
+    return {
+      name: item['Response Time'].toLocaleString('default', { month: 'short' }),       // Extract the month name from the response time using toLocaleString
+      "Cough severity": item['[18_SAQ] In the past 30 days how often have you experienced'],
+      amt: item['[18_SAQ] In the past 30 days how often have you experienced'],
+    };
+  });
+}
 
 async function test () {
   const data = await getdata(42176)
@@ -86,6 +110,9 @@ async function test () {
 }
 
 test();
+
+
+
 
 //createtable();  // RUN ONLY ONCE (if you have no tables on your computer otherwise dont run at all)
 async function checkiftable(){
@@ -319,14 +346,20 @@ app.post('/postregistrationinfo', (req, res) => {
 
 // post request to post registration data to database
 app.post('/data', (req, res) => {
-  const data = req.body;
-  //console.log(partIDnum, data['surname'] + data['givenName1'], data['password'], data['email'], data['question1'], data['answer1'], data['question2'], data['answer2'], data['question3'], data['answer3'])
-  accountcreationuser(partIDnum, data['surname'], data['givenName1'], data['givenName2'], data['password'], data['email'], data['question1'], data['answer1'], data['question2'], data['answer2'], data['question3'], data['answer3'])
-  console.log(data);
+  //const data = req.body;
+  //getdata(42176)
+  //console.log(data);
 
   // call function to post data to the database
 
-  res.send(true);   // needs failure handling
+  async function dataGetFormat () {
+    const data = await getdata(42176)
+    console.log("On my way : ", data); //print the result of the query 
+    res.send(data);   // needs failure handling
+
+  }
+  dataGetFormat();
+
 });
 
 
