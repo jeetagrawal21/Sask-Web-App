@@ -73,7 +73,7 @@ async function clientDemo() {
 }
 
 //Gets user and return user info.
-async function getdata (id:Number){
+export async function getdata (id:Number){
   const pool = new Pool(credentials);
   const result = await pool.query(               //query looks for all users with email
   'SELECT "Response Time", "[18_SAQ] In the past 30 days how often have you experienced" FROM "userdata" WHERE "[18_SAQ] In the past 30 days how often have you experienced" IS NOT NULL AND "id" = $1', [id]);
@@ -234,28 +234,34 @@ export async function accountcreationuser(ID:number, surname:string, givenname2:
 /**
  * Delete a user from the "users" table with the given email
  * @param {string} email - The email of the user to delete
- * @returns {Promise<void>} - A promise that resolves when the user is deleted or rejects when an error occurs
+ * @returns {Promise<boolean>} - A promise that resolves with a boolean value indicating whether the user was deleted or not, or rejects when an error occurs
  */
-export async function deleteUser(email:String) {
+export async function deleteUser(email: string): Promise<boolean> {
   const pool = new Pool(credentials);
 
-  try {                          
+  try {
     const result = await pool.query(
-      `DELETE FROM users WHERE email=$1 RETURNING *`,          // Delete the user from the "users" table
+      `DELETE FROM users WHERE email=$1 RETURNING *`, // Delete the user from the "users" table
       [email]
     );
 
-    if (result.rowCount === 0) {         // If the user was not found
+    if (result.rowCount === 0) {
+      // If the user was not found
       console.log("User not found");
+      return false;
     } else {
       console.log("User deleted");
+      return true;
     }
-  } catch (error) {            // If an error occurred
+  } catch (error) {
+    // If an error occurred
     console.error(error);
+    return false;
+  } finally {
+    pool.end();
   }
-
-  pool.end();
 }
+
 
 /**
  * Changes the password of the user with the specified email address
