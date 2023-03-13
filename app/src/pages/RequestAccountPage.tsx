@@ -1,17 +1,14 @@
+import React from 'react';
+// import logo from './logo.svg';
 import '../App.css';
 import Header from '../components/header';
-import React, { Component, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-
-
-function RequestAccount() {
-    const navigate = useNavigate();
-    const [isValidParticipantId, setIsValidParticipantId] = useState(false);
-    const [participantNumber, setParticipantNumber] = useState("");
-
-        /**
+class RequestAccount extends Component {
+  render() {
+    /**
      * Sends the participant id for client requesting an account to the backend,
      */
     // function requestAnAccount() {
@@ -89,9 +86,15 @@ function RequestAccount() {
               {/* </Link> */}
             </form>
           </div>
-        );
-    
+          <Link to="/Register">
+            <button className="signin-button" onClick={requestAccount}>
+              Request
+            </button>
+          </Link>
+        </form>
+      </div>
+    );
   }
-
+}
 
 export default RequestAccount;

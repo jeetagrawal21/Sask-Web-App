@@ -102,6 +102,7 @@ function SignIn() {
         {/* The sign in button is disabled by default so that the user cannot be redirected or go to the dashboard if they give the wrong details */}
         <div className="button-div">
           <button disabled={handleDisable()}
+            type="button"
             className="signin-button" 
             onClick={authenticateLogin}>
             SIGN IN
