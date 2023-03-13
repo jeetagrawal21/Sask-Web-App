@@ -1,11 +1,8 @@
-import { ParticipantID } from './entity/ParticipantID';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import { AppDataSource } from './data-source';
-import { Users } from './entity/Users';
-import path from 'path';
 import { Client, Pool } from 'pg';
-import dotenv from 'dotenv';
+import runSqlFile from 'src/datasetup'
+import path from 'path';
 
 import helmet from 'helmet';
 import express, { Request, Response, NextFunction } from 'express';
@@ -75,33 +72,68 @@ async function clientDemo() {
   return now;
 }
 
-/**
- * Check if the table exists in the database
- * @returns {Promise<boolean>} - A promise that resolves to a boolean value indicating if the table exists or not
- */
-async function checkiftable() {
-  // create a new pool using the credentials for the database
+//Gets user and return user info.
+export async function getdata (id:Number){
   const pool = new Pool(credentials);
+  const result = await pool.query(               //query looks for all users with email
+  'SELECT "Response Time", "[18_SAQ] In the past 30 days how often have you experienced" FROM "userdata" WHERE "[18_SAQ] In the past 30 days how often have you experienced" IS NOT NULL AND "id" = $1', [id]);
+  await pool.end();
+  return formatDataForLineChart(result.rows);  // returns formatted data 
+} 
 
-  const tablename = 'users';
 
-  // use the pool to query the database for the existence of the table with the given name
-  const { rows } = await pool.query(
-    'SELECT EXISTS(SELECT FROM pg_catalog.pg_tables WHERE tablename  = $1)',
-    [tablename]
-  );
 
-  // get the boolean value indicating if the table exists or not
+type DataItem = {
+  'Response Time': Date,
+  '[18_SAQ] In the past 30 days how often have you experienced': number
+}
+
+/**
+ * Formats the given data array into the format expected by a line chart.
+ * @param {DataItem[]} data - The array of data items to format.
+ * @returns {Object[]} The formatted data array.
+ */
+function formatDataForLineChart(data: DataItem[]) {
+  // Use the map function to transform each item in the array
+    return data.map((item: DataItem) => {
+    return {
+      name: item['Response Time'].toLocaleString('default', { month: 'short' }),       // Extract the month name from the response time using toLocaleString
+      "Cough severity": item['[18_SAQ] In the past 30 days how often have you experienced'],
+      uv: item['[18_SAQ] In the past 30 days how often have you experienced'],
+    };
+  });
+}
+
+/////DEEEEEEELEEEEEEETTTTTTTEEEEEEEE THHHHHHIIIIIIIIIIISSSSSSSS SSSSSSSSSSHHHHHHHHHIIIIIIIIIIIIIIIIITTTTTTTTTTTTTTTTT...later...
+// async function test () {
+//   const data = await getdata(42176)
+//   console.log("Result: ", data); //print the result of the query  
+// }
+
+// test();
+
+
+
+
+/**
+
+    Checks if a table exists in the database
+    @param tablename - The name of the table to check
+    @returns A boolean indicating whether the table exists or not
+    */
+async function checkiftable(tablename:String){
+  const pool = new Pool(credentials);
+  const { rows } = await pool.query("SELECT EXISTS(SELECT FROM pg_catalog.pg_tables WHERE tablename  = $1)", [tablename]);
   const exists = rows[0].exists;
-
-  // close the connection pool
-  pool.end();
-
+  pool.end(); 
   return Boolean(exists);
 }
 
-//function to creates table under current database
-async function createtable() {
+
+
+
+//function to creates table under current database 
+async function createtable(){
   const pool = new Pool(credentials);
   await pool.query(
     'CREATE TABLE users(id serial NOT NULL, surname character varying(80) NOT NULL, givenname2 character varying(80) NOT NULL, givenname3 character varying(80) NOT NULL, pass character varying(40) NOT NULL, email character varying(100) NOT NULL, privilege integer NOT NULL DEFAULT 0, securityQuestion1 character(40) NOT NULL, securityAnswer1 character(40) NOT NULL, securityQuestion2 character(40) NOT NULL, securityAnswer2 character(40) NOT NULL, securityQuestion3 character(40) NOT NULL, securityAnswer3 character(40) NOT NULL, CONSTRAINT utilisateur_pkey PRIMARY KEY (id))',
@@ -153,6 +185,8 @@ export async function checkifadmin(email: string) {
   // if the user is not an admin or does not exist, return false
   return false;
 }
+
+
 
 //Gets user and return user info.
 export async function getuser(email: string, pass: string) {
@@ -268,9 +302,9 @@ export async function accountcreationuser(
 /**
  * Delete a user from the "users" table with the given email
  * @param {string} email - The email of the user to delete
- * @returns {Promise<void>} - A promise that resolves when the user is deleted or rejects when an error occurs
+ * @returns {Promise<boolean>} - A promise that resolves with a boolean value indicating whether the user was deleted or not, or rejects when an error occurs
  */
-export async function deleteUser(email: String) {
+export async function deleteUser(email: string): Promise<boolean> {
   const pool = new Pool(credentials);
 
   try {
@@ -281,17 +315,21 @@ export async function deleteUser(email: String) {
 
     if (result.rowCount === 0) {
       // If the user was not found
-      console.log('User not found');
+      console.log("User not found");
+      return false;
     } else {
-      console.log('User deleted');
+      console.log("User deleted");
+      return true;
     }
   } catch (error) {
     // If an error occurred
     console.error(error);
+    return false;
+  } finally {
+    pool.end();
   }
-
-  pool.end();
 }
+
 
 /**
  * Changes the password of the user with the specified email address
@@ -330,6 +368,8 @@ export async function changepass(
   }
 }
 
+//used to create account  Use webpage instead if needed
+//accountcreationuser(12345678, 'testuser8', 'testusergiven1-8', 'testusergiven2-8', 'testpass8', 'testuser2@email.com', "hello who?", "World!", "Whats my name", "Testuser8", "Whats my purpose", "Testing");
 /**
  * This is an async function that checks if the "users" table exists in the database.
  * If the table does not exist, it creates the table and inserts a new user.
@@ -339,14 +379,14 @@ export async function changepass(
 async function initiatedb() {
   const pool = new Pool(credentials);
   const tablename = 'users';
-  if (await checkiftable()) {
-    if (await checkifuser('testuser1@email.com'))
+  if(await checkiftable('users')){
+    if(await checkifuser('testuser1@email.com'))
       changepass('testuser1@email.com', 'testpasslonger1!');
     changepass('testadmin1@email.com', 'testpasslonger2!');
   }
   // Call "checkiftable" function and wait for it to complete, storing the result in "tablecheck" variable.
-  const tablecheck = await checkiftable();
-  if (!tablecheck) {
+  const tablecheck = await checkiftable('users');
+  if (!tablecheck){
     try {
       // Execute a SQL query to create a table named "users" if it doesn't already exist.
       await pool.query(
@@ -473,25 +513,43 @@ app.post('/postregistrationinfo', (req, res) => {
   res.send(true); // needs failure handling
 });
 
+// post request to post registration data to database
+app.post('/data', (req, res) => {
+  //const data = req.body;
+  //getdata(42176)
+  //console.log(data);
+
+  // call function to post data to the database
+
+  async function dataGetFormat () {
+    const data = await getdata(42176)
+    console.log("data :", data); //print the result of the query 
+    res.send(data);   // needs failure handling
+
+  }
+  dataGetFormat();
+
+});
+
+
+
+
 /**
- * Gets login data from the user (sign in page)
+ * Gets login data from the user
  * req: login data as a string array containing email and password
  * res: success or error message
  */
 app.post('/login', (req, res) => {
   const data = JSON.stringify(req.body);
-  async function checking() {
-    var result: boolean = await checkpass(req.body.email, req.body.password); //calls check password to see if pass and email match a database entry
-    if (result) {
-      // if passed
-      console.log('login success!');
-      const isadminresult = await checkifadmin(req.body.email); //checks if the user is an admin
+  async function checking () {  
+    var result:boolean = await checkpass(req.body.email, req.body.password);    //async function is required to make it wait for reply (await used below to specific what we wait for)
+    if (result){     //calls check password to see if pass and email match a database entry
+      console.log("login success!");
+      const isadminresult = checkifadmin(req.body.email)
       const userdata = {
-        //returns all the information as data pair
         exist: result,
-        isadmin: isadminresult,
-      };
-      console.log('Is he admin?  ' + isadminresult);
+        isadmin: isadminresult
+      }
       res.send(userdata);
     } else {
       const userdata = {
@@ -507,6 +565,11 @@ app.post('/login', (req, res) => {
   // send data as JSON object to the function that aunthenticates login
   // send response if login was successful or not( we might not actually need the get request below)
 });
+
+
+
+
+
 
 app.get('/login', (req, res) => {
   // this function communicates with the login authentication function to check if login info is correct and return a response if it is found in the DB
@@ -603,6 +666,23 @@ async function initiatelogdb() {
     pool.end();
   }
 }
+
+/**
+This async function sets up the data table in the database by running a SQL file.
+@returns {Promise<void>}
+*/
+async function setupdatadb() {
+  if (!await checkiftable('userdata')){
+    const filePath = 'data/dbdatasqlcode.sql';
+    await runSqlFile(filePath)
+      .then(() => console.log('SQL file executed successfully'))
+      .catch(err => console.error('Error executing SQL file:', err));
+  }
+
+}
+setupdatadb();
+
+
 
 // **** Export default **** //
 

@@ -296,6 +296,7 @@ describe("changepass function", () => {
     // and assert that it returns true
     const result = await changepass(email, newpass);
     expect(result).toBe(true);
+    await deleteUser(email);
     console.log("changepass function: successful password change - PASSED");
   });
 
