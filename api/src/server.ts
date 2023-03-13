@@ -79,7 +79,6 @@ async function getdata (id:Number){
   const result = await pool.query(               //query looks for all users with email
   'SELECT "Response Time", "[18_SAQ] In the past 30 days how often have you experienced" FROM "userdata" WHERE "[18_SAQ] In the past 30 days how often have you experienced" IS NOT NULL AND "id" = $1', [id]);
   await pool.end();
-  console.log(formatDataForLineChart(result.rows))
   return formatDataForLineChart(result.rows);  // returns formatted data 
 } 
 
@@ -380,7 +379,7 @@ app.post('/data', (req, res) => {
 
   async function dataGetFormat () {
     const data = await getdata(42176)
-    console.log("On my way : ", data); //print the result of the query 
+    console.log("data :", data); //print the result of the query 
     res.send(data);   // needs failure handling
 
   }
