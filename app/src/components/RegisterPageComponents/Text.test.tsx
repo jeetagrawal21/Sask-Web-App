@@ -131,29 +131,29 @@ test('checkEmail function correctly validates email', () => {
         isValidSecurityQuestion1=(securityQuestionRegex.test(e.target.value));
       }
   
-    // Create a mock event object with the target value set to validPassword
+    // Create a mock event object with the target value set to validSecurityQuestion
     const mockEvent = { target: { value: validSecurityQuestion } };
   
-    // Call the checkPassword function with the mock event object
+    // Call the checkSecurityQuestion1 function with the mock event object
     checkSecurityQuestion1(mockEvent);
   
-    // Assert that the password state variable has been set to validPassword
+    // Assert that the securityQuestion1 state variable has been set to validPassword
     expect(securityQuestion1).toBe(validSecurityQuestion);
   
     // Assert that the isValidSecurityQuestion1 state variable is true
     expect(isValidSecurityQuestion1).toBe(true);
   
-    // Call the checkPassword function again with an invalid password
+    // Call the checkSecurityQuestion1 function again with an invalid security question
     checkSecurityQuestion1({ target: { value: invalidSecurityQuestion } });
   
-    // Assert that the password state variable has been set to invalidPassword
+    // Assert that the securityQuestion1 state variable has been set to invalidSecurityQuestion
     expect(securityQuestion1).toBe(invalidSecurityQuestion);
   
-    // Assert that the isValidPassword state variable is false
+    // Assert that the isValidSecurityQuestion1 state variable is false
     expect(isValidSecurityQuestion1).toBe(false);
   });
 
-  test('checkSecurityAnswer function correctly validates the given security question', () => {
+  test('checkSecurityAnswer function correctly validates the given security answer', () => {
     const validSecurityAnswer = 'Neva gonna give up';
     const invalidSecurityAnswer = 'Do you wanna be rick rolled?';
   
@@ -161,7 +161,7 @@ test('checkEmail function correctly validates email', () => {
     let securityAnswer1 = '';
     let isValidSecurityAnswer1 = false;
   
-    // Define the checkSecurityQuestion1 function
+    // Define the checkSecurityAnswer1 function
     function checkSecurityAnswer1(e:any){
         const securityAnswerRegex=/^[a-zA-Z0-9\s]{1,20}$/;
         securityAnswer1=(e.target.value);
@@ -171,7 +171,7 @@ test('checkEmail function correctly validates email', () => {
     // Create a mock event object with the target value set to validAnswer
     const mockEvent = { target: { value: validSecurityAnswer } };
   
-    // Call the checkPassword function with the mock event object
+    // Call the checkSecurityAnswer1 function with the mock event object
     checkSecurityAnswer1(mockEvent);
   
     // Assert that the security answer state variable has been set to validAnswer
