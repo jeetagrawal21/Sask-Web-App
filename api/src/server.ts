@@ -299,7 +299,7 @@ export async function changepass(email: string, newpass: string): Promise<boolea
 async function initiatedb() {
   const pool = new Pool(credentials);
   const tablename = 'users';
-  if(await checkiftable()){
+  if(await checkiftable('users')){
     if(await checkifuser('testuser1@email.com'))
       changepass('testuser1@email.com', 'testpasslonger1!');
       changepass('testadmin1@email.com', 'testpasslonger2!')
@@ -553,6 +553,21 @@ async function initiatelogdb() {
 
 
 }
+
+/**
+This async function sets up the data table in the database by running a SQL file.
+@returns {Promise<void>}
+*/
+async function setupdatadb() {
+  if (!await checkiftable('userdata')){
+    const filePath = 'data/dbdatasqlcode.sql';
+    await runSqlFile(filePath)
+      .then(() => console.log('SQL file executed successfully'))
+      .catch(err => console.error('Error executing SQL file:', err));
+  }
+
+}
+setupdatadb();
 
 
 
