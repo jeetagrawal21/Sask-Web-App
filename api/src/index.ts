@@ -4,7 +4,6 @@ import logger from 'jet-logger';
 import EnvVars from '@src/declarations/major/EnvVars';
 import server from './server';
 
-
 // **** Start server **** //
 
 const msg = ('Express server started on port: ' + EnvVars.port.toString());

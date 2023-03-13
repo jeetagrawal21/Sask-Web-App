@@ -12,10 +12,9 @@ import express, { Request, Response, NextFunction } from 'express';
 
 import 'express-async-errors';
 
-import BaseRouter from './routes/api';
 import logger from 'jet-logger';
-import EnvVars from '@src/declarations/major/EnvVars';
-import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
+// import EnvVars from '@src/declarations/major/EnvVars';
+// import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
 import { NodeEnvs } from '@src/declarations/enums';
 import { RouteError } from '@src/declarations/classes';
 import { createConnection } from 'net';
@@ -32,20 +31,20 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(EnvVars.cookieProps.secret));
+// app.use(cookieParser(EnvVars.cookieProps.secret));
 
 // Show routes called in console during development
-if (EnvVars.nodeEnv === NodeEnvs.Dev) {
-  app.use(morgan('dev'));
-}
+// if (EnvVars.nodeEnv === NodeEnvs.Dev) {
+//   app.use(morgan('dev'));
+// }
 
-// Security
-if (EnvVars.nodeEnv === NodeEnvs.Production) {
-  app.use(helmet());
-}
+// // Security
+// if (EnvVars.nodeEnv === NodeEnvs.Production) {
+//   app.use(helmet());
+// }
 
 //**** Database Query Functions ***//
-const credentials = {
+export const credentials = {
   user: 'postgres',
   host: 'postgres',
   database: 'postgres',
@@ -114,7 +113,7 @@ async function createtable() {
 }
 
 //Checks if user exists (using email) return true if 1 user is found and felse otherwise
-async function checkifuser(email: string) {
+export async function checkifuser(email: string) {
   const pool = new Pool(credentials);
   const now = await pool.query(
     //query looks for all users with email and password
@@ -130,7 +129,7 @@ async function checkifuser(email: string) {
  * @param {string} email - The email of the user to check
  * @returns {Promise<boolean>} - A promise that resolves to a boolean value indicating if the user is an admin or not
  */
-async function checkifadmin(email: string) {
+export async function checkifadmin(email: string) {
   // create a new pool using the credentials for the database
   const pool = new Pool(credentials);
 
@@ -156,7 +155,7 @@ async function checkifadmin(email: string) {
 }
 
 //Gets user and return user info.
-async function getuser(email: string, pass: string) {
+export async function getuser(email: string, pass: string) {
   const pool = new Pool(credentials);
   const result = await pool.query(
     //query looks for all users with email
@@ -168,7 +167,7 @@ async function getuser(email: string, pass: string) {
 }
 
 //Checks password for the associated email. Returns true for correct combo, false otherswise
-async function checkpass(email: string, pass: string) {
+export async function checkpass(email: string, pass: string) {
   const pool = new Pool(credentials);
   const result = await pool.query(
     //query looks for all users with email and password
@@ -180,7 +179,7 @@ async function checkpass(email: string, pass: string) {
 }
 
 //Creates account for admins (admins have a privilege of 1 as opposed to 0)
-async function accountcreationadmin(
+export async function accountcreationadmin(
   surname: string,
   givenname2: string,
   givenname3: string,
@@ -223,7 +222,7 @@ async function accountcreationadmin(
 }
 
 //Creates account for users (users dont need a privilige variable because it is 0 by default)
-async function accountcreationuser(
+export async function accountcreationuser(
   ID: number,
   surname: string,
   givenname2: string,
@@ -271,7 +270,7 @@ async function accountcreationuser(
  * @param {string} email - The email of the user to delete
  * @returns {Promise<void>} - A promise that resolves when the user is deleted or rejects when an error occurs
  */
-async function deleteUser(email: String) {
+export async function deleteUser(email: String) {
   const pool = new Pool(credentials);
 
   try {
@@ -294,20 +293,41 @@ async function deleteUser(email: String) {
   pool.end();
 }
 
-//changes password, returns true if succesful
-async function changepass(email: string, newpass: string) {
+/**
+ * Changes the password of the user with the specified email address
+ * @param email - Email address of the user whose password is to be changed
+ * @param newpass - New password to be set for the user
+ * @returns true if password is changed successfully, false otherwise
+ */
+export async function changepass(
+  email: string,
+  newpass: string
+): Promise<boolean> {
   const pool = new Pool(credentials);
+
+  // Check if the user with the specified email address exists
   if (await checkifuser(email)) {
-    //calls check if user exist (using email) if returns true he exist account not created else account created
-    const result = await pool.query(
-      //
-      `UPDATE users SET pass=$2 WHERE email=$1`,
-      [email, newpass]
-    );
+    try {
+      // Update the user's password in the database
+      await pool.query(`UPDATE users SET pass=$2 WHERE email=$1`, [
+        email,
+        newpass,
+      ]);
+      await pool.end();
+      console.log('Password changed successfully!');
+      return true;
+    } catch (err) {
+      // If there was an error updating the password, log the error and return false
+      console.error('Error changing password: ', err);
+      await pool.end();
+      return false;
+    }
   } else {
-    console.log('user not found');
+    // If the user with the specified email address doesn't exist, log an error and return false
+    console.log('User not found.');
+    await pool.end();
+    return false;
   }
-  await pool.end();
 }
 
 /**
@@ -319,9 +339,10 @@ async function changepass(email: string, newpass: string) {
 async function initiatedb() {
   const pool = new Pool(credentials);
   const tablename = 'users';
-  if (await checkifuser('testuser1@email.com')){
-    changepass('testuser1@email.com', 'testpasslonger1!');
-    changepass('testadmin1@email.com', 'testpasslonger2!')
+  if (await checkiftable()) {
+    if (await checkifuser('testuser1@email.com'))
+      changepass('testuser1@email.com', 'testpasslonger1!');
+    changepass('testadmin1@email.com', 'testpasslonger2!');
   }
   // Call "checkiftable" function and wait for it to complete, storing the result in "tablecheck" variable.
   const tablecheck = await checkiftable();
@@ -339,9 +360,33 @@ async function initiatedb() {
       console.log(res.rows[0].exists);
       console.log('Table was created successfully.');
       // Call the "accountcreationuser" function with some parameters.
-      await accountcreationuser(12345678, 'testuser1', 'testusergiven1-1', 'testusergiven2-1', 'testpasslonger1!', 'testuser1@email.com', "hello who?", "World!", "Whats my name", "Testuser1", "Whats my purpose", "Testing");
-      await accountcreationadmin('testadmin1', 'testadmingiven1-1', 'testadmingiven2-1', 'testpasslonger2!', 'testadmin1@email.com', "With great power comes what?", "Great responsability", "Who died?", "Uncle Ben", "Whats my purpose", "Freindly Neighbourhood admin");
-
+      await accountcreationuser(
+        12345678,
+        'testuser1',
+        'testusergiven1-1',
+        'testusergiven2-1',
+        'testpasslonger1!',
+        'testuser1@email.com',
+        'hello who?',
+        'World!',
+        'Whats my name',
+        'Testuser1',
+        'Whats my purpose',
+        'Testing'
+      );
+      await accountcreationadmin(
+        'testadmin1',
+        'testadmingiven1-1',
+        'testadmingiven2-1',
+        'testpasslonger2!',
+        'testadmin1@email.com',
+        'With great power comes what?',
+        'Great responsability',
+        'Who died?',
+        'Uncle Ben',
+        'Whats my purpose',
+        'Freindly Neighbourhood admin'
+      );
     } catch (error) {
       // If an error occurs, log it to the console.
       console.error(error);
@@ -367,25 +412,25 @@ initiatedb(); //initiates the db
 // **** Add API routes **** //
 
 // Add APIs
-app.use('/api', BaseRouter);
+//app.use('/api', BaseRouter);
 
 // Setup error handler
-app.use(
-  (
-    err: Error,
-    _: Request,
-    res: Response,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    next: NextFunction
-  ) => {
-    logger.err(err, true);
-    let status = HttpStatusCodes.BAD_REQUEST;
-    if (err instanceof RouteError) {
-      status = err.status;
-    }
-    return res.status(status).json({ error: err.message });
-  }
-);
+// app.use(
+//   (
+//     err: Error,
+//     _: Request,
+//     res: Response,
+//     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+//     next: NextFunction
+//   ) => {
+//     logger.err(err, true);
+//     let status = HttpStatusCodes.BAD_REQUEST;
+//     if (err instanceof RouteError) {
+//       status = err.status;
+//     }
+//     return res.status(status).json({ error: err.message });
+//   }
+// );
 // test get function
 app.get('/TestPage', function (req, res) {
   res.send('This is a test');
@@ -399,6 +444,7 @@ var partIDnum: number;
 app.post('/requestAccount', (req, res) => {
   const particpantId = req.body;
   partIDnum = Number(particpantId['participantId']);
+  console.log('PRINTED HERE');
   console.log(partIDnum);
 });
 
@@ -424,7 +470,7 @@ app.post('/postregistrationinfo', (req, res) => {
 
   // call function to post data to the database
 
-  res.send('success');
+  res.send(true); // needs failure handling
 });
 
 /**
@@ -478,8 +524,7 @@ interface Log {
 
 // Define a route for accepting log reports
 // Define the post route handler
-app.post("/logs", async (req, res) => {
-  
+app.post('/logs', async (req, res) => {
   // Create a client object with your credentials
   const client = new Client(credentials);
   try {
@@ -489,7 +534,7 @@ app.post("/logs", async (req, res) => {
     // Validate each log object
     for (const log of logs) {
       if (!log.message || !log.level || !log.timestamp) {
-        return res.status(400).send("Invalid log object");
+        return res.status(400).send('Invalid log object');
       }
     }
 
@@ -506,17 +551,17 @@ app.post("/logs", async (req, res) => {
     ]);
     for (const value of values) {
       await client.query(
-        "INSERT INTO logs (message, level, logger, timestamp, stacktrace) VALUES ($1, $2, $3, $4, $5)",
+        'INSERT INTO logs (message, level, logger, timestamp, stacktrace) VALUES ($1, $2, $3, $4, $5)',
         value
       );
     }
 
     // Send a success response
-    return res.status(200).send("Logs added successfully");
+    return res.status(200).send('Logs added successfully');
   } catch (error) {
     // Handle any database or server errors
     console.error(error);
-    return res.status(500).send("Something went wrong");
+    return res.status(500).send('Something went wrong');
   } finally {
     // Close the database connection
     await client.end();
@@ -536,31 +581,28 @@ async function initiatelogdb() {
   const tablename = 'logs';
 
   try {
-    console.log("here");
+    console.log('here');
     // Execute a SQL query to create a table named "users" if it doesn't already exist.
-    await pool.query('CREATE TABLE IF NOT EXISTS logs ( \
+    await pool.query(
+      'CREATE TABLE IF NOT EXISTS logs ( \
                         id serial PRIMARY KEY, \
                         message text, \
                         level varchar(10), \
                         logger varchar(255), \
                         timestamp timestamp, \
                         stacktrace text \
-                      );');
-    
-    console.log("Table was created successfully.");
-    // Call the "accountcreationuser" function with some parameters.
+                      );'
+    );
 
+    console.log('Table was created successfully.');
+    // Call the "accountcreationuser" function with some parameters.
   } catch (error) {
     // If an error occurs, log it to the console.
     console.error(error);
   } finally {
     pool.end();
   }
-
-
 }
-
-
 
 // **** Export default **** //
 
