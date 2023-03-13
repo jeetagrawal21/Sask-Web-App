@@ -1,14 +1,17 @@
-import React from 'react';
-// import logo from './logo.svg';
 import '../App.css';
 import Header from '../components/header';
-import { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-class RequestAccount extends Component {
-  render() {
-    /**
+
+
+function RequestAccount() {
+    const navigate = useNavigate();
+    const [isValidParticipantId, setIsValidParticipantId] = useState(false);
+    const [participantNumber, setParticipantNumber] = useState("");
+
+        /**
      * Sends the participant id for client requesting an account to the backend,
      */
     // function requestAnAccount() {
@@ -45,18 +48,18 @@ class RequestAccount extends Component {
 
     }
 
-        function checkParticipantID(e:any){
-          const ParticipantIDregex= /^\d+$/;
-          setParticipantNumber(e.target.value);
-          setIsValidParticipantId(ParticipantIDregex.test(
-            e.target.value
-          ));
-        }
+    function checkParticipantID(e:any){
+      const ParticipantIDregex= /^\d+$/;
+      setParticipantNumber(e.target.value);
+      setIsValidParticipantId(ParticipantIDregex.test(
+        e.target.value
+      ));
+    }
 
-        function handleDisable():boolean{
-          let result=!isValidParticipantId;
-          return result;
-        }
+    function handleDisable():boolean{
+      let result=!isValidParticipantId;
+      return result;
+    }
       
 
         return (
@@ -86,15 +89,9 @@ class RequestAccount extends Component {
               {/* </Link> */}
             </form>
           </div>
-          <Link to="/Register">
-            <button className="signin-button" onClick={requestAccount}>
-              Request
-            </button>
-          </Link>
-        </form>
-      </div>
-    );
+        );
+    
   }
-}
+
 
 export default RequestAccount;
