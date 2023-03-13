@@ -12,10 +12,9 @@ import express, { Request, Response, NextFunction } from 'express';
 
 import 'express-async-errors';
 
-import BaseRouter from './routes/api';
 import logger from 'jet-logger';
-import EnvVars from '@src/declarations/major/EnvVars';
-import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
+// import EnvVars from '@src/declarations/major/EnvVars';
+// import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
 import { NodeEnvs } from '@src/declarations/enums';
 import { RouteError } from '@src/declarations/classes';
 import { createConnection } from 'net';
@@ -32,20 +31,20 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(EnvVars.cookieProps.secret));
+// app.use(cookieParser(EnvVars.cookieProps.secret));
 
 // Show routes called in console during development
-if (EnvVars.nodeEnv === NodeEnvs.Dev) {
-  app.use(morgan('dev'));
-}
+// if (EnvVars.nodeEnv === NodeEnvs.Dev) {
+//   app.use(morgan('dev'));
+// }
 
-// Security
-if (EnvVars.nodeEnv === NodeEnvs.Production) {
-  app.use(helmet());
-}
+// // Security
+// if (EnvVars.nodeEnv === NodeEnvs.Production) {
+//   app.use(helmet());
+// }
 
 //**** Database Query Functions ***//
-const credentials= {
+export const credentials= {
   user: "postgres",
   host: "postgres",
   database: "postgres",
@@ -112,7 +111,7 @@ async function createtable(){
 
 
 //Checks if user exists (using email) return true if 1 user is found and felse otherwise
-async function checkifuser(email:string){
+export async function checkifuser(email:string){
   const pool = new Pool(credentials);
   const now = await pool.query(                   //query looks for all users with email and password
     `SELECT EXISTS(SELECT 1 FROM users WHERE email=$1)`, [email]);
@@ -125,7 +124,7 @@ async function checkifuser(email:string){
  * @param {string} email - The email of the user to check
  * @returns {Promise<boolean>} - A promise that resolves to a boolean value indicating if the user is an admin or not
  */
- async function checkifadmin(email:string) {
+ export async function checkifadmin(email:string) {
   // create a new pool using the credentials for the database
   const pool = new Pool(credentials);
 
@@ -151,7 +150,7 @@ async function checkifuser(email:string){
 }
 
 //Gets user and return user info.
-async function getuser (email:string, pass:string){
+export async function getuser (email:string, pass:string){
   const pool = new Pool(credentials);
   const result = await pool.query(               //query looks for all users with email
     `SELECT 1 FROM users WHERE email = $1`, 
@@ -161,7 +160,7 @@ async function getuser (email:string, pass:string){
 } 
 
 //Checks password for the associated email. Returns true for correct combo, false otherswise
-async function checkpass(email:string, pass:string){
+export async function checkpass(email:string, pass:string){
   const pool = new Pool(credentials);
   const result = await pool.query(                   //query looks for all users with email and password
     `SELECT EXISTS(SELECT 1 FROM users WHERE email=$1 AND pass=$2)`, [email, pass]);
@@ -171,7 +170,7 @@ async function checkpass(email:string, pass:string){
 }
 
 //Creates account for admins (admins have a privilege of 1 as opposed to 0)
-async function accountcreationadmin(surname:string, givenname2:string, givenname3:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
+export async function accountcreationadmin(surname:string, givenname2:string, givenname3:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
   const pool = new Pool(credentials);
   if (await checkifuser(email)){                     //calls check if user exist (using email) if returns true he exist account not created else account created
     console.log('account not created');
@@ -185,7 +184,7 @@ async function accountcreationadmin(surname:string, givenname2:string, givenname
 }
 
 //Creates account for users (users dont need a privilige variable because it is 0 by default)
-async function accountcreationuser(ID:number, surname:string, givenname2:string, givenname3:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
+export async function accountcreationuser(ID:number, surname:string, givenname2:string, givenname3:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
   const pool = new Pool(credentials);
   if (await checkifuser(email)){              //calls check if user exist (using email) if returns true he exist account not created else account created
     console.log("account not created");
@@ -203,7 +202,7 @@ async function accountcreationuser(ID:number, surname:string, givenname2:string,
  * @param {string} email - The email of the user to delete
  * @returns {Promise<void>} - A promise that resolves when the user is deleted or rejects when an error occurs
  */
-async function deleteUser(email:String) {
+export async function deleteUser(email:String) {
   const pool = new Pool(credentials);
 
   try {                          
@@ -224,19 +223,36 @@ async function deleteUser(email:String) {
   pool.end();
 }
 
-
-//changes password, returns true if succesful   
-async function changepass(email:string, newpass:string){
+/**
+ * Changes the password of the user with the specified email address
+ * @param email - Email address of the user whose password is to be changed
+ * @param newpass - New password to be set for the user
+ * @returns true if password is changed successfully, false otherwise
+ */
+export async function changepass(email: string, newpass: string): Promise<boolean> {
   const pool = new Pool(credentials);
-  if (await checkifuser(email)){             //calls check if user exist (using email) if returns true he exist account not created else account created
-    const result = await pool.query(           //
-      `UPDATE users SET pass=$2 WHERE email=$1`, [email, newpass]);
-  }else{
-    console.log("user not found");
-  }
-  await pool.end();
-}
 
+  // Check if the user with the specified email address exists
+  if (await checkifuser(email)) {             
+    try {
+      // Update the user's password in the database
+      await pool.query(`UPDATE users SET pass=$2 WHERE email=$1`, [email, newpass]);
+      await pool.end();
+      console.log("Password changed successfully!");
+      return true;
+    } catch (err) {
+      // If there was an error updating the password, log the error and return false
+      console.error("Error changing password: ", err);
+      await pool.end();
+      return false;
+    }
+  } else {
+    // If the user with the specified email address doesn't exist, log an error and return false
+    console.log("User not found.");
+    await pool.end();
+    return false;
+  }
+}
 
 
 /**
@@ -248,8 +264,11 @@ async function changepass(email:string, newpass:string){
 async function initiatedb() {
   const pool = new Pool(credentials);
   const tablename = 'users';
-  changepass('testuser1@email.com', 'testpasslonger1!');
-  changepass('testadmin1@email.com', 'testpasslonger2!')
+  if(await checkiftable()){
+    if(await checkifuser('testuser1@email.com'))
+      changepass('testuser1@email.com', 'testpasslonger1!');
+      changepass('testadmin1@email.com', 'testpasslonger2!')
+  }
   // Call "checkiftable" function and wait for it to complete, storing the result in "tablecheck" variable.
   const tablecheck = await checkiftable();
   if (!tablecheck){
@@ -295,25 +314,25 @@ initiatedb(); //initiates the db
 // **** Add API routes **** //
 
 // Add APIs
-app.use('/api', BaseRouter);
+//app.use('/api', BaseRouter);
 
 // Setup error handler
-app.use(
-  (
-    err: Error,
-    _: Request,
-    res: Response,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    next: NextFunction
-  ) => {
-    logger.err(err, true);
-    let status = HttpStatusCodes.BAD_REQUEST;
-    if (err instanceof RouteError) {
-      status = err.status;
-    }
-    return res.status(status).json({ error: err.message });
-  }
-);
+// app.use(
+//   (
+//     err: Error,
+//     _: Request,
+//     res: Response,
+//     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+//     next: NextFunction
+//   ) => {
+//     logger.err(err, true);
+//     let status = HttpStatusCodes.BAD_REQUEST;
+//     if (err instanceof RouteError) {
+//       status = err.status;
+//     }
+//     return res.status(status).json({ error: err.message });
+//   }
+// );
 // test get function
 app.get('/TestPage', function (req, res) {
   res.send('This is a test');
