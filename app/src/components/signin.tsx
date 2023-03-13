@@ -40,11 +40,12 @@ function SignIn() {
     };
 
     //Kept one more navigate to dashboard outside so that it will redirect the user to dashboard once they enter the correct input and makes sure it does not redirect in case if they don't give the correct input
-    navigate("/Dashboard");
+    // navigate("/Dashboard");
     
     axios
       .post("http://localhost:3000/login", participantInfo)
       .then((response) => {
+        alert("I AM RESPONDING");
         if (response.data.exist) {
           console.log(response.data.exist);
           if(response.data.isadmin){
@@ -52,7 +53,7 @@ function SignIn() {
           }else{
             navigate("Dashboard");
           }
-        } else {
+        }else {
           alert("User/Password Doesn't exist");
         }
       });

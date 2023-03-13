@@ -14,21 +14,39 @@ function RequestAccount() {
         /**
      * Sends the participant id for client requesting an account to the backend,
      */
-    function requestAnAccount() {
-      navigate('/Register');
+    // function requestAnAccount() {
+    //   navigate('/Register');
+    //   const ParticipantId = {
+    //     participantId: (document.getElementById('pID') as HTMLInputElement)
+    //       .value,
+    //   };
+    //   // send the participant data to the backend using an axios post request
+    //   axios
+    //     .post('http://localhost:3000/requestAccount', ParticipantId)
+    //     .then((response) => {
+        
+    //       navigate('/Register');
+    //     });
+    //   }
+    function requestAccount() {
+      // alert("In Request Acc");
+      // navigate('/Register');
+
       const ParticipantId = {
         participantId: (document.getElementById('pID') as HTMLInputElement)
           .value,
       };
+
       // send the participant data to the backend using an axios post request
       axios
         .post('http://localhost:3000/requestAccount', ParticipantId)
         .then((response) => {
-        
-          navigate('/Register');
+          alert(response);
         });
-      }
 
+      navigate('/Register');
+
+    }
 
         function checkParticipantID(e:any){
           const ParticipantIDregex= /^\d+$/;
@@ -65,7 +83,7 @@ function RequestAccount() {
 
               </div>
               {/* <Link to="/Register"> */}
-                <button disabled={handleDisable()} className="signin-button" onClick={requestAnAccount}>
+                <button disabled={handleDisable()} className="signin-button" onClick={requestAccount}>
                   Request
                 </button>
               {/* </Link> */}

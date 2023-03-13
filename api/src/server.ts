@@ -325,6 +325,7 @@ app.get('/TestPage', function (req, res) {
  app.post('/requestAccount', (req, res) => {
    const particpantId = req.body;
    partIDnum = Number(particpantId['participantId']);
+   console.log("PRINTED HERE");
    console.log(partIDnum);
  });
 

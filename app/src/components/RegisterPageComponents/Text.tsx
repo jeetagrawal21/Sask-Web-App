@@ -133,9 +133,10 @@ function Text() {
     axios
       .post('http://localhost:3000/postregistrationinfo', participantInfo)
       .then((response) => {});
-    } else {
-      alert('Error, password is not consistent in both fields');
     }
+    //  else {
+    //   alert('Error, password is not consistent in both fields');
+    // }
   }
   return (
     <div className="register">
