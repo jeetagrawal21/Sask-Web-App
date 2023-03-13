@@ -41,20 +41,20 @@ app.use(express.urlencoded({ extended: true }));
 // }
 
 //**** Database Query Functions ***//
-export const credentials= {
-  user: "postgres",
-  host: "postgres",
-  database: "postgres",
-  password: "ThisIsASuperLongAndCoolPassword4DevelopmentToKeepOutHackersSoIfYoureAHackerPleaseLeave>:3",
+export const credentials = {
+  user: 'postgres',
+  host: 'postgres',
+  database: 'postgres',
+  password:
+    'ThisIsASuperLongAndCoolPassword4DevelopmentToKeepOutHackersSoIfYoureAHackerPleaseLeave>:3',
   port: 5432,
 };
-
 
 // Connect with a connection pool.
 
 async function poolDemo() {
   const pool = new Pool(credentials);
-  const now = await pool.query("SELECT * FROM users");
+  const now = await pool.query('SELECT * FROM users');
   console.log(now.rows);
   await pool.end();
 
@@ -66,7 +66,7 @@ async function poolDemo() {
 async function clientDemo() {
   const client = new Client(credentials);
   await client.connect();
-  const now = await client.query("SELECT NOW()");
+  const now = await client.query('SELECT NOW()');
   await client.end();
 
   return now;
@@ -135,20 +135,25 @@ async function checkiftable(tablename:String){
 //function to creates table under current database 
 async function createtable(){
   const pool = new Pool(credentials);
-  await pool.query("CREATE TABLE users(id serial NOT NULL, surname character varying(80) NOT NULL, givenname2 character varying(80) NOT NULL, givenname3 character varying(80) NOT NULL, pass character varying(40) NOT NULL, email character varying(100) NOT NULL, privilege integer NOT NULL DEFAULT 0, securityQuestion1 character(40) NOT NULL, securityAnswer1 character(40) NOT NULL, securityQuestion2 character(40) NOT NULL, securityAnswer2 character(40) NOT NULL, securityQuestion3 character(40) NOT NULL, securityAnswer3 character(40) NOT NULL, CONSTRAINT utilisateur_pkey PRIMARY KEY (id))", (err, res) => {
-    //console.log(err, res);
-    pool.end();
-});
+  await pool.query(
+    'CREATE TABLE users(id serial NOT NULL, surname character varying(80) NOT NULL, givenname2 character varying(80) NOT NULL, givenname3 character varying(80) NOT NULL, pass character varying(40) NOT NULL, email character varying(100) NOT NULL, privilege integer NOT NULL DEFAULT 0, securityQuestion1 character(40) NOT NULL, securityAnswer1 character(40) NOT NULL, securityQuestion2 character(40) NOT NULL, securityAnswer2 character(40) NOT NULL, securityQuestion3 character(40) NOT NULL, securityAnswer3 character(40) NOT NULL, CONSTRAINT utilisateur_pkey PRIMARY KEY (id))',
+    (err, res) => {
+      //console.log(err, res);
+      pool.end();
+    }
+  );
 }
 
-
 //Checks if user exists (using email) return true if 1 user is found and felse otherwise
-export async function checkifuser(email:string){
+export async function checkifuser(email: string) {
   const pool = new Pool(credentials);
-  const now = await pool.query(                   //query looks for all users with email and password
-    `SELECT EXISTS(SELECT 1 FROM users WHERE email=$1)`, [email]);
+  const now = await pool.query(
+    //query looks for all users with email and password
+    `SELECT EXISTS(SELECT 1 FROM users WHERE email=$1)`,
+    [email]
+  );
   pool.end();
-  return Boolean(((now['rows'])[0])['exists']);  // typecast the return value to bool. Came back in array sorta thing thus all the nonsense
+  return Boolean(now['rows'][0]['exists']); // typecast the return value to bool. Came back in array sorta thing thus all the nonsense
 }
 
 /**
@@ -156,7 +161,7 @@ export async function checkifuser(email:string){
  * @param {string} email - The email of the user to check
  * @returns {Promise<boolean>} - A promise that resolves to a boolean value indicating if the user is an admin or not
  */
- export async function checkifadmin(email:string) {
+export async function checkifadmin(email: string) {
   // create a new pool using the credentials for the database
   const pool = new Pool(credentials);
 
@@ -184,52 +189,115 @@ export async function checkifuser(email:string){
 
 
 //Gets user and return user info.
-export async function getuser (email:string, pass:string){
+export async function getuser(email: string, pass: string) {
   const pool = new Pool(credentials);
-  const result = await pool.query(               //query looks for all users with email
-    `SELECT 1 FROM users WHERE email = $1`, 
-        [email]);
+  const result = await pool.query(
+    //query looks for all users with email
+    `SELECT 1 FROM users WHERE email = $1`,
+    [email]
+  );
   await pool.end();
   return result;
-} 
+}
 
 //Checks password for the associated email. Returns true for correct combo, false otherswise
-export async function checkpass(email:string, pass:string){
+export async function checkpass(email: string, pass: string) {
   const pool = new Pool(credentials);
-  const result = await pool.query(                   //query looks for all users with email and password
-    `SELECT EXISTS(SELECT 1 FROM users WHERE email=$1 AND pass=$2)`, [email, pass]);
+  const result = await pool.query(
+    //query looks for all users with email and password
+    `SELECT EXISTS(SELECT 1 FROM users WHERE email=$1 AND pass=$2)`,
+    [email, pass]
+  );
   pool.end();
-  return Boolean(((result['rows'])[0])['exists']);  // typecast the return value to bool. Came back in array sorta thing thus all the nonsense
-
+  return Boolean(result['rows'][0]['exists']); // typecast the return value to bool. Came back in array sorta thing thus all the nonsense
 }
 
 //Creates account for admins (admins have a privilege of 1 as opposed to 0)
-export async function accountcreationadmin(surname:string, givenname2:string, givenname3:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
+export async function accountcreationadmin(
+  surname: string,
+  givenname2: string,
+  givenname3: string,
+  pass: string,
+  email: string,
+  securityQuestion1: string,
+  securityAnswer1: string,
+  securityQuestion2: string,
+  securityAnswer2: string,
+  securityQuestion3: string,
+  securityAnswer3: string
+) {
   const pool = new Pool(credentials);
-  if (await checkifuser(email)){                     //calls check if user exist (using email) if returns true he exist account not created else account created
+  if (await checkifuser(email)) {
+    //calls check if user exist (using email) if returns true he exist account not created else account created
     console.log('account not created');
-  }else{
-    const result = await pool.query(               //account created
+  } else {
+    const result = await pool.query(
+      //account created
       `INSERT INTO users (surname, givenname2, givenname3, pass, email, privilege, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3)  
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`, [surname, givenname2, givenname3, pass, email, 1, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3]);
-       console.log("Account created");
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+      [
+        surname,
+        givenname2,
+        givenname3,
+        pass,
+        email,
+        1,
+        securityQuestion1,
+        securityAnswer1,
+        securityQuestion2,
+        securityAnswer2,
+        securityQuestion3,
+        securityAnswer3,
+      ]
+    );
+    console.log('Account created');
   }
   await pool.end();
 }
 
 //Creates account for users (users dont need a privilige variable because it is 0 by default)
-export async function accountcreationuser(ID:number, surname:string, givenname2:string, givenname3:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
+export async function accountcreationuser(
+  ID: number,
+  surname: string,
+  givenname2: string,
+  givenname3: string,
+  pass: string,
+  email: string,
+  securityQuestion1: string,
+  securityAnswer1: string,
+  securityQuestion2: string,
+  securityAnswer2: string,
+  securityQuestion3: string,
+  securityAnswer3: string
+) {
   const pool = new Pool(credentials);
-  if (await checkifuser(email)){              //calls check if user exist (using email) if returns true he exist account not created else account created
-    console.log("account not created");
-  }else{
-    const result = await pool.query(            //account created         
+  if (await checkifuser(email)) {
+    //calls check if user exist (using email) if returns true he exist account not created else account created
+    console.log('account not created');
+  } else {
+    const result = await pool.query(
+      //account created
       `INSERT INTO users (id, surname, givenname2, givenname3, pass, email, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3)  
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`, [ID, surname, givenname2, givenname3, pass, email, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3]);
-    console.log("Account created");
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+      [
+        ID,
+        surname,
+        givenname2,
+        givenname3,
+        pass,
+        email,
+        securityQuestion1,
+        securityAnswer1,
+        securityQuestion2,
+        securityAnswer2,
+        securityQuestion3,
+        securityAnswer3,
+      ]
+    );
+    console.log('Account created');
   }
   await pool.end();
-} 
+}
 
 /**
  * Delete a user from the "users" table with the given email
@@ -269,26 +337,32 @@ export async function deleteUser(email: string): Promise<boolean> {
  * @param newpass - New password to be set for the user
  * @returns true if password is changed successfully, false otherwise
  */
-export async function changepass(email: string, newpass: string): Promise<boolean> {
+export async function changepass(
+  email: string,
+  newpass: string
+): Promise<boolean> {
   const pool = new Pool(credentials);
 
   // Check if the user with the specified email address exists
-  if (await checkifuser(email)) {             
+  if (await checkifuser(email)) {
     try {
       // Update the user's password in the database
-      await pool.query(`UPDATE users SET pass=$2 WHERE email=$1`, [email, newpass]);
+      await pool.query(`UPDATE users SET pass=$2 WHERE email=$1`, [
+        email,
+        newpass,
+      ]);
       await pool.end();
-      console.log("Password changed successfully!");
+      console.log('Password changed successfully!');
       return true;
     } catch (err) {
       // If there was an error updating the password, log the error and return false
-      console.error("Error changing password: ", err);
+      console.error('Error changing password: ', err);
       await pool.end();
       return false;
     }
   } else {
     // If the user with the specified email address doesn't exist, log an error and return false
-    console.log("User not found.");
+    console.log('User not found.');
     await pool.end();
     return false;
   }
@@ -308,35 +382,61 @@ async function initiatedb() {
   if(await checkiftable('users')){
     if(await checkifuser('testuser1@email.com'))
       changepass('testuser1@email.com', 'testpasslonger1!');
-      changepass('testadmin1@email.com', 'testpasslonger2!')
+    changepass('testadmin1@email.com', 'testpasslonger2!');
   }
   // Call "checkiftable" function and wait for it to complete, storing the result in "tablecheck" variable.
   const tablecheck = await checkiftable('users');
   if (!tablecheck){
     try {
       // Execute a SQL query to create a table named "users" if it doesn't already exist.
-      await pool.query('CREATE TABLE IF NOT EXISTS users (id serial NOT NULL, surname character varying(80) NOT NULL, givenname2 character varying(80) NOT NULL, givenname3 character varying(80) NOT NULL, pass character varying(40) NOT NULL, email character varying(100) NOT NULL, privilege integer NOT NULL DEFAULT 0, securityQuestion1 character(40) NOT NULL, securityAnswer1 character(40) NOT NULL, securityQuestion2 character(40) NOT NULL, securityAnswer2 character(40) NOT NULL, securityQuestion3 character(40) NOT NULL, securityAnswer3 character(40) NOT NULL, CONSTRAINT utilisateur_pkey PRIMARY KEY (id));');
+      await pool.query(
+        'CREATE TABLE IF NOT EXISTS users (id serial NOT NULL, surname character varying(80) NOT NULL, givenname2 character varying(80) NOT NULL, givenname3 character varying(80) NOT NULL, pass character varying(40) NOT NULL, email character varying(100) NOT NULL, privilege integer NOT NULL DEFAULT 0, securityQuestion1 character(40) NOT NULL, securityAnswer1 character(40) NOT NULL, securityQuestion2 character(40) NOT NULL, securityAnswer2 character(40) NOT NULL, securityQuestion3 character(40) NOT NULL, securityAnswer3 character(40) NOT NULL, CONSTRAINT utilisateur_pkey PRIMARY KEY (id));'
+      );
       // Execute a SQL query to check if the "users" table exists, and store the result in "res".
-      const res = await pool.query(`SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='${tablename}')`);
+      const res = await pool.query(
+        `SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='${tablename}')`
+      );
       // Log the value of the "exists" column in the first row of the "res" result.
       console.log(res.rows[0].exists);
-      console.log("Table was created successfully.");
+      console.log('Table was created successfully.');
       // Call the "accountcreationuser" function with some parameters.
-      await accountcreationuser(12345678, 'testuser1', 'testusergiven1-1', 'testusergiven2-1', 'testpasslonger1!', 'testuser1@email.com', "hello who?", "World!", "Whats my name", "Testuser1", "Whats my purpose", "Testing");
-      await accountcreationadmin('testadmin1', 'testadmingiven1-1', 'testadmingiven2-1', 'testpasslonger2!', 'testadmin1@email.com', "With great power comes what?", "Great responsability", "Who died?", "Uncle Ben", "Whats my purpose", "Freindly Neighbourhood admin");
-
+      await accountcreationuser(
+        12345678,
+        'testuser1',
+        'testusergiven1-1',
+        'testusergiven2-1',
+        'testpasslonger1!',
+        'testuser1@email.com',
+        'hello who?',
+        'World!',
+        'Whats my name',
+        'Testuser1',
+        'Whats my purpose',
+        'Testing'
+      );
+      await accountcreationadmin(
+        'testadmin1',
+        'testadmingiven1-1',
+        'testadmingiven2-1',
+        'testpasslonger2!',
+        'testadmin1@email.com',
+        'With great power comes what?',
+        'Great responsability',
+        'Who died?',
+        'Uncle Ben',
+        'Whats my purpose',
+        'Freindly Neighbourhood admin'
+      );
     } catch (error) {
       // If an error occurs, log it to the console.
       console.error(error);
     } finally {
       pool.end();
     }
-
   }
-
 }
 
-initiatedb();
+initiatedb(); //initiates the db
 
 // async function runCheckifadmin() {
 //   try {
@@ -348,9 +448,6 @@ initiatedb();
 // }
 
 // runCheckifadmin();
-
-
-
 
 // **** Add API routes **** //
 
@@ -383,25 +480,37 @@ app.get('/TestPage', function (req, res) {
  * for now this would not really do any work on the backend other than store participant id with the rest of particiapnt info on the registration page
  * in the future we plan for it to send this participnat id to the admin who then verifies and send a unique link to the participant for registration
  */
- var partIDnum:number;
- app.post('/requestAccount', (req, res) => {
-   const particpantId = req.body;
-   partIDnum = Number(particpantId['participantId']);
-   console.log("PRINTED HERE");
-   console.log(partIDnum);
- });
-
+var partIDnum: number;
+app.post('/requestAccount', (req, res) => {
+  const particpantId = req.body;
+  partIDnum = Number(particpantId['participantId']);
+  console.log('PRINTED HERE');
+  console.log(partIDnum);
+});
 
 // post request to post registration data to database
 app.post('/postregistrationinfo', (req, res) => {
   const data = req.body;
   //console.log(partIDnum, data['surname'] + data['givenName1'], data['password'], data['email'], data['question1'], data['answer1'], data['question2'], data['answer2'], data['question3'], data['answer3'])
-  accountcreationuser(partIDnum, data['surname'], data['givenName1'], data['givenName2'], data['password'], data['email'], data['question1'], data['answer1'], data['question2'], data['answer2'], data['question3'], data['answer3'])
+  accountcreationuser(
+    partIDnum,
+    data['surname'],
+    data['givenName1'],
+    data['givenName2'],
+    data['password'],
+    data['email'],
+    data['question1'],
+    data['answer1'],
+    data['question2'],
+    data['answer2'],
+    data['question3'],
+    data['answer3']
+  );
   console.log(data);
 
   // call function to post data to the database
 
-  res.send(true);   // needs failure handling
+  res.send(true); // needs failure handling
 });
 
 // post request to post registration data to database
@@ -442,12 +551,12 @@ app.post('/login', (req, res) => {
         isadmin: isadminresult
       }
       res.send(userdata);
-    }else{
+    } else {
       const userdata = {
         exist: false,
         isadmin: false,
-      }
-      console.log("login failed");
+      };
+      console.log('login failed');
       res.send(userdata);
     }
   }
@@ -478,8 +587,7 @@ interface Log {
 
 // Define a route for accepting log reports
 // Define the post route handler
-app.post("/logs", async (req, res) => {
-  
+app.post('/logs', async (req, res) => {
   // Create a client object with your credentials
   const client = new Client(credentials);
   try {
@@ -489,7 +597,7 @@ app.post("/logs", async (req, res) => {
     // Validate each log object
     for (const log of logs) {
       if (!log.message || !log.level || !log.timestamp) {
-        return res.status(400).send("Invalid log object");
+        return res.status(400).send('Invalid log object');
       }
     }
 
@@ -506,17 +614,17 @@ app.post("/logs", async (req, res) => {
     ]);
     for (const value of values) {
       await client.query(
-        "INSERT INTO logs (message, level, logger, timestamp, stacktrace) VALUES ($1, $2, $3, $4, $5)",
+        'INSERT INTO logs (message, level, logger, timestamp, stacktrace) VALUES ($1, $2, $3, $4, $5)',
         value
       );
     }
 
     // Send a success response
-    return res.status(200).send("Logs added successfully");
+    return res.status(200).send('Logs added successfully');
   } catch (error) {
     // Handle any database or server errors
     console.error(error);
-    return res.status(500).send("Something went wrong");
+    return res.status(500).send('Something went wrong');
   } finally {
     // Close the database connection
     await client.end();
@@ -536,28 +644,27 @@ async function initiatelogdb() {
   const tablename = 'logs';
 
   try {
-    console.log("here");
+    console.log('here');
     // Execute a SQL query to create a table named "users" if it doesn't already exist.
-    await pool.query('CREATE TABLE IF NOT EXISTS logs ( \
+    await pool.query(
+      'CREATE TABLE IF NOT EXISTS logs ( \
                         id serial PRIMARY KEY, \
                         message text, \
                         level varchar(10), \
                         logger varchar(255), \
                         timestamp timestamp, \
                         stacktrace text \
-                      );');
-    
-    console.log("Table was created successfully.");
-    // Call the "accountcreationuser" function with some parameters.
+                      );'
+    );
 
+    console.log('Table was created successfully.');
+    // Call the "accountcreationuser" function with some parameters.
   } catch (error) {
     // If an error occurs, log it to the console.
     console.error(error);
   } finally {
     pool.end();
   }
-
-
 }
 
 /**
