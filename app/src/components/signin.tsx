@@ -24,7 +24,7 @@ function SignIn() {
   //Password should be a minimum of 8 characters with at least one lowercase letter, one uppercase letter, one number and one special character
   function checkPassword(e: any) {
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     setPassword(e.target.value);
     setIsValidPassword(passwordRegex.test(e.target.value));
   }
