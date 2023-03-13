@@ -1,6 +1,8 @@
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import { Client, Pool } from 'pg';
+import runSqlFile from 'src/datasetup'
+import path from 'path';
 
 import helmet from 'helmet';
 import express, { Request, Response, NextFunction } from 'express';
@@ -40,7 +42,7 @@ if (EnvVars.nodeEnv === NodeEnvs.Production) {
 }
 
 //**** Database Query Functions ***//
-const credentials= {
+export const credentials= {
   user: "postgres",
   host: "postgres",
   database: "postgres",
@@ -104,20 +106,25 @@ function formatDataForLineChart(data: DataItem[]) {
   });
 }
 
-async function test () {
-  const data = await getdata(42176)
-  console.log("Result: ", data); //print the result of the query  
-}
+/////DEEEEEEELEEEEEEETTTTTTTEEEEEEEE THHHHHHIIIIIIIIIIISSSSSSSS SSSSSSSSSSHHHHHHHHHIIIIIIIIIIIIIIIIITTTTTTTTTTTTTTTTT...later...
+// async function test () {
+//   const data = await getdata(42176)
+//   console.log("Result: ", data); //print the result of the query  
+// }
 
-test();
+// test();
 
 
 
 
-//createtable();  // RUN ONLY ONCE (if you have no tables on your computer otherwise dont run at all)
-async function checkiftable(){
+/**
+
+    Checks if a table exists in the database
+    @param tablename - The name of the table to check
+    @returns A boolean indicating whether the table exists or not
+    */
+async function checkiftable(tablename:String){
   const pool = new Pool(credentials);
-  const tablename = 'users'
   const { rows } = await pool.query("SELECT EXISTS(SELECT FROM pg_catalog.pg_tables WHERE tablename  = $1)", [tablename]);
   const exists = rows[0].exists;
   pool.end(); 
@@ -252,7 +259,7 @@ async function initiatedb() {
   const pool = new Pool(credentials);
   const tablename = 'users';
   // Call "checkiftable" function and wait for it to complete, storing the result in "tablecheck" variable.
-  const tablecheck = await checkiftable();
+  const tablecheck = await checkiftable('users');
   if (!tablecheck){
     try {
       // Execute a SQL query to create a table named "users" if it doesn't already exist.
@@ -315,6 +322,25 @@ app.use(
     return res.status(status).json({ error: err.message });
   }
 );
+
+/**
+
+This async function sets up the data table in the database by running a SQL file.
+@returns {Promise<void>}
+*/
+async function setupdatadb() {
+  if (!await checkiftable('userdata')){
+    const filePath = 'data/dbdatasqlcode.sql';
+    await runSqlFile(filePath)
+      .then(() => console.log('SQL file executed successfully'))
+      .catch(err => console.error('Error executing SQL file:', err));
+  }
+
+}
+setupdatadb();
+
+
+
 // test get function
 app.get('/TestPage', function (req, res) {
   res.send('This is a test');
@@ -396,6 +422,7 @@ app.post('/login', (req, res) => {
   // send data as JSON object to the function that aunthenticates login
   // send response if login was successful or not( we might not actually need the get request below)
 });
+
 
 
 
