@@ -161,7 +161,7 @@ export async function checkifuser(email: string) {
  * @param {string} email - The email of the user to check
  * @returns {Promise<boolean>} - A promise that resolves to a boolean value indicating if the user is an admin or not
  */
-export async function checkifadmin(email: string) {
+export async function checkifadmin(email:string) {
   // create a new pool using the credentials for the database
   const pool = new Pool(credentials);
 
@@ -185,7 +185,6 @@ export async function checkifadmin(email: string) {
   // if the user is not an admin or does not exist, return false
   return false;
 }
-
 
 
 //Gets user and return user info.
@@ -545,7 +544,7 @@ app.post('/login', (req, res) => {
     var result:boolean = await checkpass(req.body.email, req.body.password);    //async function is required to make it wait for reply (await used below to specific what we wait for)
     if (result){     //calls check password to see if pass and email match a database entry
       console.log("login success!");
-      const isadminresult = checkifadmin(req.body.email)
+      const isadminresult = await checkifadmin(req.body.email)
       const userdata = {
         exist: result,
         isadmin: isadminresult
