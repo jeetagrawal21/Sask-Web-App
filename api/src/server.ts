@@ -9,10 +9,9 @@ import express, { Request, Response, NextFunction } from 'express';
 
 import 'express-async-errors';
 
-import BaseRouter from './routes/api';
 import logger from 'jet-logger';
-import EnvVars from '@src/declarations/major/EnvVars';
-import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
+// import EnvVars from '@src/declarations/major/EnvVars';
+// import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
 import { NodeEnvs } from '@src/declarations/enums';
 import { RouteError } from '@src/declarations/classes';
 import { createConnection } from 'net';
@@ -29,17 +28,17 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(EnvVars.cookieProps.secret));
+// app.use(cookieParser(EnvVars.cookieProps.secret));
 
 // Show routes called in console during development
-if (EnvVars.nodeEnv === NodeEnvs.Dev) {
-  app.use(morgan('dev'));
-}
+// if (EnvVars.nodeEnv === NodeEnvs.Dev) {
+//   app.use(morgan('dev'));
+// }
 
-// Security
-if (EnvVars.nodeEnv === NodeEnvs.Production) {
-  app.use(helmet());
-}
+// // Security
+// if (EnvVars.nodeEnv === NodeEnvs.Production) {
+//   app.use(helmet());
+// }
 
 //**** Database Query Functions ***//
 export const credentials= {
@@ -144,7 +143,7 @@ async function createtable(){
 
 
 //Checks if user exists (using email) return true if 1 user is found and felse otherwise
-async function checkifuser(email:string){
+export async function checkifuser(email:string){
   const pool = new Pool(credentials);
   const now = await pool.query(                   //query looks for all users with email and password
     `SELECT EXISTS(SELECT 1 FROM users WHERE email=$1)`, [email]);
@@ -157,7 +156,7 @@ async function checkifuser(email:string){
  * @param {string} email - The email of the user to check
  * @returns {Promise<boolean>} - A promise that resolves to a boolean value indicating if the user is an admin or not
  */
- async function checkifadmin(email:string) {
+ export async function checkifadmin(email:string) {
   // create a new pool using the credentials for the database
   const pool = new Pool(credentials);
 
@@ -185,7 +184,7 @@ async function checkifuser(email:string){
 
 
 //Gets user and return user info.
-async function getuser (email:string, pass:string){
+export async function getuser (email:string, pass:string){
   const pool = new Pool(credentials);
   const result = await pool.query(               //query looks for all users with email
     `SELECT 1 FROM users WHERE email = $1`, 
@@ -195,7 +194,7 @@ async function getuser (email:string, pass:string){
 } 
 
 //Checks password for the associated email. Returns true for correct combo, false otherswise
-async function checkpass(email:string, pass:string){
+export async function checkpass(email:string, pass:string){
   const pool = new Pool(credentials);
   const result = await pool.query(                   //query looks for all users with email and password
     `SELECT EXISTS(SELECT 1 FROM users WHERE email=$1 AND pass=$2)`, [email, pass]);
@@ -205,7 +204,7 @@ async function checkpass(email:string, pass:string){
 }
 
 //Creates account for admins (admins have a privilege of 1 as opposed to 0)
-async function accountcreationadmin(surname:string, givenname2:string, givenname3:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
+export async function accountcreationadmin(surname:string, givenname2:string, givenname3:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
   const pool = new Pool(credentials);
   if (await checkifuser(email)){                     //calls check if user exist (using email) if returns true he exist account not created else account created
     console.log('account not created');
@@ -219,7 +218,7 @@ async function accountcreationadmin(surname:string, givenname2:string, givenname
 }
 
 //Creates account for users (users dont need a privilige variable because it is 0 by default)
-async function accountcreationuser(ID:number, surname:string, givenname2:string, givenname3:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
+export async function accountcreationuser(ID:number, surname:string, givenname2:string, givenname3:string, pass:string, email:string, securityQuestion1:string, securityAnswer1:string, securityQuestion2:string, securityAnswer2:string, securityQuestion3:string, securityAnswer3:string){
   const pool = new Pool(credentials);
   if (await checkifuser(email)){              //calls check if user exist (using email) if returns true he exist account not created else account created
     console.log("account not created");
@@ -232,19 +231,62 @@ async function accountcreationuser(ID:number, surname:string, givenname2:string,
   await pool.end();
 } 
 
-
-//changes password, returns true if succesful   
-async function changepass(email:string, newpass:string){
+/**
+ * Delete a user from the "users" table with the given email
+ * @param {string} email - The email of the user to delete
+ * @returns {Promise<void>} - A promise that resolves when the user is deleted or rejects when an error occurs
+ */
+export async function deleteUser(email:String) {
   const pool = new Pool(credentials);
-  if (await checkifuser(email)){             //calls check if user exist (using email) if returns true he exist account not created else account created
-    const result = await pool.query(           //
-      `UPDATE users SET pass=$2 WHERE email=$1`, [email, newpass]);
-  }else{
-    console.log("user not found");
+
+  try {                          
+    const result = await pool.query(
+      `DELETE FROM users WHERE email=$1 RETURNING *`,          // Delete the user from the "users" table
+      [email]
+    );
+
+    if (result.rowCount === 0) {         // If the user was not found
+      console.log("User not found");
+    } else {
+      console.log("User deleted");
+    }
+  } catch (error) {            // If an error occurred
+    console.error(error);
   }
-  await pool.end();
+
+  pool.end();
 }
 
+/**
+ * Changes the password of the user with the specified email address
+ * @param email - Email address of the user whose password is to be changed
+ * @param newpass - New password to be set for the user
+ * @returns true if password is changed successfully, false otherwise
+ */
+export async function changepass(email: string, newpass: string): Promise<boolean> {
+  const pool = new Pool(credentials);
+
+  // Check if the user with the specified email address exists
+  if (await checkifuser(email)) {             
+    try {
+      // Update the user's password in the database
+      await pool.query(`UPDATE users SET pass=$2 WHERE email=$1`, [email, newpass]);
+      await pool.end();
+      console.log("Password changed successfully!");
+      return true;
+    } catch (err) {
+      // If there was an error updating the password, log the error and return false
+      console.error("Error changing password: ", err);
+      await pool.end();
+      return false;
+    }
+  } else {
+    // If the user with the specified email address doesn't exist, log an error and return false
+    console.log("User not found.");
+    await pool.end();
+    return false;
+  }
+}
 
 //used to create account  Use webpage instead if needed
 //accountcreationuser(12345678, 'testuser8', 'testusergiven1-8', 'testusergiven2-8', 'testpass8', 'testuser2@email.com', "hello who?", "World!", "Whats my name", "Testuser8", "Whats my purpose", "Testing");
@@ -257,6 +299,11 @@ async function changepass(email:string, newpass:string){
 async function initiatedb() {
   const pool = new Pool(credentials);
   const tablename = 'users';
+  if(await checkiftable()){
+    if(await checkifuser('testuser1@email.com'))
+      changepass('testuser1@email.com', 'testpasslonger1!');
+      changepass('testadmin1@email.com', 'testpasslonger2!')
+  }
   // Call "checkiftable" function and wait for it to complete, storing the result in "tablecheck" variable.
   const tablecheck = await checkiftable('users');
   if (!tablecheck){
@@ -269,8 +316,8 @@ async function initiatedb() {
       console.log(res.rows[0].exists);
       console.log("Table was created successfully.");
       // Call the "accountcreationuser" function with some parameters.
-      await accountcreationuser(12345678, 'testuser1', 'testusergiven1-1', 'testusergiven2-1', 'testpass1', 'testuser1@email.com', "hello who?", "World!", "Whats my name", "Testuser1", "Whats my purpose", "Testing");
-
+      await accountcreationuser(12345678, 'testuser1', 'testusergiven1-1', 'testusergiven2-1', 'testpasslonger1!', 'testuser1@email.com', "hello who?", "World!", "Whats my name", "Testuser1", "Whats my purpose", "Testing");
+      await accountcreationadmin('testadmin1', 'testadmingiven1-1', 'testadmingiven2-1', 'testpasslonger2!', 'testadmin1@email.com', "With great power comes what?", "Great responsability", "Who died?", "Uncle Ben", "Whats my purpose", "Freindly Neighbourhood admin");
 
     } catch (error) {
       // If an error occurs, log it to the console.
@@ -302,44 +349,25 @@ initiatedb();
 // **** Add API routes **** //
 
 // Add APIs
-app.use('/api', BaseRouter);
+//app.use('/api', BaseRouter);
 
 // Setup error handler
-app.use(
-  (
-    err: Error,
-    _: Request,
-    res: Response,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    next: NextFunction
-  ) => {
-    logger.err(err, true);
-    let status = HttpStatusCodes.BAD_REQUEST;
-    if (err instanceof RouteError) {
-      status = err.status;
-    }
-    return res.status(status).json({ error: err.message });
-  }
-);
-
-/**
-
-This async function sets up the data table in the database by running a SQL file.
-@returns {Promise<void>}
-*/
-async function setupdatadb() {
-  if (!await checkiftable('userdata')){
-    const filePath = 'data/dbdatasqlcode.sql';
-    await runSqlFile(filePath)
-      .then(() => console.log('SQL file executed successfully'))
-      .catch(err => console.error('Error executing SQL file:', err));
-  }
-
-}
-setupdatadb();
-
-
-
+// app.use(
+//   (
+//     err: Error,
+//     _: Request,
+//     res: Response,
+//     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+//     next: NextFunction
+//   ) => {
+//     logger.err(err, true);
+//     let status = HttpStatusCodes.BAD_REQUEST;
+//     if (err instanceof RouteError) {
+//       status = err.status;
+//     }
+//     return res.status(status).json({ error: err.message });
+//   }
+// );
 // test get function
 app.get('/TestPage', function (req, res) {
   res.send('This is a test');
@@ -353,6 +381,7 @@ app.get('/TestPage', function (req, res) {
  app.post('/requestAccount', (req, res) => {
    const particpantId = req.body;
    partIDnum = Number(particpantId['participantId']);
+   console.log("PRINTED HERE");
    console.log(partIDnum);
  });
 
@@ -432,6 +461,98 @@ app.get('/login', (req, res) => {
   // res.send(req);
 });
 
+// Define the log interface
+interface Log {
+  message: string;
+  level: string;
+  logger?: string;
+  timestamp: Date;
+  stacktrace?: string;
+}
+
+// Define a route for accepting log reports
+// Define the post route handler
+app.post("/logs", async (req, res) => {
+  
+  // Create a client object with your credentials
+  const client = new Client(credentials);
+  try {
+    // Get the log objects from the request body
+    const logs: Log[] = req.body.logs;
+
+    // Validate each log object
+    for (const log of logs) {
+      if (!log.message || !log.level || !log.timestamp) {
+        return res.status(400).send("Invalid log object");
+      }
+    }
+
+    // Connect to the database
+    await client.connect();
+
+    // Insert the log objects into the database table
+    const values = logs.map((log) => [
+      log.message,
+      log.level,
+      log.logger,
+      new Date(log.timestamp).toISOString(),
+      log.stacktrace,
+    ]);
+    for (const value of values) {
+      await client.query(
+        "INSERT INTO logs (message, level, logger, timestamp, stacktrace) VALUES ($1, $2, $3, $4, $5)",
+        value
+      );
+    }
+
+    // Send a success response
+    return res.status(200).send("Logs added successfully");
+  } catch (error) {
+    // Handle any database or server errors
+    console.error(error);
+    return res.status(500).send("Something went wrong");
+  } finally {
+    // Close the database connection
+    await client.end();
+  }
+});
+
+initiatelogdb();
+
+/**
+ * This is an async function that checks if the "logs" table exists in the database.
+ * If the table does not exist, it creates the table.
+ * @returns {Promise<void>} Nothing is returned from this function.
+ */
+// This is an async function named "test".
+async function initiatelogdb() {
+  const pool = new Pool(credentials);
+  const tablename = 'logs';
+
+  try {
+    console.log("here");
+    // Execute a SQL query to create a table named "users" if it doesn't already exist.
+    await pool.query('CREATE TABLE IF NOT EXISTS logs ( \
+                        id serial PRIMARY KEY, \
+                        message text, \
+                        level varchar(10), \
+                        logger varchar(255), \
+                        timestamp timestamp, \
+                        stacktrace text \
+                      );');
+    
+    console.log("Table was created successfully.");
+    // Call the "accountcreationuser" function with some parameters.
+
+  } catch (error) {
+    // If an error occurs, log it to the console.
+    console.error(error);
+  } finally {
+    pool.end();
+  }
+
+
+}
 
 
 
