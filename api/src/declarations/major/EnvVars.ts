@@ -20,3 +20,5 @@ export default {
     exp: (process.env.COOKIE_EXP ?? ''), // exp at the same time as the cookie
   },
 } as const;
+
+
