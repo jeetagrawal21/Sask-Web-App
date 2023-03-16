@@ -104,15 +104,6 @@ function formatDataForLineChart(data: DataItem[]) {
   });
 }
 
-/////DEEEEEEELEEEEEEETTTTTTTEEEEEEEE THHHHHHIIIIIIIIIIISSSSSSSS SSSSSSSSSSHHHHHHHHHIIIIIIIIIIIIIIIIITTTTTTTTTTTTTTTTT...later...
-// async function test () {
-//   const data = await getdata(42176)
-//   console.log("Result: ", data); //print the result of the query  
-// }
-
-// test();
-
-
 
 
 /**
