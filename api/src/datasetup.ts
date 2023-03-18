@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { Client } from 'pg';
 import path from 'path';
-import { credentials } from 'src/server';
+import { credentials } from './database';
 
 const cred= {
     user: "postgres",
@@ -34,3 +34,4 @@ export default async function runSqlFile(filepath: string): Promise<void> {
     // Closes the database connection
     await client.end();
 }
+
