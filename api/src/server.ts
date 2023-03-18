@@ -5,7 +5,7 @@ import { Client, Pool } from 'pg';
 import path from 'path';
 
 import helmet from 'helmet';
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction, Router} from 'express';
 
 import 'express-async-errors';
 
@@ -22,13 +22,20 @@ import { credentials} from './database';
 import {accountcreationuser, accountcreationadmin, changepass, checkifuser, checkifadmin, getuser, checkpass, deleteUser} from './services/user-services'
 import {getdata, formatDataForLineChart} from './services/data-services'
 import {setupdatadb, initiatedb} from './services/internal-services'
+import requestAccountRouter from './routes/requestAccount-route';
+import dataRouter from './routes/data-route';
+import loginRouter from './routes/login-route';
+import postregistrationinfoRouter from './routes/postregistrationinfo-route';
+
+
+
 
 
 // const fs = require('fs');
 
 // **** Init express **** //
 
-const app = express();
+export const app = express();
 const cors = require('cors');
 
 // **** Set basic express settings **** //
@@ -48,10 +55,22 @@ app.use(express.urlencoded({ extended: true }));
 //   app.use(helmet());
 // }
 
+const router = Router();
+
 
 
 initiatedb(); //initiates the db
 setupdatadb(); // initeates the data db with the data
+
+
+
+
+app.use('/requestAccount', requestAccountRouter);
+app.use('/data', dataRouter);
+app.use('/login', loginRouter);
+app.use('/postregistrationinfo', postregistrationinfoRouter);
+
+
 
 
 
@@ -60,105 +79,101 @@ app.get('/TestPage', function (req, res) {
   res.send('This is a test');
 });
 
-/**
- * for now this would not really do any work on the backend other than store participant id with the rest of particiapnt info on the registration page
- * in the future we plan for it to send this participnat id to the admin who then verifies and send a unique link to the participant for registration
- */
-var partIDnum: number;
-app.post('/requestAccount', (req, res) => {
-  const particpantId = req.body;
-  partIDnum = Number(particpantId['participantId']);
-  console.log('PRINTED HERE');
-  console.log(partIDnum);
-});
+// /**
+//  * for now this would not really do any work on the backend other than store participant id with the rest of particiapnt info on the registration page
+//  * in the future we plan for it to send this participnat id to the admin who then verifies and send a unique link to the participant for registration
+//  */
+// var partIDnum: number;
+// app.post('/requestAccount', (req, res) => {
+//   const particpantId = req.body;
+//   partIDnum = Number(particpantId['participantId']);
+//   console.log('PRINTED HERE');
+//   console.log(partIDnum);
+// });
+
+
 
 // post request to post registration data to database
-app.post('/postregistrationinfo', (req, res) => {
-  const data = req.body;
-  //console.log(partIDnum, data['surname'] + data['givenName1'], data['password'], data['email'], data['question1'], data['answer1'], data['question2'], data['answer2'], data['question3'], data['answer3'])
-  accountcreationuser(
-    partIDnum,
-    data['surname'],
-    data['givenName1'],
-    data['givenName2'],
-    data['password'],
-    data['email'],
-    data['question1'],
-    data['answer1'],
-    data['question2'],
-    data['answer2'],
-    data['question3'],
-    data['answer3']
-  );
-  console.log(data);
+// app.post('/postregistrationinfo', (req, res) => {
+//   const data = req.body;
+//   //console.log(partIDnum, data['surname'] + data['givenName1'], data['password'], data['email'], data['question1'], data['answer1'], data['question2'], data['answer2'], data['question3'], data['answer3'])
+//   accountcreationuser(
+//     partIDnum,
+//     data['surname'],
+//     data['givenName1'],
+//     data['givenName2'],
+//     data['password'],
+//     data['email'],
+//     data['question1'],
+//     data['answer1'],
+//     data['question2'],
+//     data['answer2'],
+//     data['question3'],
+//     data['answer3']
+//   );
+//   console.log(data);
 
-  // call function to post data to the database
+//   // call function to post data to the database
 
-  res.send(true); // needs failure handling
-});
-
-// post request to post registration data to database
-app.post('/data', (req, res) => {
-  //const data = req.body;
-  //getdata(42176)
-  //console.log(data);
-
-  // call function to post data to the database
-
-  async function dataGetFormat () {
-    const data = await getdata(42176)
-    console.log("data :", data); //print the result of the query 
-    res.send(data);   // needs failure handling
-
-  }
-  dataGetFormat();
-
-});
+//   res.send(true); // needs failure handling
+// });
 
 
 
 
-/**
- * Gets login data from the user
- * req: login data as a string array containing email and password
- * res: success or error message
- */
-app.post('/login', (req, res) => {
-  const data = JSON.stringify(req.body);
-  async function checking () {  
-    var result:boolean = await checkpass(req.body.email, req.body.password);    //async function is required to make it wait for reply (await used below to specific what we wait for)
-    if (result){     //calls check password to see if pass and email match a database entry
-      console.log("login success!");
-      const isadminresult = await checkifadmin(req.body.email)
-      const userdata = {
-        exist: result,
-        isadmin: isadminresult
-      }
-      res.send(userdata);
-    } else {
-      const userdata = {
-        exist: false,
-        isadmin: false,
-      };
-      console.log('login failed');
-      res.send(userdata);
-    }
-  }
-  checking(); //Calling above function with data from page
+// // post request to post registration data to database
+// app.post('/data', (req, res) => {
+//   //const data = req.body;
+//   //getdata(42176)
+//   //console.log(data);
 
-  // send data as JSON object to the function that aunthenticates login
-  // send response if login was successful or not( we might not actually need the get request below)
-});
+//   // call function to post data to the database
+
+//   async function dataGetFormat () {
+//     const data = await getdata(42176)
+//     console.log("data :", data); //print the result of the query 
+//     res.send(data);   // needs failure handling
+
+//   }
+//   dataGetFormat();
+
+// });
 
 
 
 
+// /**
+//  * Gets login data from the user
+//  * req: login data as a string array containing email and password
+//  * res: success or error message
+//  */
+// app.post('/login', (req, res) => {
+//   const data = JSON.stringify(req.body);
+//   async function checking () {  
+//     var result:boolean = await checkpass(req.body.email, req.body.password);    //async function is required to make it wait for reply (await used below to specific what we wait for)
+//     if (result){     //calls check password to see if pass and email match a database entry
+//       console.log("login success!");
+//       const isadminresult = await checkifadmin(req.body.email)
+//       const userdata = {
+//         exist: result,
+//         isadmin: isadminresult
+//       }
+//       res.send(userdata);
+//     } else {
+//       const userdata = {
+//         exist: false,
+//         isadmin: false,
+//       };
+//       console.log('login failed');
+//       res.send(userdata);
+//     }
+//   }
+//   checking(); //Calling above function with data from page
 
+//   // send data as JSON object to the function that aunthenticates login
+//   // send response if login was successful or not( we might not actually need the get request below)
+// });
 
-app.get('/login', (req, res) => {
-  // this function communicates with the login authentication function to check if login info is correct and return a response if it is found in the DB
-  // res.send(req);
-});
 
 // Define the log interface
 interface Log {

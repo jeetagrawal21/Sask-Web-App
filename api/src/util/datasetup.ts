@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { Client } from 'pg';
 import path from 'path';
-import { credentials } from './database';
+import { credentials } from '../database';
 
 const cred= {
     user: "postgres",
