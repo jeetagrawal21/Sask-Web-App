@@ -1,11 +1,11 @@
-import React from 'react';
-import '../stylings/DashboardStyles/Dashboard.css';
-import Header from '../components/header';
-import Sidebar from '../components/DashboardComponents/Sidebar';
-import MainComponent from '../components/DashboardComponents/MainComponent';
-import { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React from "react";
+import "../stylings/DashboardStyles/Dashboard.css";
+import Header from "../components/Header";
+import Sidebar from "../components/DashboardComponents/Sidebar";
+import MainComponent from "../components/DashboardComponents/MainComponent";
+import { Component } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 class Dashboard extends Component {
   render() {

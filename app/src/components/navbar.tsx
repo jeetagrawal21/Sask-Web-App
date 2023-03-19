@@ -1,14 +1,20 @@
-import React from 'react';
-import '../stylings/navbar.css';
+import React from "react";
+import "../stylings/NavBar.css";
 
-function Navbar() {
+function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="nav-link" href="#">About</a>
-      <a className="nav-link" href="#">Contact us</a>
-      <a className="nav-link" href="#">Help</a>
+      <a className="nav-link" href="#">
+        About
+      </a>
+      <a className="nav-link" href="#">
+        Contact us
+      </a>
+      <a className="nav-link" href="#">
+        Help
+      </a>
     </nav>
   );
 }
 
-export default Navbar; 
+export default NavBar;

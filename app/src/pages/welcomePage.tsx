@@ -1,8 +1,8 @@
-import React from 'react';
-import '../App.css';
-import Header from '../components/header';
-import SignIn from '../components/Signin';
-import Navbar from '../components/navbar';
+import React from "react";
+import "../App.css";
+import Header from "../components/Header";
+import SignIn from "../components/SignIn";
+import Navbar from "../components/NavBar";
 
 function WelcomePage() {
   return (

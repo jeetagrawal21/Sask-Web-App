@@ -1,6 +1,6 @@
-import React, { Component, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { Component, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 /**
    Checks if the given email is valid. It takes the parameter and compares it with emailRegex to see if it fits the description.

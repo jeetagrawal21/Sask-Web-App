@@ -1,7 +1,7 @@
-import React from 'react';
-import '../../stylings/DashboardStyles/sidebar.css';
-import { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import "../../stylings/DashboardStyles/sidebar.css";
+import { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Sidebar extends Component {
   render() {
@@ -15,7 +15,7 @@ class Sidebar extends Component {
             </button>
           </Link>
           <button className="sidebar-button">
-            Table (Under Construction){' '}
+            Table (Under Construction){" "}
           </button>
           <button className="sidebar-button">
             Settings (Under Construction)

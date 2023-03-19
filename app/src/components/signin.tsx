@@ -1,4 +1,4 @@
-import "../stylings/signin.css";
+import "../stylings/SignIn.css";
 import React, { Component, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -6,7 +6,7 @@ import {
   checkEmail,
   checkPassword,
   handleDisable,
-} from "./WelcomePageComponents/Controller/SigninController";
+} from "./WelcomePageComponents/Controller/SignInController";
 
 //Used React useState to check if the Email and password are valid. It is set to false and it will change once the desired input is given.
 function SignIn() {
