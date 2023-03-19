@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "../stylings/AdminPage.css";
 
+/*
+Represents a user in the list of all users
+*/
 export interface User {
   id: number;
   name: string;
   email: string;
 }
 
+/*
+Represents a user request to be added to the list of all users
+*/
 export interface UserRequest {
   id: number;
   name: string;
@@ -14,79 +20,80 @@ export interface UserRequest {
   requestDate: Date;
 }
 
-// initialize sample data
-const initUserRequests: UserRequest[] = [
-  {
-    id: 2735,
-    name: "Jack Black",
-    email: "jack.black@example.com",
-    requestDate: new Date(),
-  },
-  {
-    id: 1892,
-    name: "Mary White",
-    email: "mary.white@example.com",
-    requestDate: new Date(),
-  },
-];
-
-const initUsers: User[] = [
-  { id: 3921, name: "John Doe", email: "john.doe@example.com" },
-  { id: 2012, name: "Jane Smith", email: "jane.smith@example.com" },
-  { id: 3289, name: "Bob Johnson", email: "bob.johnson@example.com" },
-];
-
 const AdminPage: React.FC = () => {
-  // set up state hooks
   const [userRequests, setUserRequests] = useState<UserRequest[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);
 
+  // useEffect hook that runs on component mount to simulate fetching user requests and all users from server
   useEffect(() => {
-    fetchUserRequests();
-    fetchAllUsers();
+    const initUserRequests: UserRequest[] = [
+      {
+        id: 2735,
+        name: "Jack Black",
+        email: "jack.black@example.com",
+        requestDate: new Date(),
+      },
+      {
+        id: 1892,
+        name: "Mary White",
+        email: "mary.white@example.com",
+        requestDate: new Date(),
+      },
+    ];
+    setUserRequests(initUserRequests);
+
+    // initialize sample data for all users
+    const initUsers: User[] = [
+      { id: 3921, name: "John Doe", email: "john.doe@example.com" },
+      { id: 2012, name: "Jane Smith", email: "jane.smith@example.com" },
+      { id: 3289, name: "Bob Johnson", email: "bob.johnson@example.com" },
+    ];
+    setAllUsers(initUsers);
   }, []);
 
-  // load initial data
-  const fetchUserRequests = async () => {
-    setUserRequests(initUserRequests);
-  };
-
-  // simulate fetching user requests from server
-  const fetchAllUsers = async () => {
-    setAllUsers(initUsers);
-  };
-
-  // handle approving a user request
-  const handleApproveUserRequest = async (userId: number) => {
-    // find the user request by ID and create a new User object with its data
-    let newUser: User = { id: 0, name: "null", email: "null" };
-    let newUsers = allUsers;
-    userRequests.map((req) =>
-      req.id === userId
-        ? (newUser = { id: req.id, name: req.name, email: req.email })
-        : null
-    );
-    // remove the user request from the state
-    setUserRequests(userRequests.filter((req) => req.id !== userId));
-    // add the new user to the state if it exists
-    if (newUser.id !== 0) {
-      newUsers.push(newUser);
-      setAllUsers(newUsers);
+  /**
+  Handles approving a user request and adding the user to the list of all users
+  @param userId - The id of the user request to approve
+  @precondition userRequest with the given userId exists in the userRequests array
+  @postcondition userRequest with the given userId is removed from the userRequests array,
+  and a new user object is added to the allUsers array
+  @assertion userRequest with the given userId is not null
+  */
+  const handleApproveUserRequest = (userId: number) => {
+    const userRequest = userRequests.find((req) => req.id === userId);
+    if (userRequest) {
+      setUserRequests(userRequests.filter((req) => req.id !== userId));
+      setAllUsers([
+        ...allUsers,
+        {
+          id: userRequest.id,
+          name: userRequest.name,
+          email: userRequest.email,
+        },
+      ]);
     }
   };
 
-  // handle rejecting a user request
-  const handleRejectUserRequest = async (userId: number) => {
-    // remove the user request from the state
-    const newRequests = userRequests.filter((req) => req.id !== userId);
-    setUserRequests(newRequests);
+  /**
+  Handles rejecting a user request
+  @param userId - The id of the user request to reject
+  @precondition userRequest with the given userId exists in the userRequests array
+  @postcondition userRequest with the given userId is removed from the userRequests array
+  @assertion userRequest with the given userId is not null
+  */
+  const handleRejectUserRequest = (userId: number) => {
+    setUserRequests(userRequests.filter((req) => req.id !== userId));
   };
 
-  // handle removing a user from the list
-  const handleRemoveUser = async (userId: number) => {
-    // remove the user from the state
-    const newUsers = allUsers.filter((u) => u.id !== userId);
-    setAllUsers(newUsers);
+  /**
+  Handles removing a user from the list of all users
+  @param userId - The id of the user to remove
+  @precondition user with the given userId exists in the allUsers array
+  @postcondition user with the given userId is removed from the allUsers array
+  @assertion user with the given userId is not null
+  */
+  const handleRemoveUser = (userId: number) => {
+    setAllUsers(allUsers.filter((user) => user.id !== userId));
   };
 
   return (
