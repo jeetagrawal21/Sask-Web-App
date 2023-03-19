@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 import Header from '../components/header';
-import SignIn from '../components/signin';
+import SignIn from '../components/Signin';
 import Navbar from '../components/navbar';
 
 function WelcomePage() {
