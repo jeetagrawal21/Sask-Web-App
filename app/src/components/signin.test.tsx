@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import SignIn from './signin';
+import SignIn from './Signin';
 import axios from 'axios';
 
 //UI SNAPSHOT TESTING
@@ -21,7 +21,7 @@ describe('SignIn component', () => {
         <SignIn />
       </BrowserRouter>
     );
-    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Email*')).toBeInTheDocument();
   });
 
   it('should should have the Password label in the component', () => {
@@ -30,7 +30,7 @@ describe('SignIn component', () => {
         <SignIn />
       </BrowserRouter>
     );
-    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Password*')).toBeInTheDocument();
   });
 
   it('should should have the SIGN IN label in the component', () => {
@@ -48,7 +48,7 @@ describe('SignIn component', () => {
         <SignIn />
       </BrowserRouter>
     );
-    const emailInput = screen.getByPlaceholderText('Email');
+    const emailInput = screen.getByPlaceholderText('Email*');
     expect(emailInput).toBeInTheDocument();
     expect(emailInput).toHaveAttribute('type', 'id');
   });
@@ -59,7 +59,7 @@ describe('SignIn component', () => {
         <SignIn />
       </BrowserRouter>
     );
-    const passwordInput = screen.getByPlaceholderText('Password');
+    const passwordInput = screen.getByPlaceholderText('Password*');
     expect(passwordInput).toBeInTheDocument();
     expect(passwordInput).toHaveAttribute('type', 'password');
   });
@@ -119,17 +119,17 @@ describe('SignIn component', () => {
         <SignIn />
       </BrowserRouter>
     );
-    const emailInput = screen.getByPlaceholderText('Email');
-    const passwordInput = screen.getByPlaceholderText('Password');
-    fireEvent.change(emailInput, { target: { value: 'user@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+    const emailInput = screen.getByPlaceholderText('Email*');
+    const passwordInput = screen.getByPlaceholderText('Password*');
+    fireEvent.change(emailInput, { target: { value: 'testuser1@email.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'testpasslonger1!' } });
     const signInButton = screen.getByText('SIGN IN');
     fireEvent.click(signInButton);
 
     //   // assertions to verify that the POST request is sent to the server
     expect(axiosMock).toHaveBeenCalledWith('http://localhost:3000/login', {
-      email: 'user@example.com',
-      password: 'password123',
+      email: 'testuser1@email.com',
+      password: 'testpasslonger1!',
     });
   });
 
@@ -171,28 +171,28 @@ describe('SignIn component', () => {
   );
 
   it.todo(
-    'should navigate to the dashboard page when authentication is successful',
-    async () => {
-      render(
-        <BrowserRouter>
-          <SignIn />
-        </BrowserRouter>
-      );
-      const emailInput = screen.getByPlaceholderText('Email');
-      const passwordInput = screen.getByPlaceholderText('Password');
-      fireEvent.change(emailInput, {
-        target: { value: 'testuser1@email.com' },
-      });
-      fireEvent.change(passwordInput, {
-        target: { value: 'testpasslonger1!' },
-      });
-      const signInButton = screen.getByText('SIGN IN');
-      fireEvent.click(signInButton);
+    'should navigate to the dashboard page when authentication is successful'
+    // async () => {
+    //   render(
+    //     <BrowserRouter>
+    //       <SignIn />
+    //     </BrowserRouter>
+    //   );
+    //   const emailInput = screen.getByPlaceholderText('Email');
+    //   const passwordInput = screen.getByPlaceholderText('Password');
+    //   fireEvent.change(emailInput, {
+    //     target: { value: 'testuser1@email.com' },
+    //   });
+    //   fireEvent.change(passwordInput, {
+    //     target: { value: 'testpasslonger1!' },
+    //   });
+    //   const signInButton = screen.getByText('SIGN IN');
+    //   fireEvent.click(signInButton);
 
-      // assertions to verify that the user is redirected to the dashboard page
-      const dashboardPage = await screen.findByText('Welcome Back ...');
-      expect(dashboardPage).toBeInTheDocument();
-    }
+    //   // assertions to verify that the user is redirected to the dashboard page
+    //   const dashboardPage = await screen.findByText('Welcome Back ...');
+    //   expect(dashboardPage).toBeInTheDocument();
+    // }
   );
 
   // it('should navigate to the request account page when "REQUEST ACCOUNT" button is clicked', () => {

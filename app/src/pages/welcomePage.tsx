@@ -1,13 +1,10 @@
 import React from 'react';
-// import logo from './logo.svg';
 import '../App.css';
 import Header from '../components/header';
-import SignIn from '../components/signin';
+import SignIn from '../components/Signin';
 import Navbar from '../components/navbar';
-import axios from 'axios';
 
 function WelcomePage() {
-
   return (
     <div className="App">
       <Header />
