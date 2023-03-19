@@ -1,7 +1,8 @@
 name: Notify Discord on PR Merge
 on:
-  pull_request:
-    types: [closed]
+  # pull_request:
+  #   types: [closed]
+  push:
 jobs:
   notify-discord:
     runs-on: ubuntu-latest
@@ -10,4 +11,5 @@ jobs:
         uses: discord/discord-webhook@v1
         with:
           url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          content: 'PR #${{ github.event.pull_request.number }} has been merged!'
+          content: 'testing discord ping'
+          # content: 'PR #${{ github.event.pull_request.number }} has been merged!'
