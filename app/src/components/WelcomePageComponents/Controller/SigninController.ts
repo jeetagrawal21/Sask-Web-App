@@ -22,6 +22,7 @@ function checkPassword(password: string) {
 }
 /**
 This function handles the disabling and enabling the sign in button in regards to the input given in email and password fields.
+if all the fields are correct and validated, it should return false, meaning that the button should not be disabled
 */
 function handleDisable(email: string, password: string): boolean {
   let result = checkEmail(email) && checkPassword(password);

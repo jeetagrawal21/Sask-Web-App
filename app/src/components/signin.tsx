@@ -1,4 +1,3 @@
-// <<<<<<< HEAD
 import '../stylings/signin.css';
 import React, { Component, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -47,9 +46,7 @@ function SignIn() {
             className="input-fields"
             placeholder="Email*"
             id="email"
-            // value={email}
             onChange={(e) => {
-              // checkEmail(e);
               setEmail(e.target.value);
             }}
           ></input>
@@ -82,7 +79,7 @@ function SignIn() {
           <>
             <p>
               Please enter valid password. It must not be less than 8 characters
-              and must include a special character
+              and must include a special character and a number
             </p>
           </>
         )}

@@ -1,7 +1,7 @@
 import '../../stylings/RegisterPageStyles/Title.css';
 import React from 'react';
 
-function Title() {
+function RegisterPageTitle() {
   return (
     <div>
       <div className="welcome">
@@ -13,4 +13,4 @@ function Title() {
   );
 }
 
-export default Title;
+export default RegisterPageTitle;

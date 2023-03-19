@@ -1,14 +1,14 @@
 import React from 'react';
-// import logo from './logo.svg';
+
 import '../App.css';
-import Title from '../components/RegisterPageComponents/Title';
-import Text from '../components/RegisterPageComponents/Text';
+import RegisterPageTitle from '../components/RegisterPageComponents/RegisterPageTitle';
+import RegisterPageBody from '../components/RegisterPageComponents/RegisterPageBody';
 
 function App() {
   return (
     <div className="App">
-      <Title />
-      <Text />
+      <RegisterPageTitle />
+      <RegisterPageBody />
     </div>
   );
 }
