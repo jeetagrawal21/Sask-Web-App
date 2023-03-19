@@ -31,10 +31,18 @@ module.exports = {
 	},
 	resolve: {
 		extensions: ['', '.tsx', '.ts', '.js'],
+		alias: {
+			'./loglevel': path.resolve(__dirname, './src/types/loglevel.d.ts'),
+			'./loglevel-plugin-remote': path.resolve(__dirname, './src/types/loglevel-plugin-remote.d.ts'),
+		  },
+		  fallback: {
+			util: require.resolve('util/')
+		  }
 	},
 	mode: 'development',
 	output: {
 		filename: 'bundle.js',
 		path: path.resolve(__dirname, 'dist'),
 	},
+	
 };

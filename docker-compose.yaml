@@ -65,13 +65,23 @@ services:
     hostname: covid_selenium_test
     image: selenium/standalone-chrome
     build:
-      dockerfile: selenium_test/.docker/Sel.Dockerfile
+      dockerfile: /selenium_test/.docker/Sel.Dockerfile
     volumes:
       - ./selenium_test:/app
     ports:
       - 4444:4444
     tty: true
     stdin_open: true
+    
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
       
 volumes:
   app_node_modules:

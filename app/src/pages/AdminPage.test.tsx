@@ -1,6 +1,10 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react";
-import AdminPage, { UserRequest, User } from "./AdminPage";
+import AdminPage from "../pages/AdminPage";
+import {
+  UserRequest,
+  User,
+} from "../components/AdminPageComponents/interfaces";
 
 // mock initial data
 const initUserRequests: UserRequest[] = [
