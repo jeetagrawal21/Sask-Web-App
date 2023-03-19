@@ -1,0 +1,8 @@
+.dashboard-body {
+}
+
+/*places the divs side by side*/
+.dashboard-component {
+  float: left;
+  width: 50%;
+}
