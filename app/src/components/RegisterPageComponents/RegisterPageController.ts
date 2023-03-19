@@ -4,7 +4,7 @@ import axios from 'axios';
 import {
   checkEmail,
   checkPassword,
-} from '../WelcomePageComponents/Controller/SigninController';
+} from '../WelcomePageComponents/Controller/SignInController';
 
 function checkName(name: string) {
   const nameRegex = /^[a-zA-Z0-9\s!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{1,}$/;

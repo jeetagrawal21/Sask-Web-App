@@ -1,13 +1,13 @@
-import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import SignIn from './Signin';
-import axios from 'axios';
+import React from "react";
+import { render, fireEvent, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import SignIn from "./SignIn";
+import axios from "axios";
 
 //UI SNAPSHOT TESTING
 
-describe('SignIn component', () => {
-  it('should render the component without crashing', () => {
+describe("SignIn component", () => {
+  it("should render the component without crashing", () => {
     render(
       <BrowserRouter>
         <SignIn />
@@ -15,53 +15,53 @@ describe('SignIn component', () => {
     );
   });
 
-  it('should should have the Email label in the component', () => {
+  it("should should have the Email label in the component", () => {
     render(
       <BrowserRouter>
         <SignIn />
       </BrowserRouter>
     );
-    expect(screen.getByPlaceholderText('Email*')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Email*")).toBeInTheDocument();
   });
 
-  it('should should have the Password label in the component', () => {
+  it("should should have the Password label in the component", () => {
     render(
       <BrowserRouter>
         <SignIn />
       </BrowserRouter>
     );
-    expect(screen.getByPlaceholderText('Password*')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Password*")).toBeInTheDocument();
   });
 
-  it('should should have the SIGN IN label in the component', () => {
+  it("should should have the SIGN IN label in the component", () => {
     render(
       <BrowserRouter>
         <SignIn />
       </BrowserRouter>
     );
-    expect(screen.getByText('SIGN IN')).toBeInTheDocument();
+    expect(screen.getByText("SIGN IN")).toBeInTheDocument();
   });
 
-  it('should have an email input field', () => {
+  it("should have an email input field", () => {
     render(
       <BrowserRouter>
         <SignIn />
       </BrowserRouter>
     );
-    const emailInput = screen.getByPlaceholderText('Email*');
+    const emailInput = screen.getByPlaceholderText("Email*");
     expect(emailInput).toBeInTheDocument();
-    expect(emailInput).toHaveAttribute('type', 'id');
+    expect(emailInput).toHaveAttribute("type", "id");
   });
 
-  it('should have a password input field', () => {
+  it("should have a password input field", () => {
     render(
       <BrowserRouter>
         <SignIn />
       </BrowserRouter>
     );
-    const passwordInput = screen.getByPlaceholderText('Password*');
+    const passwordInput = screen.getByPlaceholderText("Password*");
     expect(passwordInput).toBeInTheDocument();
-    expect(passwordInput).toHaveAttribute('type', 'password');
+    expect(passwordInput).toHaveAttribute("type", "password");
   });
 
   it('should have a "SIGN IN" button', () => {
@@ -70,7 +70,7 @@ describe('SignIn component', () => {
         <SignIn />
       </BrowserRouter>
     );
-    const signInButton = screen.getByText('SIGN IN');
+    const signInButton = screen.getByText("SIGN IN");
     // assertions to verify that the "SIGN IN" button exists
     expect(signInButton).toBeInTheDocument();
   });
@@ -81,7 +81,7 @@ describe('SignIn component', () => {
         <SignIn />
       </BrowserRouter>
     );
-    const requestAccountButton = screen.getByText('Request one.');
+    const requestAccountButton = screen.getByText("Request one.");
 
     // assertions to verify that the "REQUEST ACCOUNT" link exists
     expect(requestAccountButton).toBeInTheDocument();
@@ -113,23 +113,23 @@ describe('SignIn component', () => {
   // );
 
   it('should send a POST request to the server when "SIGN IN" button is clicked', () => {
-    const axiosMock = jest.spyOn(axios, 'post');
+    const axiosMock = jest.spyOn(axios, "post");
     render(
       <BrowserRouter>
         <SignIn />
       </BrowserRouter>
     );
-    const emailInput = screen.getByPlaceholderText('Email*');
-    const passwordInput = screen.getByPlaceholderText('Password*');
-    fireEvent.change(emailInput, { target: { value: 'testuser1@email.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'testpasslonger1!' } });
-    const signInButton = screen.getByText('SIGN IN');
+    const emailInput = screen.getByPlaceholderText("Email*");
+    const passwordInput = screen.getByPlaceholderText("Password*");
+    fireEvent.change(emailInput, { target: { value: "testuser1@email.com" } });
+    fireEvent.change(passwordInput, { target: { value: "testpasslonger1!" } });
+    const signInButton = screen.getByText("SIGN IN");
     fireEvent.click(signInButton);
 
     //   // assertions to verify that the POST request is sent to the server
-    expect(axiosMock).toHaveBeenCalledWith('http://localhost:3000/login', {
-      email: 'testuser1@email.com',
-      password: 'testpasslonger1!',
+    expect(axiosMock).toHaveBeenCalledWith("http://localhost:3000/login", {
+      email: "testuser1@email.com",
+      password: "testpasslonger1!",
     });
   });
 
@@ -171,7 +171,7 @@ describe('SignIn component', () => {
   );
 
   it.todo(
-    'should navigate to the dashboard page when authentication is successful'
+    "should navigate to the dashboard page when authentication is successful"
     // async () => {
     //   render(
     //     <BrowserRouter>
@@ -210,7 +210,7 @@ describe('SignIn component', () => {
   // });
 
   it.todo(
-    'should authenticate the user when valid email and password are provided'
+    "should authenticate the user when valid email and password are provided"
     //  () => {
     //   render(
     //     <BrowserRouter>
@@ -256,7 +256,7 @@ describe('SignIn component', () => {
   // );
 
   it.todo(
-    'should not authenticate the user when email field is empty'
+    "should not authenticate the user when email field is empty"
     // () => {
     //   render(
     //     <BrowserRouter>
@@ -295,7 +295,7 @@ describe('SignIn component', () => {
   );
 
   it.todo(
-    'should not authenticate the user when email field contains only spaces'
+    "should not authenticate the user when email field contains only spaces"
     // () => {
     //   render(<SignIn />);
     //   const emailInput = screen.getByPlaceholderText("Email");
@@ -314,7 +314,7 @@ describe('SignIn component', () => {
   );
 
   it.todo(
-    'should not authenticate the user when password field contains only spaces'
+    "should not authenticate the user when password field contains only spaces"
     // () => {
     //   render(<SignIn />);
     //   const emailInput = screen.getByPlaceholderText("Email");
@@ -333,7 +333,7 @@ describe('SignIn component', () => {
   );
 
   it.todo(
-    'should not authenticate the user when email and password fields are empty'
+    "should not authenticate the user when email and password fields are empty"
     //  () => {
     //   render(<SignIn />);
     //   const signInButton = screen.getByText("SIGN IN");
@@ -347,7 +347,7 @@ describe('SignIn component', () => {
   );
 
   it.todo(
-    'should not authenticate the user when email and password fields contain only spaces'
+    "should not authenticate the user when email and password fields contain only spaces"
     //  () => {
     //   render(<SignIn />);
     //   const emailInput = screen.getByPlaceholderText("Email");
