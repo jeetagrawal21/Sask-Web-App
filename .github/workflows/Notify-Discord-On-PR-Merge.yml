@@ -11,6 +11,6 @@ jobs:
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: info
-          url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
           details: 'testing discord ping'
           # content: 'PR #${{ github.event.pull_request.number }} has been merged!'
