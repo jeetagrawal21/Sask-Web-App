@@ -1,24 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../stylings/AdminPage.css";
-
-/*
-Represents a user in the list of all users
-*/
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
-/*
-Represents a user request to be added to the list of all users
-*/
-export interface UserRequest {
-  id: number;
-  name: string;
-  email: string;
-  requestDate: Date;
-}
+import {
+  User,
+  UserRequest,
+} from "../components/AdminPageComponents/interfaces";
+import UserRequestsTable from "../components/AdminPageComponents/UserRequestsTable";
+import AllUsersTable from "../components/AdminPageComponents/AllUsersTable";
 
 const AdminPage: React.FC = () => {
   const [userRequests, setUserRequests] = useState<UserRequest[]>([]);
@@ -98,74 +85,12 @@ const AdminPage: React.FC = () => {
 
   return (
     <div>
-      <h1>User Requests</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Request Date</th>
-            <th>Approve</th>
-            <th>Reject</th>
-          </tr>
-        </thead>
-        <tbody>
-          {userRequests.map((userRequest) => (
-            <tr key={userRequest.id}>
-              <td>{userRequest.id}</td>
-              <td>{userRequest.name}</td>
-              <td>{userRequest.email}</td>
-              <td>{userRequest.requestDate.toString()}</td>
-              <td>
-                <button
-                  onClick={() => handleApproveUserRequest(userRequest.id)}
-                  data-testid={`approve-user-${userRequest.id}`}
-                >
-                  Approve
-                </button>
-              </td>
-              <td>
-                <button
-                  onClick={() => handleRejectUserRequest(userRequest.id)}
-                  data-testid={`reject-user-${userRequest.id}`}
-                >
-                  Reject
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <h1>All Users</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {allUsers.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>
-                <button
-                  onClick={() => handleRemoveUser(user.id)}
-                  data-testid={`remove-user-${user.id}`}
-                >
-                  Remove
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <UserRequestsTable
+        userRequests={userRequests}
+        onApproveUserRequest={handleApproveUserRequest}
+        onRejectUserRequest={handleRejectUserRequest}
+      />
+      <AllUsersTable allUsers={allUsers} onRemoveUser={handleRemoveUser} />
     </div>
   );
 };
