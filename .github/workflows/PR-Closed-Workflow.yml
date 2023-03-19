@@ -13,4 +13,4 @@ jobs:
         with:
           severity: info
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          details: 'PR #${{ github.event.pull_request.number }} has been merged!'
+          details: '@everyone PR #${{ github.event.pull_request.number }} has been merged! Please merge it into your working branch!'
