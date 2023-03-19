@@ -1,3 +1,4 @@
+# https://github.com/marketplace/actions/discord-webhook-notify
 name: Notify Discord on PR Merge
 on:
   pull_request:
@@ -13,4 +14,3 @@ jobs:
           severity: info
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
           details: 'PR #${{ github.event.pull_request.number }} has been merged!'
-          # content: 'PR #${{ github.event.pull_request.number }} has been merged!'
