@@ -14,6 +14,12 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  /**
+   * Purpose: send post request with login data to backend and receives a response on if the user is valid, then takes them to the appropriate page
+   * Preconditions: user input fields as strings
+   * Postconditions:
+   * Return: None
+   */
   function authenticateLogin() {
     const participantInfo = {
       email: (document.getElementById("email") as HTMLInputElement).value,
