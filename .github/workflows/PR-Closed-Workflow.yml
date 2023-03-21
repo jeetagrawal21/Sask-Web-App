@@ -1,0 +1,16 @@
+# https://github.com/marketplace/actions/discord-webhook-notify
+name: Notify Discord on PR Merge
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send notification to Discord
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: info
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          details: '@everyone PR #${{ github.event.pull_request.number }} has been merged! Please merge it into your working branch!'

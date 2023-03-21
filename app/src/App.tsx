@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import WelcomePage from "./pages/welcomePage";
+import WelcomePage from "./pages/WelcomePage";
 import Register from "./pages/RegisterPage";
 import TestPage from "./pages/TestPage";
 import RequestAccount from "./pages/RequestAccountPage";
@@ -9,7 +9,7 @@ import Timeline from "./pages/Timeline";
 import AdminPage from "./pages/AdminPage";
 import Dashboard from "./pages/Dashboard";
 import log from "loglevel";
-import remotePlugin from 'loglevel-plugin-remote';
+import remotePlugin from "loglevel-plugin-remote";
 
 const remoteOptions = {
   url: "http://localhost:3000/logs",
@@ -21,8 +21,6 @@ const remoteOptions = {
 remotePlugin.apply(log, remoteOptions); // use remotePlugin.apply() here
 
 log.enableAll();
-
-
 
 function App() {
   return (
