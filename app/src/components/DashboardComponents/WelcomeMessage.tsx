@@ -1,5 +1,5 @@
 import React from "react";
-import "../../stylings/DashboardStyles/MainComponent.css";
+import "../../stylings/DashboardStyles/WelcomeMessage.css";
 
 function WelcomeMessage() {
   return (

@@ -1,24 +1,29 @@
 import React, { Component } from "react";
-import "../stylings/DashboardStyles/Dashboard.css";
+import "../stylings/DashboardStyles/DashboardPage.css";
 import Header from "../components/Header";
 import WelcomeMessage from "../components/DashboardComponents/WelcomeMessage";
 import Timeline from "../components/DashboardComponents/Timeline";
 import SignOut from "../components/SignOut";
 
-class Dashboard extends Component {
+class DashboardPage extends Component {
   render() {
     return (
       <div className="dashboard">
-        <Header />
-        <br></br>
+        <div className="dashboard-header">
+          <Header />
+          <div className="dashboard-signout">
+            <SignOut />
+          </div>
+        </div>
         <div className="dashboard-body">
-          <WelcomeMessage />
+          <div className="welcome-message">
+            <WelcomeMessage />
+          </div>
           <Timeline />
-          <SignOut />
         </div>
       </div>
     );
   }
 }
 
-export default Dashboard;
+export default DashboardPage;
