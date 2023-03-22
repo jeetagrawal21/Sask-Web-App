@@ -1,26 +1,28 @@
 
 import express from 'express';
-import {getdata} from '@src/services/Data-Services'
+import {getData} from '@src/services/Data-Services'
 
 const router = express.Router();
 
 
 // post request to post registration data to database
-router.get('/data', (req, res) => {
+router
+  .route("")
+  .post((req, res) => {
     //const data = req.body;
     //getdata(42176)
     //console.log(data);
-  
+
     // call function to post data to the database
-  
+
     async function dataGetFormat () {
-      const data = await getdata(42176)
+      const data = await getData(42176)
       console.log("data :", data); //print the result of the query 
       res.send(data);   // needs failure handling
-  
+
     }
     dataGetFormat();
-  
+
   });
 
-  export default router;
+  module.exports = router;

@@ -1,6 +1,6 @@
 
 import { Client, Pool } from 'pg';
-import { credentials} from '../declarations/database_credentials';
+import { credentials} from '../declarations/Database_Credentials';
 
 
 /**

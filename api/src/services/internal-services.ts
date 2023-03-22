@@ -1,7 +1,7 @@
 
-import runSqlFile from '../util/datasetup'
+import runSqlFile from '../util/DataSetup'
 import { Client, Pool } from 'pg';
-import { credentials} from '../declarations/database_credentials';
+import { credentials} from '../declarations/Database_Credentials';
 import {accountCreationUser, accountCreationAdmin, changePass, checkIfUser} from './User-Services'
 import path from 'path';
 
