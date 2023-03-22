@@ -85,8 +85,8 @@ export async function initiateDB() {
     const tablename = 'users';
     if(await checkIfTable('users')){
       if(await checkIfUser('testuser1@email.com'))
-        changePass('testuser1@email.com', 'testpasslonger1!');
-      changePass('testadmin1@email.com', 'testpasslonger2!');
+        changePass('testuser1@email.com', 'Testpasslonger1!');
+      changePass('testadmin1@email.com', 'Testpasslonger2!');
     }
     // Call "checkIfTable" function and wait for it to complete, storing the result in "tablecheck" variable.
     const tablecheck = await checkIfTable('users');
@@ -109,7 +109,7 @@ export async function initiateDB() {
           'testuser1',
           'testusergiven1-1',
           'testusergiven2-1',
-          'testpasslonger1!',
+          'Testpasslonger1!',
           'testuser1@email.com',
           'hello who?',
           'World!',
@@ -122,7 +122,7 @@ export async function initiateDB() {
           'testadmin1',
           'testadmingiven1-1',
           'testadmingiven2-1',
-          'testpasslonger2!',
+          'Testpasslonger2!',
           'testadmin1@email.com',
           'With great power comes what?',
           'Great responsability',
