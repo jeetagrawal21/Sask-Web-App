@@ -1,15 +1,15 @@
-import express, { Request, Response, NextFunction } from 'express';
-import userService from '../services/user-services';
+// import express, { Request, Response, NextFunction } from 'express';
+// import userService from '../services/User-Services';
 
-const router = express.Router();
+// const router = express.Router();
 
-router.get('/user/:id', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const data = await userService.getUserData(req.params.id);
-    res.json(data);
-  } catch (err) {
-    next(err);
-  }
-});
+// router.get('/user/:id', async (req: Request, res: Response, next: NextFunction) => {
+//   try {
+//     const data = await userService.getUserData(req.params.id);
+//     res.json(data);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
-export default router;
+// export default router;

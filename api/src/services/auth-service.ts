@@ -3,7 +3,7 @@ import userRepository from '@src/repos/user.repository';
 import jwtUtil from '@src/util/jwt-util';
 import pwdUtil from '@src/util/pwd-util';
 import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
-import { RouteError } from '@src/declarations/classes';
+import { RouteError } from '@src/declarations/Classes';
 import { tick } from '@src/declarations/functions';
 
 

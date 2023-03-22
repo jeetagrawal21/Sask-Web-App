@@ -1,8 +1,8 @@
 
 import runSqlFile from '../util/datasetup'
 import { Client, Pool } from 'pg';
-import { credentials} from '../database';
-import {accountcreationuser, accountcreationadmin, changepass, checkifuser} from './user-services'
+import { credentials} from '../declarations/database_credentials';
+import {accountCreationUser, accountCreationAdmin, changePass, checkIfUser} from './User-Services'
 import path from 'path';
 
 
@@ -13,7 +13,7 @@ import path from 'path';
  * @param tablename - The name of the table to check
  * @returns A boolean indicating whether the table exists or not
  */
-export async function checkiftable(tablename:String) {
+export async function checkIfTable(tablename:String) {
     const pool = new Pool(credentials);
     try {
       const { rows } = await pool.query("SELECT EXISTS(SELECT FROM pg_catalog.pg_tables WHERE tablename = $1)", [tablename]);
@@ -31,7 +31,7 @@ export async function checkiftable(tablename:String) {
  * Creates a new "users" table in the database if it does not exist.
  * @returns {Promise<void>} A promise that resolves when the table has been created, or rejects if there was an error.
  */
-  async function createtable() {
+  async function createTable() {
     const pool = new Pool(credentials);
     try {
       await pool.query(`
@@ -63,8 +63,8 @@ export async function checkiftable(tablename:String) {
 This async function sets up the data table in the database by running a SQL file.
 @returns {Promise<void>}
 */
-export async function setupdatadb() {
-    if (!await checkiftable('userdata')){
+export async function setupDataDB() {
+    if (!await checkIfTable('userdata')){
       const filePath = 'data/dbdatasqlcode.sql';
       await runSqlFile(filePath)
         .then(() => console.log('SQL file executed successfully'))
@@ -74,22 +74,22 @@ export async function setupdatadb() {
 
 
 //used to create account  Use webpage instead if needed
-//accountcreationuser(12345678, 'testuser8', 'testusergiven1-8', 'testusergiven2-8', 'testpass8', 'testuser2@email.com', "hello who?", "World!", "Whats my name", "Testuser8", "Whats my purpose", "Testing");
+//accountCreationUser(12345678, 'testuser8', 'testusergiven1-8', 'testusergiven2-8', 'testpass8', 'testuser2@email.com', "hello who?", "World!", "Whats my name", "Testuser8", "Whats my purpose", "Testing");
 /**
  * This is an async function that checks if the "users" table exists in the database.
  * If the table does not exist, it creates the table and inserts a new user.
  * @returns {Promise<void>} Nothing is returned from this function.
  */
-export async function initiatedb() {
+export async function initiateDB() {
     const pool = new Pool(credentials);
     const tablename = 'users';
-    if(await checkiftable('users')){
-      if(await checkifuser('testuser1@email.com'))
-        changepass('testuser1@email.com', 'testpasslonger1!');
-      changepass('testadmin1@email.com', 'testpasslonger2!');
+    if(await checkIfTable('users')){
+      if(await checkIfUser('testuser1@email.com'))
+        changePass('testuser1@email.com', 'testpasslonger1!');
+      changePass('testadmin1@email.com', 'testpasslonger2!');
     }
-    // Call "checkiftable" function and wait for it to complete, storing the result in "tablecheck" variable.
-    const tablecheck = await checkiftable('users');
+    // Call "checkIfTable" function and wait for it to complete, storing the result in "tablecheck" variable.
+    const tablecheck = await checkIfTable('users');
     if (!tablecheck){
       try {
         // Execute a SQL query to create a table named "users" if it doesn't already exist.
@@ -103,8 +103,8 @@ export async function initiatedb() {
         // Log the value of the "exists" column in the first row of the "res" result.
         console.log(res.rows[0].exists);
         console.log('Table was created successfully.');
-        // Call the "accountcreationuser" function with some parameters.
-        await accountcreationuser(
+        // Call the "accountCreationUser" function with some parameters.
+        await accountCreationUser(
           12345678,
           'testuser1',
           'testusergiven1-1',
@@ -118,7 +118,7 @@ export async function initiatedb() {
           'Whats my purpose',
           'Testing'
         );
-        await accountcreationadmin(
+        await accountCreationAdmin(
           'testadmin1',
           'testadmingiven1-1',
           'testadmingiven2-1',
@@ -141,7 +141,7 @@ export async function initiatedb() {
   }
 
   export default {
-    initiatedb,
-    setupdatadb,
-    checkiftable
+    initiateDB,
+    setupDataDB,
+    checkIfTable
   } 

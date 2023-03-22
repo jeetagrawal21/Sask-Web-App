@@ -1,8 +1,8 @@
-import './pre-start'; // Must be the first import
+import './Pre-Start'; // Must be the first import
 import logger from 'jet-logger';
 
 import EnvVars from '@src/declarations/major/EnvVars';
-import server from './server';
+import server from './Server';
 
 // **** Start server **** //
 

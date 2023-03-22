@@ -1,15 +1,15 @@
 
 import { Client, Pool } from 'pg';
-import { credentials} from '../database';
+import { credentials} from '../declarations/database_credentials';
 
 
 /**
-    Function Name: getdata
+    Function Name: getData
     Description: Retrieves user data from the "userdata" table in the database and formats it for use in a line chart.
     @param {Number} id - The unique ID of the user to retrieve data for.
     @returns {Promise<Array>} - Returns an array of formatted data objects for use in a line chart.
     */
-   export async function getdata (id:Number){
+   export async function getData (id:Number){
   const pool = new Pool(credentials);
   const result = await pool.query(               //query looks for all users with email
   'SELECT "Response Time", "[18_SAQ] In the past 30 days how often have you experienced" FROM "userdata" WHERE "[18_SAQ] In the past 30 days how often have you experienced" IS NOT NULL AND "id" = $1', [id]);
@@ -41,6 +41,6 @@ export function formatDataForLineChart(data: DataItem[]) {
 }
 
 export default {
-  getdata,
+  getData,
   formatDataForLineChart
 } 

@@ -1,6 +1,6 @@
 
 import express from 'express';
-import {getdata} from 'src/services/data-services'
+import {getdata} from '@src/services/Data-Services'
 
 const router = express.Router();
 

@@ -13,19 +13,19 @@ import logger from 'jet-logger';
 // import EnvVars from '@src/declarations/major/EnvVars';
 // import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
 import { NodeEnvs } from '@src/declarations/enums';
-import { RouteError } from '@src/declarations/classes';
+import { RouteError } from '@src/declarations/Classes';
 import { createConnection } from 'net';
-import userService from './services/user-services';
+import userService from './services/User-Services';
 
 
-import { credentials} from './database';
-import {accountcreationuser, accountcreationadmin, changepass, checkifuser, checkifadmin, getuser, checkpass, deleteUser} from './services/user-services'
-import {getdata, formatDataForLineChart} from './services/data-services'
-import {setupdatadb, initiatedb} from './services/internal-services'
-import requestAccountRouter from './routes/requestAccount-route';
-import dataRouter from './routes/data-route';
-import loginRouter from './routes/login-route';
-import postregistrationinfoRouter from './routes/postregistrationinfo-route';
+import { credentials} from './declarations/Database_Credentials';
+import {accountcreationuser, accountcreationadmin, changepass, checkifuser, checkifadmin, getuser, checkpass, deleteUser} from './services/User-Services'
+import {getdata, formatDataForLineChart} from './services/Data-Services'
+import {setupdatadb, initiatedb} from './services/Internal-Services'
+import requestAccountRouter from './routes/RequestAccount-Route';
+import dataRouter from './routes/Data-Route';
+import loginRouter from './routes/Login-Route';
+import postregistrationinfoRouter from './routes/Postregistrationinfo-Route';
 
 
 

@@ -1,6 +1,6 @@
 
 import { Client, Pool } from 'pg';
-import { credentials} from '../database';
+import { credentials} from '../declarations/database_credentials';
 
 
 
@@ -31,12 +31,12 @@ async function clientDemo() {
 
 
 /**
-    Function Name: checkifuser
+    Function Name: checkIfUser
     Description: Verifies if a user with the provided email exists in the database.
     @param {string} email - The email address of the user to check for.
     @returns {Promise<boolean>} - Returns true if a user with the provided email exists in the database, false otherwise.
     */
-   export async function checkifuser(email: string) {
+   export async function checkIfUser(email: string) {
   const pool = new Pool(credentials);
   const now = await pool.query(
     //query looks for all users with email and password
@@ -53,7 +53,7 @@ async function clientDemo() {
  * @param {string} email - The email of the user to check
  * @returns {Promise<boolean>} - A promise that resolves to a boolean value indicating if the user is an admin or not
  */
-export async function checkifadmin(email:string) {
+export async function checkIfAdmin(email:string) {
   // create a new pool using the credentials for the database
   const pool = new Pool(credentials);
 
@@ -81,13 +81,13 @@ export async function checkifadmin(email:string) {
 
 /**
 
-    Function Name: getuser
+    Function Name: getUser
     Description: Retrieves user information based on the email and password provided.
     @param {string} email - The email address of the user to retrieve information for.
     @param {string} pass - The password of the user.
     @returns {Promise<object>} - Returns an object containing user information if found, otherwise returns null.
     */
-   export async function getuser(email: string, pass: string) {
+   export async function getUser(email: string, pass: string) {
   const pool = new Pool(credentials);
   const result = await pool.query(
     //query looks for all users with email
@@ -101,13 +101,13 @@ export async function checkifadmin(email:string) {
 
 /**
 
-    Function Name: checkpass
+    Function Name: checkPass
     Description: Verifies if the provided email and password combination is correct for a user in the database.
     @param {string} email - The email address of the user to check the password for.
     @param {string} pass - The password of the user to verify.
     @returns {Promise<boolean>} - Returns true if the email and password combination is correct, false otherwise.
     */
-   export async function checkpass(email: string, pass: string) {
+   export async function checkPass(email: string, pass: string) {
   const pool = new Pool(credentials);
   const result = await pool.query(
     //query looks for all users with email and password
@@ -121,7 +121,7 @@ export async function checkifadmin(email:string) {
 
 
 //Creates account for admins (admins have a privilege of 1 as opposed to 0)
-export async function accountcreationadmin(
+export async function accountCreationAdmin(
   surname: string,
   givenname2: string,
   givenname3: string,
@@ -135,7 +135,7 @@ export async function accountcreationadmin(
   securityAnswer3: string
 ) {
   const pool = new Pool(credentials);
-  if (await checkifuser(email)) {
+  if (await checkIfUser(email)) {
     //calls check if user exist (using email) if returns true he exist account not created else account created
     console.log('account not created');
   } else {
@@ -164,7 +164,7 @@ export async function accountcreationadmin(
 }
 
 //Creates account for users (users dont need a privilige variable because it is 0 by default)
-export async function accountcreationuser(
+export async function accountCreationUser(
   ID: number,
   surname: string,
   givenname2: string,
@@ -179,7 +179,7 @@ export async function accountcreationuser(
   securityAnswer3: string
 ) {
   const pool = new Pool(credentials);
-  if (await checkifuser(email)) {
+  if (await checkIfUser(email)) {
     //calls check if user exist (using email) if returns true he exist account not created else account created
     console.log('account not created');
   } else {
@@ -245,14 +245,14 @@ export async function deleteUser(email: string): Promise<boolean> {
  * @param newpass - New password to be set for the user
  * @returns true if password is changed successfully, false otherwise
  */
-export async function changepass(
+export async function changePass(
   email: string,
   newpass: string
 ): Promise<boolean> {
   const pool = new Pool(credentials);
 
   // Check if the user with the specified email address exists
-  if (await checkifuser(email)) {
+  if (await checkIfUser(email)) {
     try {
       // Update the user's password in the database
       await pool.query(`UPDATE users SET pass=$2 WHERE email=$1`, [
@@ -277,12 +277,12 @@ export async function changepass(
 }
 
 export default {
-  checkifuser,
-  checkifadmin,
-  getuser,
-  checkpass,
-  accountcreationadmin,
-  accountcreationuser,
+  checkIfUser,
+  checkIfAdmin,
+  getUser,
+  checkPass,
+  accountCreationAdmin,
+  accountCreationUser,
   deleteUser,
-  changepass
+  changePass
 } 

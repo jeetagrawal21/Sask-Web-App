@@ -1,5 +1,5 @@
 import express from 'express';
-import { checkpass, checkifadmin } from '@src/services/user-services';
+import { checkpass, checkifadmin } from '@src/services/User-Services';
 
 const router = express.Router();
 
