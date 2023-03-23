@@ -1,7 +1,7 @@
-import Graph from '../components/DashboardComponents/Graph';
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import Graph from "./Graph";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Timeline() {
   const [data, setData] = useState([]);
@@ -9,7 +9,7 @@ function Timeline() {
 
   useEffect(() => {
     axios
-      .post('http://localhost:3000/data')
+      .post("http://localhost:3000/data")
       .then((response) => {
         setData(response.data);
         setLoading(false);
@@ -22,11 +22,7 @@ function Timeline() {
   return (
     <div>
       <h1>My Timeline</h1>
-      {loading ? (
-        <p>Loading data...</p>
-      ) : (
-        <Graph data={data} />
-      )}
+      {loading ? <p>Loading data...</p> : <Graph data={data} />}
     </div>
   );
 }
