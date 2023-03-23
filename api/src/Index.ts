@@ -8,8 +8,8 @@ import server from './Server';
 
 // **** Start server **** //
 
-const logger = new Logger(); 
 
+export const logger = new Logger(); 
 
 logger.attachTransport((logObj) => {
   appendFileSync("BackendLog.txt", JSON.stringify(logObj) + "\n");
@@ -17,9 +17,10 @@ logger.attachTransport((logObj) => {
 
 
 
+
 const msg = ('Express server started on port: ' + EnvVars.port.toString());
 server.listen(EnvVars.port, () => logger.info(msg));
 
-export { logger } 
+//export default { logger } 
   
 

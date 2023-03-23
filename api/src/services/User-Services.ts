@@ -1,6 +1,16 @@
 
 import { Client, Pool } from 'pg';
 import { credentials} from '../declarations/Database_Credentials';
+import { Logger } from "tslog";
+import { appendFileSync } from "fs";
+
+
+//setting up logging 
+export const logger = new Logger(); 
+
+logger.attachTransport((logObj) => {
+  appendFileSync("BackendLog.txt", JSON.stringify(logObj) + "\n");
+});
 
 
 
@@ -137,7 +147,7 @@ export async function accountCreationAdmin(
   const pool = new Pool(credentials);
   if (await checkIfUser(email)) {
     //calls check if user exist (using email) if returns true he exist account not created else account created
-    console.log('account not created');
+    logger.info('accountCreationAdmin : account not created');
   } else {
     const result = await pool.query(
       //account created
@@ -158,7 +168,7 @@ export async function accountCreationAdmin(
         securityAnswer3,
       ]
     );
-    console.log('Account created');
+    logger.info('accountCreationAdmin : Account created');
   }
   await pool.end();
 }
@@ -181,7 +191,7 @@ export async function accountCreationUser(
   const pool = new Pool(credentials);
   if (await checkIfUser(email)) {
     //calls check if user exist (using email) if returns true he exist account not created else account created
-    console.log('account not created');
+    logger.info('accountCreationUser : account not created');
   } else {
     const result = await pool.query(
       //account created
@@ -202,7 +212,7 @@ export async function accountCreationUser(
         securityAnswer3,
       ]
     );
-    console.log('Account created');
+    logger.info('accountCreationUser : Account created');
   }
   await pool.end();
 }
@@ -223,15 +233,15 @@ export async function deleteUser(email: string): Promise<boolean> {
 
     if (result.rowCount === 0) {
       // If the user was not found
-      console.log("User not found");
+      logger.info("deleteUser : User not found");
       return false;
     } else {
-      console.log("User deleted");
+      logger.info("deleteUser : User deleted");
       return true;
     }
   } catch (error) {
     // If an error occurred
-    console.error(error);
+    logger.error("deleteUser : " + error);
     return false;
   } finally {
     pool.end();
@@ -260,17 +270,17 @@ export async function changePass(
         newpass,
       ]);
       await pool.end();
-      console.log('Password changed successfully!');
+      logger.info('changePass: Password changed successfully!');
       return true;
     } catch (err) {
       // If there was an error updating the password, log the error and return false
-      console.error('Error changing password: ', err);
+      logger.error('changePass: Error changing password: ', err);
       await pool.end();
       return false;
     }
   } else {
     // If the user with the specified email address doesn't exist, log an error and return false
-    console.log('User not found.');
+    logger.info('changePass: User not found.');
     await pool.end();
     return false;
   }

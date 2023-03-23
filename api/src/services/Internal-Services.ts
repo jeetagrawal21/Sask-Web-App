@@ -4,6 +4,19 @@ import { Client, Pool } from 'pg';
 import { credentials} from '../declarations/Database_Credentials';
 import {accountCreationUser, accountCreationAdmin, changePass, checkIfUser} from './User-Services'
 import path from 'path';
+import { Logger } from "tslog";
+import { appendFileSync } from "fs";
+
+
+
+
+//setting up logging 
+export const logger = new Logger(); 
+
+logger.attachTransport((logObj) => {
+  appendFileSync("BackendLog.txt", JSON.stringify(logObj) + "\n");
+});
+
 
 
 
@@ -20,7 +33,7 @@ export async function checkIfTable(tablename:String) {
       const exists = rows[0].exists;
       return Boolean(exists);
     } catch (error) {
-      console.error(error);
+      logger.error("checkIfTable errpr: \n" +error);
     } finally {
       pool.end();
     }
@@ -53,7 +66,7 @@ export async function checkIfTable(tablename:String) {
         )
       `);
     } catch (error) {
-      console.error(error);
+      logger.error("createTable errpr: \n" +error);
     } finally {
       pool.end();
     }
@@ -67,8 +80,8 @@ export async function setupDataDB() {
     if (!await checkIfTable('userdata')){
       const filePath = 'data/dbdatasqlcode.sql';
       await runSqlFile(filePath)
-        .then(() => console.log('SQL file executed successfully'))
-        .catch(err => console.error('Error executing SQL file:', err));
+        .then(() => logger.info('SQL file executed successfully'))
+        .catch(err => logger.error('Error executing SQL file:', err));
     }
 }
 
@@ -82,15 +95,16 @@ export async function setupDataDB() {
  */
 export async function initiateDB() {
     const pool = new Pool(credentials);
+    //This changes the passwords to match current standards for users who already have a table (instead of deleting and creating a new table)
     const tablename = 'users';
     if(await checkIfTable('users')){
       if(await checkIfUser('testuser1@email.com'))
         changePass('testuser1@email.com', 'Testpasslonger1!');
       changePass('testadmin1@email.com', 'Testpasslonger2!');
     }
-    // Call "checkIfTable" function and wait for it to complete, storing the result in "tablecheck" variable.
+    // Call "checkIfTable" to see if the table exists 
     const tablecheck = await checkIfTable('users');
-    if (!tablecheck){
+    if (!tablecheck){    //if it doesnt exist
       try {
         // Execute a SQL query to create a table named "users" if it doesn't already exist.
         await pool.query(
@@ -101,8 +115,8 @@ export async function initiateDB() {
           `SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='${tablename}')`
         );
         // Log the value of the "exists" column in the first row of the "res" result.
-        console.log(res.rows[0].exists);
-        console.log('Table was created successfully.');
+        logger.info('initiateDB table exist double check -->'res.rows[0].exists);
+        logger.info('initiateDB --> Table was created successfully.');
         // Call the "accountCreationUser" function with some parameters.
         await accountCreationUser(
           12345678,
@@ -133,7 +147,7 @@ export async function initiateDB() {
         );
       } catch (error) {
         // If an error occurs, log it to the console.
-        console.error(error);
+        logger.error("initiateDB error: \n" +error);
       } finally {
         pool.end();
       }

@@ -1,8 +1,18 @@
 import express from 'express';
 import { accountCreationUser } from '@src/services/User-Services';
+import { Logger } from "tslog";
+import { appendFileSync } from "fs";
 //import {partIDnum} from '@src/routes/requestAccount'
 const router = express.Router();
 const app = express();
+
+
+//setting up logging 
+export const logger = new Logger(); 
+
+logger.attachTransport((logObj) => {
+  appendFileSync("BackendLog.txt", JSON.stringify(logObj) + "\n");
+});
 
 
 
@@ -30,7 +40,7 @@ router
         data['question3'],
         data['answer3']
       );
-      console.log(data);
+      logger.info("Account creation request data: \n" + data)
     
       // call function to post data to the database
     

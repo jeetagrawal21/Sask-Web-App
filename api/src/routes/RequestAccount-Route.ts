@@ -1,9 +1,19 @@
 import express from 'express';
 import { Request, Response } from 'express';
-
+import { Logger } from "tslog";
+import { appendFileSync } from "fs";
 
 
 const router = express.Router();
+
+
+//setting up logging 
+export const logger = new Logger(); 
+
+logger.attachTransport((logObj) => {
+  appendFileSync("BackendLog.txt", JSON.stringify(logObj) + "\n");
+});
+
 
 
 
@@ -18,8 +28,7 @@ router
     const particpantId = req.body;
     const partIDnum = 753951
     //req.session.partIDnum = Number(particpantId['participantId']);
-    console.log('PRINTED HERE');
-    console.log(partIDnum);
+    logger.info("Participant ID Number Passed: " + partIDnum)
   });
 
   module.exports = router;

@@ -9,7 +9,8 @@ import express, { Request, Response, NextFunction, Router} from 'express';
 
 import 'express-async-errors';
 
-import logger from '../src/Index';
+import { Logger } from "tslog";
+import { appendFileSync } from "fs";
 
 import { credentials} from './declarations/Database_Credentials';
 
@@ -37,10 +38,14 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(cookieParser(EnvVars.cookieProps.secret));
 
 
+export const logger = new Logger(); 
+
+logger.attachTransport((logObj) => {
+  appendFileSync("BackendLog.txt", JSON.stringify(logObj) + "\n");
+});
 
 
 
-logger.silly("I am an info log.");
 
 
 

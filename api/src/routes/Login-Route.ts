@@ -1,7 +1,20 @@
 import express from 'express';
 import { checkPass, checkIfAdmin } from '@src/services/User-Services';
+import { Logger } from "tslog";
+import { appendFileSync } from "fs";
 
 const router = express.Router();
+
+
+
+
+//setting up logging 
+export const logger = new Logger(); 
+
+logger.attachTransport((logObj) => {
+  appendFileSync("BackendLog.txt", JSON.stringify(logObj) + "\n");
+});
+
 
 
 
@@ -17,7 +30,7 @@ router
     async function checking () {  
       var result:boolean = await checkPass(req.body.email, req.body.password);    //async function is required to make it wait for reply (await used below to specific what we wait for)
       if (result){     //calls check password to see if pass and email match a database entry
-        console.log("login success!");
+        logger.info(req.body.email + " login attempt was succesful")
         const isadminresult = await checkIfAdmin(req.body.email)
         const userdata = {
           exist: result,
@@ -29,7 +42,7 @@ router
           exist: false,
           isadmin: false,
         };
-        console.log('login failed');
+        logger.info(req.body.email + " login attempt was failed")
         res.send(userdata);
       }
     }

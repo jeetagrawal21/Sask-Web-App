@@ -1,6 +1,19 @@
 
 import { Client, Pool } from 'pg';
 import { credentials} from '../declarations/Database_Credentials';
+import { Logger } from "tslog";
+import { appendFileSync } from "fs";
+
+
+//setting up logging 
+export const logger = new Logger(); 
+
+logger.attachTransport((logObj) => {
+  appendFileSync("BackendLog.txt", JSON.stringify(logObj) + "\n");
+});
+
+
+
 
 
 /**
