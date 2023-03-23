@@ -9,13 +9,13 @@ import express, { Request, Response, NextFunction, Router} from 'express';
 
 import 'express-async-errors';
 
-import logger from 'jet-logger';
-
-
+import logger from '../src/Index';
 
 import { credentials} from './declarations/Database_Credentials';
 
-import { setupDataDB, initiateDB } from '@src/services/Internal-Services'
+import { setupDataDB, initiateDB } from '@src/services/Internal-Services';
+
+
 
 
 
@@ -35,6 +35,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(cookieParser(EnvVars.cookieProps.secret));
+
+
+
+
+
+logger.silly("I am an info log.");
+
+
+
 
 
 
