@@ -42,7 +42,7 @@ router
           exist: false,
           isadmin: false,
         };
-        logger.info(req.body.email + " login attempt was failed")
+        logger.info('\n' + req.body.email + " login attempt was failed")
         res.send(userdata);
       }
     }

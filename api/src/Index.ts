@@ -19,7 +19,7 @@ logger.attachTransport((logObj) => {
 
 
 const msg = ('Express server started on port: ' + EnvVars.port.toString());
-server.listen(EnvVars.port, () => logger.info(msg));
+server.listen(EnvVars.port, () => logger.info('\n' + msg));
 
 //export default { logger } 
   

@@ -147,7 +147,7 @@ export async function accountCreationAdmin(
   const pool = new Pool(credentials);
   if (await checkIfUser(email)) {
     //calls check if user exist (using email) if returns true he exist account not created else account created
-    logger.info('accountCreationAdmin : account not created');
+    logger.info('\naccountCreationAdmin : account not created');
   } else {
     const result = await pool.query(
       //account created
@@ -168,7 +168,7 @@ export async function accountCreationAdmin(
         securityAnswer3,
       ]
     );
-    logger.info('accountCreationAdmin : Account created');
+    logger.info('\naccountCreationAdmin : Account created');
   }
   await pool.end();
 }
@@ -191,7 +191,7 @@ export async function accountCreationUser(
   const pool = new Pool(credentials);
   if (await checkIfUser(email)) {
     //calls check if user exist (using email) if returns true he exist account not created else account created
-    logger.info('accountCreationUser : account not created');
+    logger.info('\naccountCreationUser : account not created');
   } else {
     const result = await pool.query(
       //account created
@@ -212,7 +212,7 @@ export async function accountCreationUser(
         securityAnswer3,
       ]
     );
-    logger.info('accountCreationUser : Account created');
+    logger.info('\naccountCreationUser : Account created');
   }
   await pool.end();
 }
@@ -233,15 +233,15 @@ export async function deleteUser(email: string): Promise<boolean> {
 
     if (result.rowCount === 0) {
       // If the user was not found
-      logger.info("deleteUser : User not found");
+      logger.info("\ndeleteUser : User not found");
       return false;
     } else {
-      logger.info("deleteUser : User deleted");
+      logger.info("\ndeleteUser : User deleted");
       return true;
     }
   } catch (error) {
     // If an error occurred
-    logger.error("deleteUser : " + error);
+    logger.error("\ndeleteUser : " + error);
     return false;
   } finally {
     pool.end();
@@ -270,17 +270,17 @@ export async function changePass(
         newpass,
       ]);
       await pool.end();
-      logger.info('changePass: Password changed successfully!');
+      logger.info('\n changePass: Password changed successfully!');
       return true;
     } catch (err) {
       // If there was an error updating the password, log the error and return false
-      logger.error('changePass: Error changing password: ', err);
+      logger.error('\n changePass: Error changing password: ', err);
       await pool.end();
       return false;
     }
   } else {
     // If the user with the specified email address doesn't exist, log an error and return false
-    logger.info('changePass: User not found.');
+    logger.info('\n changePass: User not found.');
     await pool.end();
     return false;
   }

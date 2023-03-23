@@ -40,7 +40,7 @@ router
         data['question3'],
         data['answer3']
       );
-      logger.info("Account creation request data: \n" + data)
+      logger.info("\nAccount creation request data: \n" + data)
     
       // call function to post data to the database
     

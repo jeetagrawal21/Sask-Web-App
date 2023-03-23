@@ -33,7 +33,7 @@ export async function checkIfTable(tablename:String) {
       const exists = rows[0].exists;
       return Boolean(exists);
     } catch (error) {
-      logger.error("checkIfTable errpr: \n" +error);
+      logger.error("\ncheckIfTable errpr: \n" +error);
     } finally {
       pool.end();
     }
@@ -66,7 +66,7 @@ export async function checkIfTable(tablename:String) {
         )
       `);
     } catch (error) {
-      logger.error("createTable errpr: \n" +error);
+      logger.error("\ncreateTable errpr: \n" +error);
     } finally {
       pool.end();
     }
@@ -80,8 +80,8 @@ export async function setupDataDB() {
     if (!await checkIfTable('userdata')){
       const filePath = 'data/dbdatasqlcode.sql';
       await runSqlFile(filePath)
-        .then(() => logger.info('SQL file executed successfully'))
-        .catch(err => logger.error('Error executing SQL file:', err));
+        .then(() => logger.info('\nSQL file executed successfully'))
+        .catch(err => logger.error('\nError executing SQL file:', err));
     }
 }
 
@@ -115,8 +115,8 @@ export async function initiateDB() {
           `SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='${tablename}')`
         );
         // Log the value of the "exists" column in the first row of the "res" result.
-        logger.info('initiateDB table exist double check -->'res.rows[0].exists);
-        logger.info('initiateDB --> Table was created successfully.');
+        logger.info('\ninitiateDB table exist double check --> ' + res.rows[0].exists);
+        logger.info('\ninitiateDB --> Table was created successfully.');
         // Call the "accountCreationUser" function with some parameters.
         await accountCreationUser(
           12345678,
@@ -147,7 +147,7 @@ export async function initiateDB() {
         );
       } catch (error) {
         // If an error occurs, log it to the console.
-        logger.error("initiateDB error: \n" +error);
+        logger.error("\ninitiateDB error: \n" +error);
       } finally {
         pool.end();
       }

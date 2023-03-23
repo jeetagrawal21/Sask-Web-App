@@ -144,7 +144,6 @@ async function initiatelogdb() {
   const tablename = 'logs';
 
   try {
-    console.log('here');
     // Execute a SQL query to create a table named "users" if it doesn't already exist.
     await pool.query(
       'CREATE TABLE IF NOT EXISTS logs ( \
@@ -157,11 +156,11 @@ async function initiatelogdb() {
                       );'
     );
 
-    console.log('Table was created successfully.');
+    logger.info('initiatelogdb: Table was created successfully.');
     // Call the "accountcreationuser" function with some parameters.
   } catch (error) {
     // If an error occurs, log it to the console.
-    console.error(error);
+    logger.error('initiatelogdb: ' + error);
   } finally {
     pool.end();
   }

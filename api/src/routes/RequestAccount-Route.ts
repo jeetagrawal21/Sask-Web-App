@@ -28,7 +28,7 @@ router
     const particpantId = req.body;
     const partIDnum = 753951
     //req.session.partIDnum = Number(particpantId['participantId']);
-    logger.info("Participant ID Number Passed: " + partIDnum)
+    logger.info("\nParticipant ID Number Passed: " + partIDnum)
   });
 
   module.exports = router;
