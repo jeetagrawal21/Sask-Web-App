@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import WelcomePage from "./pages/WelcomePage";
 import Register from "./pages/RegisterPage";
-import TestPage from "./pages/TestPage";
 import RequestAccount from "./pages/RequestAccountPage";
 import AdminPage from "./pages/AdminPage";
 import Dashboard from "./pages/DashboardPage";
@@ -29,7 +28,6 @@ function App() {
         <Route path="/RequestAccount" element={<RequestAccount />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Dashboard" element={<Dashboard />} />
-        <Route path="/TestPage" element={<TestPage />} />
         <Route path="/AdminPage" element={<AdminPage />} />
       </Routes>
     </Router>
