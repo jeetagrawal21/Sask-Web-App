@@ -15,7 +15,7 @@ const UserRequestsTable: React.FC<UserRequestsTableProps> = ({
 }) => {
   return (
     <div>
-      <h1>User Requests</h1>
+      <h2>User Requests</h2>
       <table>
         <thead>
           <tr>
