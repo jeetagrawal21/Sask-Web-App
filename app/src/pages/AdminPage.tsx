@@ -6,6 +6,7 @@ import {
 } from "../components/AdminPageComponents/interfaces";
 import UserRequestsTable from "../components/AdminPageComponents/UserRequestsTable";
 import AllUsersTable from "../components/AdminPageComponents/AllUsersTable";
+import SignOut from "../components/SignOut";
 
 const AdminPage: React.FC = () => {
   const [userRequests, setUserRequests] = useState<UserRequest[]>([]);
@@ -85,6 +86,12 @@ const AdminPage: React.FC = () => {
 
   return (
     <div>
+      <h1>
+        AdminPage
+        <div style={{ float: "right", marginRight: "55px" }}>
+          <SignOut />
+        </div>
+      </h1>
       <UserRequestsTable
         userRequests={userRequests}
         onApproveUserRequest={handleApproveUserRequest}

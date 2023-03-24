@@ -1,20 +1,29 @@
-import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import React from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
+import "../../stylings/DashboardStyles/Graph.css";
 
 type DataItem = {
-  name: string,
-  uv: number,
-  pv: number,
-  amt: number,
-}
+  name: string;
+  uv: number;
+  pv: number;
+  amt: number;
+};
 
 type Props = {
-  data: DataItem[],
-}
+  data: DataItem[];
+};
 
-const SimpleLineChart = ({ data }: Props) => {
+const Graph = ({ data }: Props) => {
   return (
-    <LineChart width={800} height={400} data={data}>
+    <LineChart className="graph-container" width={800} height={400} data={data}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
       <YAxis />
@@ -25,4 +34,4 @@ const SimpleLineChart = ({ data }: Props) => {
   );
 };
 
-export default SimpleLineChart;
+export default Graph;
