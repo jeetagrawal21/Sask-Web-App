@@ -11,10 +11,8 @@ import {
 } from "./RegisterPageController";
 
 /**
- * Purpose: send post request with user registration data to backend and receives a response on if the registration was valid
- * Preconditions: user input fields as strings
- * Postconditions:
- * Return: None
+ * Send the registration data to the backend after validation
+ * @returns {JSX.Element} - Register page body
  */
 function RegisterPageBody() {
   const [email, setEmail] = useState("");
@@ -30,6 +28,10 @@ function RegisterPageBody() {
   const [givenName1, setGivenName1] = useState("");
   const [givenName2, setGivenName2] = useState("");
 
+  /**
+   * Send post request with registration data to backend and receives a response on if the user is valid,
+   * then takes them to the appropriate page
+   */
   function postRegistrationData() {
     // checks if the passwords put in password and confirm password fields are exactly the same
     const participantInfo = {
@@ -65,52 +67,50 @@ function RegisterPageBody() {
   return (
     <div className="register">
       <form>
-        {/* Textfield to enter surname */}
         <div>
           <input
-            placeholder="Enter your surname*"
+            placeholder="Surname *"
             id="surname"
             type="text"
-            // value={name}
+            // value={surname}
             onChange={(e) => {
               setSurname(e.target.value);
             }}
           ></input>
         </div>
 
-        {/* If the given name is not valid, this will display an error message. */}
-        {!checkName(surname) && surname !== "" && (
+        {/* Validate surname */}
+        {!checkName(surname) && surname !== "" ? (
           <>
-            <p>
-              Please enter a valid surname. It must not be less than 1 character
-            </p>
+            <p>Please enter a valid name.</p>
           </>
+        ) : (
+          <></>
         )}
 
-        {/* Textfield to enter Given name 1 */}
         <div>
           <input
-            placeholder="Enter your Given Name 1*"
+            placeholder="Given Name 1"
             id="givenName1"
             type="text"
-            // value={name}
             onChange={(e) => {
               setGivenName1(e.target.value);
             }}
           ></input>
         </div>
 
-        {/* If the given name is not valid, this will display an error message. */}
-        {!checkName(givenName1) && givenName1 !== "" && (
+        {/* Validate given name 1 */}
+        {!checkName(givenName1) && givenName1 !== "" ? (
           <>
-            <p>Please enter a Name. It must not be less than 1 character</p>
+            <p>Please enter a valid name.</p>
           </>
+        ) : (
+          <></>
         )}
 
-        {/* Textfield to enter Given name 2 */}
         <div>
           <input
-            placeholder="Enter your Given Name 2*"
+            placeholder="Given Name 2"
             id="givenName2"
             type="text"
             // value={name}
@@ -120,17 +120,18 @@ function RegisterPageBody() {
           ></input>
         </div>
 
-        {/* If the given name is not valid, this will display an error message. */}
-        {!checkName(givenName2) && givenName2 !== "" && (
+        {/* Validate given name 2 */}
+        {!checkName(givenName2) && givenName2 !== "" ? (
           <>
-            <p>Please enter a Name. It must not be less than 1 character</p>
+            <p>Please enter a valid name.</p>
           </>
+        ) : (
+          <></>
         )}
 
-        {/* Textfield to enter email */}
         <div className="Email">
           <input
-            placeholder="Enter your email*"
+            placeholder="Email *"
             // className="input-fields"
             id="email"
             value={email}
@@ -143,16 +144,15 @@ function RegisterPageBody() {
         {/* If the given email is not valid, this will display an error message. */}
         {!checkEmail(email) && email !== "" ? (
           <>
-            <p>Please enter a valid email</p>
+            <p>Please enter a valid email.</p>
           </>
         ) : (
           <></>
         )}
 
-        {/* Textfield to enter password */}
         <div>
           <input
-            placeholder="Enter your password*"
+            placeholder="Password *"
             id="password"
             value={password}
             onChange={(e) => {
@@ -161,58 +161,56 @@ function RegisterPageBody() {
           ></input>
         </div>
 
-        {/* If the typed password does not meet the criteria, this will display an error message. */}
-        {!checkPassword(password) && password !== "" && (
+        {/* Validate password */}
+        {!checkPassword(password) && password !== "" ? (
           <>
-            <p>
-              Please enter valid password. It must not be less than 8 characters
-              and must include a special character
-            </p>
+            <p>Please enter a valid password.</p>
           </>
+        ) : (
+          <></>
         )}
 
-        {/* Textfield to confirm password */}
         <div>
           <input
-            placeholder="Confirm your password*"
+            placeholder="Confirm Password *"
             id="confirm-password"
-            value={confirmPassword}
             onChange={(e) => {
               setConfirmPassword(e.target.value);
             }}
           ></input>
         </div>
 
+        {/* Ensure password and confirmPassword matches */}
+        {password !== confirmPassword && confirmPassword !== "" ? (
+          <>
+            <p>Passwords do not match.</p>
+          </>
+        ) : (
+          <></>
+        )}
+
         <div className="security-questions">
-          {/* Textfield to enter First security question */}
           <div>
             <input
-              placeholder="Enter security question 1*"
+              placeholder="Security Question 1 *"
               id="securityQuestion1"
-              // value={securityQuestion}
               onChange={(e) => {
                 setSecurityQuestion1(e.target.value);
               }}
             ></input>
           </div>
 
-          {/* If the given Security question is not valid, this will display an error message. */}
           {!checkSecurityQuestion(securityQuestion1) &&
             securityQuestion1 !== "" && (
               <>
-                <p>
-                  Please enter a security question. It cannot be blank and it
-                  should have a question mark at the end!
-                </p>
+                <p>Please enter a security question.</p>
               </>
             )}
 
-          {/* Textfield to enter First security answer */}
           <div>
             <input
-              placeholder="Enter security answer 1*"
+              placeholder="Security Answer 1 *"
               id="securityAnswer1"
-              // value={securityAnswer}
               onChange={(e) => {
                 setSecurityAnswer1(e.target.value);
               }}
@@ -222,17 +220,13 @@ function RegisterPageBody() {
           {/* If the given security answer is not valid, this will display an error message. */}
           {!checkSecurityAnswer(securityAnswer1) && securityAnswer1 !== "" && (
             <>
-              <p>
-                Please enter a valid security answer. It cannot be blank and it
-                should not be more than 30 characters
-              </p>
+              <p>Please enter a valid security answer.</p>
             </>
           )}
 
-          {/* Textfield to enter second security question */}
           <div>
             <input
-              placeholder="Enter security question 2*"
+              placeholder="Security Question 2 *"
               id="securityQuestion2"
               // value={securityQuestion}
               onChange={(e) => {
@@ -245,17 +239,13 @@ function RegisterPageBody() {
           {!checkSecurityQuestion(securityQuestion2) &&
             securityQuestion2 !== "" && (
               <>
-                <p>
-                  Please enter a security question. It cannot be blank and it
-                  should have a question mark at the end!
-                </p>
+                <p>Please enter a valid security question.</p>
               </>
             )}
 
-          {/* Textfield to enter second security answer */}
           <div>
             <input
-              placeholder="Enter security answer 2*"
+              placeholder="Security Answer 2 *"
               id="securityAnswer2"
               // value={securityAnswer}
               onChange={(e) => {
@@ -267,17 +257,13 @@ function RegisterPageBody() {
           {/* If the given security answer is not valid, this will display an error message. */}
           {!checkSecurityAnswer(securityAnswer2) && securityAnswer2 !== "" && (
             <>
-              <p>
-                Please enter a valid security answer. It cannot be blank and it
-                should not be more than 30 characters
-              </p>
+              <p>Please enter a valid security answer.</p>
             </>
           )}
 
-          {/* Textfield to enter third security question */}
           <div>
             <input
-              placeholder="Enter security question 3*"
+              placeholder="Security Question 3 *"
               id="securityQuestion3"
               // value={securityQuestion}
               onChange={(e) => {
@@ -290,19 +276,14 @@ function RegisterPageBody() {
           {!checkSecurityQuestion(securityQuestion3) &&
             securityQuestion3 !== "" && (
               <>
-                <p>
-                  Please enter a security question. It cannot be blank and it
-                  should have a question mark at the end!
-                </p>
+                <p>Please enter a valid security question.</p>
               </>
             )}
 
-          {/* Textfield to enter third security answer */}
           <div>
             <input
-              placeholder="Enter security answer 3*"
+              placeholder="Security Answer 3 *"
               id="securityAnswer3"
-              // value={securityAnswer}
               onChange={(e) => {
                 setSecurityAnswer3(e.target.value);
               }}
@@ -313,10 +294,7 @@ function RegisterPageBody() {
         {/* If the given security answer is not valid, this will display an error message. */}
         {!checkSecurityAnswer(securityAnswer3) && securityAnswer3 !== "" && (
           <>
-            <p>
-              Please enter a valid security answer. It cannot be blank and it
-              should not be more than 30 characters
-            </p>
+            <p>Please enter a valid security answer.</p>
           </>
         )}
 
