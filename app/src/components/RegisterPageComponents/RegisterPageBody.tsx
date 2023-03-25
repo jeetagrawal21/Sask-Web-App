@@ -3,8 +3,7 @@ import axios from "axios";
 import React, { Component, useState } from "react";
 import {
   checkName,
-  checkSecurityQuestion,
-  checkSecurityAnswer,
+  checkSecurityField,
   handleDisable,
   checkEmail,
   checkPassword,
@@ -195,12 +194,15 @@ function RegisterPageBody() {
               placeholder="Security Question 1 *"
               id="securityQuestion1"
               onChange={(e) => {
-                setSecurityQuestion1(e.target.value);
+                if (!e.target.value.endsWith("?")) {
+                  e.target.value += "?";
+                }
+                setSecurityQuestion3(e.target.value);
               }}
             ></input>
           </div>
 
-          {!checkSecurityQuestion(securityQuestion1) &&
+          {!checkSecurityField(securityQuestion1) &&
             securityQuestion1 !== "" && (
               <>
                 <p>Please enter a security question.</p>
@@ -218,7 +220,7 @@ function RegisterPageBody() {
           </div>
 
           {/* If the given security answer is not valid, this will display an error message. */}
-          {!checkSecurityAnswer(securityAnswer1) && securityAnswer1 !== "" && (
+          {!checkSecurityField(securityAnswer1) && securityAnswer1 !== "" && (
             <>
               <p>Please enter a valid security answer.</p>
             </>
@@ -230,13 +232,15 @@ function RegisterPageBody() {
               id="securityQuestion2"
               // value={securityQuestion}
               onChange={(e) => {
-                setSecurityQuestion2(e.target.value);
+                if (!e.target.value.endsWith("?")) {
+                  e.target.value += "?";
+                }
+                setSecurityQuestion3(e.target.value);
               }}
             ></input>
           </div>
 
-          {/* If the given name is not valid, this will display an error message. */}
-          {!checkSecurityQuestion(securityQuestion2) &&
+          {!checkSecurityField(securityQuestion2) &&
             securityQuestion2 !== "" && (
               <>
                 <p>Please enter a valid security question.</p>
@@ -255,7 +259,7 @@ function RegisterPageBody() {
           </div>
 
           {/* If the given security answer is not valid, this will display an error message. */}
-          {!checkSecurityAnswer(securityAnswer2) && securityAnswer2 !== "" && (
+          {!checkSecurityField(securityAnswer2) && securityAnswer2 !== "" && (
             <>
               <p>Please enter a valid security answer.</p>
             </>
@@ -267,18 +271,13 @@ function RegisterPageBody() {
               id="securityQuestion3"
               // value={securityQuestion}
               onChange={(e) => {
+                if (!e.target.value.endsWith("?")) {
+                  e.target.value += "?";
+                }
                 setSecurityQuestion3(e.target.value);
               }}
             ></input>
           </div>
-
-          {/* If the given name is not valid, this will display an error message. */}
-          {!checkSecurityQuestion(securityQuestion3) &&
-            securityQuestion3 !== "" && (
-              <>
-                <p>Please enter a valid security question.</p>
-              </>
-            )}
 
           <div>
             <input
@@ -291,8 +290,7 @@ function RegisterPageBody() {
           </div>
         </div>
 
-        {/* If the given security answer is not valid, this will display an error message. */}
-        {!checkSecurityAnswer(securityAnswer3) && securityAnswer3 !== "" && (
+        {!checkSecurityField(securityAnswer3) && securityAnswer3 !== "" && (
           <>
             <p>Please enter a valid security answer.</p>
           </>
