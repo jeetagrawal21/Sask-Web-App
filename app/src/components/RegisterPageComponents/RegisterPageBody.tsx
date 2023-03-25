@@ -1,16 +1,14 @@
-import '../../stylings/RegisterPageStyles/Text.css';
-import axios from 'axios';
-import React, { Component, useState } from 'react';
-import {
-  checkEmail,
-  checkPassword,
-} from '../WelcomePageComponents/Controller/SignInController';
+import "../../stylings/RegisterPageStyles/Text.css";
+import axios from "axios";
+import React, { Component, useState } from "react";
 import {
   checkName,
   checkSecurityQuestion,
   checkSecurityAnswer,
   handleDisable,
-} from './RegisterPageController';
+  checkEmail,
+  checkPassword,
+} from "./RegisterPageController";
 
 /**
  * Purpose: send post request with user registration data to backend and receives a response on if the registration was valid
@@ -19,47 +17,48 @@ import {
  * Return: None
  */
 function RegisterPageBody() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [securityQuestion1, setSecurityQuestion1] = useState('');
-  const [securityQuestion2, setSecurityQuestion2] = useState('');
-  const [securityQuestion3, setSecurityQuestion3] = useState('');
-  const [securityAnswer1, setSecurityAnswer1] = useState('');
-  const [securityAnswer2, setSecurityAnswer2] = useState('');
-  const [securityAnswer3, setSecurityAnswer3] = useState('');
-  const [surname, setSurname] = useState('');
-  const [givenName1, setGivenName1] = useState('');
-  const [givenName2, setGivenName2] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [securityQuestion1, setSecurityQuestion1] = useState("");
+  const [securityQuestion2, setSecurityQuestion2] = useState("");
+  const [securityQuestion3, setSecurityQuestion3] = useState("");
+  const [securityAnswer1, setSecurityAnswer1] = useState("");
+  const [securityAnswer2, setSecurityAnswer2] = useState("");
+  const [securityAnswer3, setSecurityAnswer3] = useState("");
+  const [surname, setSurname] = useState("");
+  const [givenName1, setGivenName1] = useState("");
+  const [givenName2, setGivenName2] = useState("");
 
   function postRegistrationData() {
     // checks if the passwords put in password and confirm password fields are exactly the same
     const participantInfo = {
-      surname: (document.getElementById('surname') as HTMLInputElement).value,
-      email: (document.getElementById('email') as HTMLInputElement).value,
-      givenName1: (document.getElementById('givenName1') as HTMLInputElement)
+      surname: (document.getElementById("surname") as HTMLInputElement).value,
+      email: (document.getElementById("email") as HTMLInputElement).value,
+      givenName1: (document.getElementById("givenName1") as HTMLInputElement)
         .value,
-      givenName2: (document.getElementById('givenName2') as HTMLInputElement)
+      givenName2: (document.getElementById("givenName2") as HTMLInputElement)
         .value,
       question1: (
-        document.getElementById('securityQuestion1') as HTMLInputElement
+        document.getElementById("securityQuestion1") as HTMLInputElement
       ).value,
       question2: (
-        document.getElementById('securityQuestion2') as HTMLInputElement
+        document.getElementById("securityQuestion2") as HTMLInputElement
       ).value,
       question3: (
-        document.getElementById('securityQuestion3') as HTMLInputElement
+        document.getElementById("securityQuestion3") as HTMLInputElement
       ).value,
-      answer1: (document.getElementById('securityAnswer1') as HTMLInputElement)
+      answer1: (document.getElementById("securityAnswer1") as HTMLInputElement)
         .value,
-      answer2: (document.getElementById('securityAnswer2') as HTMLInputElement)
+      answer2: (document.getElementById("securityAnswer2") as HTMLInputElement)
         .value,
-      answer3: (document.getElementById('securityAnswer3') as HTMLInputElement)
+      answer3: (document.getElementById("securityAnswer3") as HTMLInputElement)
         .value,
-      password: (document.getElementById('password') as HTMLInputElement).value,
+      password: (document.getElementById("password") as HTMLInputElement).value,
     };
     // send the participant data to the backend using an axios post request
     axios
-      .post('http://localhost:3000/postregistrationinfo', participantInfo)
+      .post("http://localhost:3000/postregistrationinfo", participantInfo)
       .then((response) => {});
   }
 
@@ -80,7 +79,7 @@ function RegisterPageBody() {
         </div>
 
         {/* If the given name is not valid, this will display an error message. */}
-        {!checkName(surname) && surname !== '' && (
+        {!checkName(surname) && surname !== "" && (
           <>
             <p>
               Please enter a valid surname. It must not be less than 1 character
@@ -102,7 +101,7 @@ function RegisterPageBody() {
         </div>
 
         {/* If the given name is not valid, this will display an error message. */}
-        {!checkName(givenName1) && givenName1 !== '' && (
+        {!checkName(givenName1) && givenName1 !== "" && (
           <>
             <p>Please enter a Name. It must not be less than 1 character</p>
           </>
@@ -122,7 +121,7 @@ function RegisterPageBody() {
         </div>
 
         {/* If the given name is not valid, this will display an error message. */}
-        {!checkName(givenName2) && givenName2 !== '' && (
+        {!checkName(givenName2) && givenName2 !== "" && (
           <>
             <p>Please enter a Name. It must not be less than 1 character</p>
           </>
@@ -142,7 +141,7 @@ function RegisterPageBody() {
         </div>
 
         {/* If the given email is not valid, this will display an error message. */}
-        {!checkEmail(email) && email !== '' ? (
+        {!checkEmail(email) && email !== "" ? (
           <>
             <p>Please enter a valid email</p>
           </>
@@ -163,7 +162,7 @@ function RegisterPageBody() {
         </div>
 
         {/* If the typed password does not meet the criteria, this will display an error message. */}
-        {!checkPassword(password) && password !== '' && (
+        {!checkPassword(password) && password !== "" && (
           <>
             <p>
               Please enter valid password. It must not be less than 8 characters
@@ -177,6 +176,10 @@ function RegisterPageBody() {
           <input
             placeholder="Confirm your password*"
             id="confirm-password"
+            value={confirmPassword}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+            }}
           ></input>
         </div>
 
@@ -195,7 +198,7 @@ function RegisterPageBody() {
 
           {/* If the given Security question is not valid, this will display an error message. */}
           {!checkSecurityQuestion(securityQuestion1) &&
-            securityQuestion1 !== '' && (
+            securityQuestion1 !== "" && (
               <>
                 <p>
                   Please enter a security question. It cannot be blank and it
@@ -217,7 +220,7 @@ function RegisterPageBody() {
           </div>
 
           {/* If the given security answer is not valid, this will display an error message. */}
-          {!checkSecurityAnswer(securityAnswer1) && securityAnswer1 !== '' && (
+          {!checkSecurityAnswer(securityAnswer1) && securityAnswer1 !== "" && (
             <>
               <p>
                 Please enter a valid security answer. It cannot be blank and it
@@ -240,7 +243,7 @@ function RegisterPageBody() {
 
           {/* If the given name is not valid, this will display an error message. */}
           {!checkSecurityQuestion(securityQuestion2) &&
-            securityQuestion2 !== '' && (
+            securityQuestion2 !== "" && (
               <>
                 <p>
                   Please enter a security question. It cannot be blank and it
@@ -262,7 +265,7 @@ function RegisterPageBody() {
           </div>
 
           {/* If the given security answer is not valid, this will display an error message. */}
-          {!checkSecurityAnswer(securityAnswer2) && securityAnswer2 !== '' && (
+          {!checkSecurityAnswer(securityAnswer2) && securityAnswer2 !== "" && (
             <>
               <p>
                 Please enter a valid security answer. It cannot be blank and it
@@ -285,7 +288,7 @@ function RegisterPageBody() {
 
           {/* If the given name is not valid, this will display an error message. */}
           {!checkSecurityQuestion(securityQuestion3) &&
-            securityQuestion3 !== '' && (
+            securityQuestion3 !== "" && (
               <>
                 <p>
                   Please enter a security question. It cannot be blank and it
@@ -308,7 +311,7 @@ function RegisterPageBody() {
         </div>
 
         {/* If the given security answer is not valid, this will display an error message. */}
-        {!checkSecurityAnswer(securityAnswer3) && securityAnswer3 !== '' && (
+        {!checkSecurityAnswer(securityAnswer3) && securityAnswer3 !== "" && (
           <>
             <p>
               Please enter a valid security answer. It cannot be blank and it
@@ -320,9 +323,10 @@ function RegisterPageBody() {
         <div className="register-page-button-div">
           <button
             disabled={handleDisable(
-              [surname, givenName1, givenName2],
-              password,
               email,
+              password,
+              [surname, givenName1, givenName2],
+              confirmPassword,
               [securityQuestion1, securityQuestion2, securityQuestion3],
               [securityAnswer1, securityAnswer2, securityAnswer3]
             )}

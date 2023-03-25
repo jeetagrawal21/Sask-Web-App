@@ -4,16 +4,14 @@ import RegisterPageBody from "./RegisterPageBody";
 import React from "react";
 import RegisterPageTitle from "./RegisterPageTitle";
 import axios from "axios";
-import {
-  checkEmail,
-  checkPassword,
-} from "../WelcomePageComponents/Controller/SignInController";
 
 import {
   checkName,
   checkSecurityQuestion,
   checkSecurityAnswer,
   handleDisable,
+  checkEmail,
+  checkPassword,
 } from "./RegisterPageController";
 import "@testing-library/jest-dom";
 

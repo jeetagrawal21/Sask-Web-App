@@ -27,10 +27,9 @@ function checkPassword(password: string): boolean {
 }
 
 /**
-   Purpose: Checks if the format of a given name is valid.
-   Precondition: name: string entered by the user
-   PostCondition: None
-   Return: true if the name provided by the user matches the description provided in the function  
+ * Check if the format of a given name is valid.
+ * @param name name string entered by the user
+ * @returns true if the name provided by the user matches the description provided in the function
 */
 function checkName(name: string) {
   const nameRegex = /^[a-zA-Z0-9\s!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{1,}$/;
@@ -38,55 +37,72 @@ function checkName(name: string) {
 }
 
 /**
-   Purpose: Checks if the format of a given question is valid.
-   Precondition: question: string entered by the user
-   PostCondition: None
-   Return: true if the question provided by the user matches the description provided in the function  
+ * Checks if the format of a given security question is valid.
+ * @param question security question string entered by the user
+ * @returns true if the security question provided by the user matches the description provided in the function
 */
 function checkSecurityQuestion(question: string) {
-  const securityQuestionRegex = /^.+\?$/;
+  const securityQuestionRegex = /^(?=.*[a-zA-Z\d])(\w|[\s\.\@\-\?\,\&\/\_\#\+\(\)\"'"\'"']){3,50}$/;
   return securityQuestionRegex.test(question);
 }
 
 /**
-   Purpose: Checks if the format of a given answer is valid.
-   Precondition: answer: string entered by the user
-   PostCondition: None
-   Return: true if the answer provided by the user matches the description provided in the function  
+ * Checks if the format of a given security answer is valid.
+ * @param answer security answer string entered by the user
+ * @returns true if the security answer provided by the user matches the description provided in the function
 */
 function checkSecurityAnswer(answer: string) {
-  const securityAnswerRegex = /^[a-zA-Z0-9\s]{1,30}$/;
+  const securityAnswerRegex = /^(?=.*[a-zA-Z\d])(\w|[\s\.\@\-\?\,\&\/\_\#\+\(\)\"'"\'"']){3,50}$/
   return securityAnswerRegex.test(answer);
 }
 
 /**
-   Purpose: Disables a button if the requirements specified are not fulfilled
-   Precondition: names: List of names,  email: email string entered by the user, password: password string entered by the user,
-                  securityQuestions: List of security questions, securityAnswers: List of security answers from the user
-   PostCondition: None
-   Return: true if any of the inputs do not meet the requirement   
+ * Checks if the email, password, names, security questions, and security answers are valid and returns the opposite of that.
+ * @param email email string entered by the user
+ * @param password password string entered by the user
+ * @param names names string array entered by the user
+ * @param confirmPassword confirm password string entered by the user
+ * @param securityQuestions security questions string array entered by the user
+ * @param securityAnswers security answers string array entered by the user
+ * @returns true if the email, password, names, security questions, and security answers are valid, false otherwise
+ * @note This function can be used for both the register and sign in pages.
 */
 function handleDisable(
-  names: string[],
-  password: string,
   email: string,
-  securityQuestions: string[],
-  securityAnswers: string[]
+  password: string,
+  names?: string[],
+  confirmPassword?: string,
+  securityQuestions?: string[],
+  securityAnswers?: string[]
 ) {
-  let result =
-    checkEmail(email) &&
-    checkPassword(password) &&
-    checkName(names[0]) &&
-    checkName(names[1]) &&
-    checkName(names[2]) &&
-    checkSecurityQuestion(securityQuestions[0]) &&
-    checkSecurityQuestion(securityQuestions[1]) &&
-    checkSecurityQuestion(securityQuestions[2]) &&
-    checkSecurityAnswer(securityAnswers[0]) &&
-    checkSecurityAnswer(securityAnswers[1]) &&
-    checkSecurityAnswer(securityAnswers[2]);
+  const isValidEmail = checkEmail(email);
+  const isValidPassword = checkPassword(password);
 
-  return !result;
+  if (!isValidEmail || !isValidPassword) {
+    return true; // If email or password is invalid, disable the button
+  }
+
+  if (names && (names.length !== 3 || !names.every((name) => checkName(name)))) {
+    return true; // If names are present but not valid, disable the button
+  }
+
+  if (
+    securityQuestions &&
+    securityAnswers &&
+    (securityQuestions.length !== 3 ||
+      securityAnswers.length !== 3 ||
+      !securityQuestions.every((question) => checkSecurityQuestion(question)) ||
+      !securityAnswers.every((answer) => checkSecurityAnswer(answer)))
+  ) {
+    return true; // If security questions/answers are present but not valid, disable the button
+  }
+
+  if (confirmPassword && password !== confirmPassword) {
+    return true; // If confirm password does not match password, disable the button
+  }
+
+  return false; // All validations passed, enable the button
 }
+
 
 export { checkName, checkSecurityQuestion, checkSecurityAnswer, handleDisable, checkEmail, checkPassword };
