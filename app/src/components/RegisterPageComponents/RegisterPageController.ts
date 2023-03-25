@@ -1,10 +1,30 @@
-import React, { Component, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import {
-  checkEmail,
-  checkPassword,
-} from '../WelcomePageComponents/Controller/SignInController';
+/**
+ * Check if the format of a given email is valid.
+ * @param email email string entered by the user
+ * @returns true if the email provided by the user matches the description provided in the function
+*/
+function checkEmail(email: string) {
+  const emailRegex = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]{2,3}\s*$/;
+  return emailRegex.test(email);
+}
+
+/**
+ * Checks if the format of a given password is valid. 
+ * @param password password string entered by the user
+ * @returns true if the password provided by the user matches the description provided in the function
+ */
+function checkPassword(password: string): boolean {
+  let count = 0;
+
+  if (password.length >= 8 && password.length <= 32) {
+    if (/\d/.test(password)) count++;
+    if (/[a-z]/.test(password)) count++;
+    if (/[A-Z]/.test(password)) count++;
+    if (/[*.!@#$%^&(){}\[\]:;"'<>,.?\/~`_+\-=|\\]/.test(password)) count++;
+  }
+
+  return count >= 3;
+}
 
 /**
    Purpose: Checks if the format of a given name is valid.
@@ -69,4 +89,4 @@ function handleDisable(
   return !result;
 }
 
-export { checkName, checkSecurityQuestion, checkSecurityAnswer, handleDisable };
+export { checkName, checkSecurityQuestion, checkSecurityAnswer, handleDisable, checkEmail, checkPassword };
