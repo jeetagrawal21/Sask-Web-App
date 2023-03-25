@@ -24,7 +24,7 @@ function checkPassword(password: string): boolean {
     if (/[*.!@#$%^&(){}\[\]:;"'<>,.?\/~`_+\-=|\\]/.test(password)) count++;
   }
 
-  return count >= 3;
+  return count > 3;
 }
 
 /**
@@ -38,26 +38,21 @@ function checkName(name: string) {
 }
 
 /**
- * Checks if the format of a given security question is valid.
- * @param question security question string entered by the user
- * @returns true if the security question provided by the user matches the description provided in the function
+ * Checks if the format of a given security field is valid.
+ * @param field security field string entered by the user
+ * @returns true if the security field provided by the user matches the description provided in the function
+ * @note This function can be used for both the security questions and security answers.
  */
-function checkSecurityQuestion(question: string) {
-  const securityQuestionRegex =
-    /^(?=.*[a-zA-Z\d])(\w|[\s\.\@\-\?\,\&\/\_\#\+\(\)\"'"\'"']){3,50}$/;
-  return securityQuestionRegex.test(question);
+function checkSecurityField(field: string): boolean {
+  const isQuestion = field.endsWith('?');
+  const minLength = isQuestion ? 15 : 3;
+  const maxLength = 56;
+  const allowedCharacters = /[\w\s.@\-?,&/#+()"'\[\]{}!$%^*|~=]/;
+  const regex = new RegExp(`^(?=.*[a-zA-Z\d])${allowedCharacters.source}{${minLength},${maxLength}}$`);
+  return regex.test(field);
 }
 
-/**
- * Checks if the format of a given security answer is valid.
- * @param answer security answer string entered by the user
- * @returns true if the security answer provided by the user matches the description provided in the function
- */
-function checkSecurityAnswer(answer: string) {
-  const securityAnswerRegex =
-    /^(?=.*[a-zA-Z\d])(\w|[\s\.\@\-\?\,\&\/\_\#\+\(\)\"'"\'"']){3,50}$/;
-  return securityAnswerRegex.test(answer);
-}
+
 
 /**
  * Checks if the email, password, names, security questions, and security answers are valid and returns the opposite of that.
@@ -89,10 +84,8 @@ function handleDisable(
   if (
     securityQuestions &&
     securityAnswers &&
-    (securityQuestions.length !== 3 ||
-      securityAnswers.length !== 3 ||
-      !securityQuestions.every((question) => checkSecurityQuestion(question)) ||
-      !securityAnswers.every((answer) => checkSecurityAnswer(answer)))
+    securityQuestions.some((question) => question.length > 0 && !checkSecurityField(question)) &&
+    securityAnswers.some((answer) => answer.length > 0 && !checkSecurityField(answer))
   ) {
     disable = true;
   }
@@ -107,9 +100,8 @@ function handleDisable(
 
 export {
   checkName,
-  checkSecurityQuestion,
-  checkSecurityAnswer,
   handleDisable,
   checkEmail,
   checkPassword,
+  checkSecurityField,
 };
