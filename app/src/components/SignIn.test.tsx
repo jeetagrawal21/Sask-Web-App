@@ -122,14 +122,14 @@ describe("SignIn component", () => {
     const emailInput = screen.getByPlaceholderText("Email*");
     const passwordInput = screen.getByPlaceholderText("Password*");
     fireEvent.change(emailInput, { target: { value: "testuser1@email.com" } });
-    fireEvent.change(passwordInput, { target: { value: "testpasslonger1!" } });
+    fireEvent.change(passwordInput, { target: { value: "TestPassLonger1!" } });
     const signInButton = screen.getByText("SIGN IN");
     fireEvent.click(signInButton);
 
     //   // assertions to verify that the POST request is sent to the server
     expect(axiosMock).toHaveBeenCalledWith("http://localhost:3000/login", {
       email: "testuser1@email.com",
-      password: "testpasslonger1!",
+      password: "TestPassLonger1!",
     });
   });
 
@@ -184,7 +184,7 @@ describe("SignIn component", () => {
     //     target: { value: 'testuser1@email.com' },
     //   });
     //   fireEvent.change(passwordInput, {
-    //     target: { value: 'testpasslonger1!' },
+    //     target: { value: 'TestPassLonger1!' },
     //   });
     //   const signInButton = screen.getByText('SIGN IN');
     //   fireEvent.click(signInButton);

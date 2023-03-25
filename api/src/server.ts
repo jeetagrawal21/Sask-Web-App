@@ -371,8 +371,8 @@ async function initiatedb() {
   const tablename = 'users';
   if(await checkiftable('users')){
     if(await checkifuser('testuser1@email.com'))
-      changepass('testuser1@email.com', 'testpasslonger1!');
-    changepass('testadmin1@email.com', 'testpasslonger2!');
+      changepass('testuser1@email.com', 'TestPassLonger1!');
+    changepass('testadmin1@email.com', 'TestPassLonger2!');
   }
   // Call "checkiftable" function and wait for it to complete, storing the result in "tablecheck" variable.
   const tablecheck = await checkiftable('users');
@@ -395,7 +395,7 @@ async function initiatedb() {
         'testuser1',
         'testusergiven1-1',
         'testusergiven2-1',
-        'testpasslonger1!',
+        'TestPassLonger1!',
         'testuser1@email.com',
         'hello who?',
         'World!',
@@ -408,7 +408,7 @@ async function initiatedb() {
         'testadmin1',
         'testadmingiven1-1',
         'testadmingiven2-1',
-        'testpasslonger2!',
+        'TestPassLonger2!',
         'testadmin1@email.com',
         'With great power comes what?',
         'Great responsability',
