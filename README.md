@@ -1,3 +1,10 @@
+# Running Selenium Tests
+Run the following command from inside of the app container before you run selenium tests:
+export REACT_APP_API_BASE_URL=http://covid_api:3000
+
+Run the following command from inside of the app container after you run the selenium tests if yuo want to access the webpage manually:
+export REACT_APP_API_BASE_URL=http://localhost:3000
+
 # Branch Structure
 ### feature/story-name
 These branches are for actual features that we expect to eventually end up on the main branch.<br>
