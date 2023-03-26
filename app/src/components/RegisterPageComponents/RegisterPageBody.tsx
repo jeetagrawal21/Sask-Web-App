@@ -71,7 +71,6 @@ function RegisterPageBody() {
             placeholder="Surname *"
             id="surname"
             type="text"
-            // value={surname}
             onChange={(e) => {
               setSurname(e.target.value);
             }}
@@ -112,7 +111,6 @@ function RegisterPageBody() {
             placeholder="Given Name 2"
             id="givenName2"
             type="text"
-            // value={name}
             onChange={(e) => {
               setGivenName2(e.target.value);
             }}
@@ -194,10 +192,12 @@ function RegisterPageBody() {
               placeholder="Security Question 1 *"
               id="securityQuestion1"
               onChange={(e) => {
-                if (!e.target.value.endsWith("?")) {
-                  e.target.value += "?";
+                const value = e.target.value;
+                if (value && !value.endsWith("?")) {
+                  setSecurityQuestion1(value + "?");
+                } else {
+                  setSecurityQuestion1(value);
                 }
-                setSecurityQuestion3(e.target.value);
               }}
             ></input>
           </div>
@@ -205,7 +205,7 @@ function RegisterPageBody() {
           {!checkSecurityField(securityQuestion1) &&
             securityQuestion1 !== "" && (
               <>
-                <p>Please enter a security question.</p>
+                <p>Please enter a valid security question.</p>
               </>
             )}
 
@@ -230,12 +230,13 @@ function RegisterPageBody() {
             <input
               placeholder="Security Question 2 *"
               id="securityQuestion2"
-              // value={securityQuestion}
               onChange={(e) => {
-                if (!e.target.value.endsWith("?")) {
-                  e.target.value += "?";
+                const value = e.target.value;
+                if (value && !value.endsWith("?")) {
+                  setSecurityQuestion2(value + "?");
+                } else {
+                  setSecurityQuestion2(value);
                 }
-                setSecurityQuestion3(e.target.value);
               }}
             ></input>
           </div>
@@ -251,7 +252,6 @@ function RegisterPageBody() {
             <input
               placeholder="Security Answer 2 *"
               id="securityAnswer2"
-              // value={securityAnswer}
               onChange={(e) => {
                 setSecurityAnswer2(e.target.value);
               }}
@@ -269,15 +269,23 @@ function RegisterPageBody() {
             <input
               placeholder="Security Question 3 *"
               id="securityQuestion3"
-              // value={securityQuestion}
               onChange={(e) => {
-                if (!e.target.value.endsWith("?")) {
-                  e.target.value += "?";
+                const value = e.target.value;
+                if (value && !value.endsWith("?")) {
+                  setSecurityQuestion3(value + "?");
+                } else {
+                  setSecurityQuestion3(value);
                 }
-                setSecurityQuestion3(e.target.value);
               }}
             ></input>
           </div>
+
+          {!checkSecurityField(securityQuestion3) &&
+            securityQuestion3 !== "" && (
+              <>
+                <p>Please enter a valid security question.</p>
+              </>
+            )}
 
           <div>
             <input
