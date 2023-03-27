@@ -27,7 +27,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Build The Stack
-        run: docker compose up -d
+        run: docker-compose up -d
       
 #       - name: Lint Frontend
 #         run: docker exec covid_app run eslint
