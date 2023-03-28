@@ -294,5 +294,6 @@ export default {
   accountCreationAdmin,
   accountCreationUser,
   deleteUser,
-  changePass
+  changePass,
 } 
+

@@ -2,6 +2,7 @@ import express from 'express';
 import { Request, Response } from 'express';
 import { Logger } from "tslog";
 import { appendFileSync } from "fs";
+import { insertPendingUser, isParticipantIdPending } from '@src/services/Account-Service'
 
 
 const router = express.Router();
@@ -25,10 +26,23 @@ logger.attachTransport((logObj) => {
 router
   .route("")
   .post((req: Request, res: Response) => {
-    const particpantId = req.body;
-    const partIDnum = 753951
+    const particpantId = req.body.participantId;
+
+
+    async function checking () {  
+
+      if (! await isParticipantIdPending(particpantId)){
+        const result = await insertPendingUser(particpantId);
+        res.send(result);
+      }else{
+        res.send(null)
+      }
+    }
+
+    checking();
+
     //req.session.partIDnum = Number(particpantId['participantId']);
-    logger.info("\nParticipant ID Number Passed: " + partIDnum)
+    logger.info("\nParticipant ID Number Passed: " + particpantId)
   });
 
   module.exports = router;
