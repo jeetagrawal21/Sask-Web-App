@@ -58,8 +58,7 @@ services:
       - SaskLongCovidDevData:/var/lib/postgresql/data
     env_file:
       - ./db/.env
-
-
+    
   selenium_test:
     container_name: selenium_test
     hostname: covid_selenium_test
@@ -73,11 +72,12 @@ services:
       - 4444:4444
     tty: true
     stdin_open: true
-    
+
   pgadmin:
     container_name: pgadmin4_container
     image: dpage/pgadmin4
     restart: always
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root

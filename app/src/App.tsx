@@ -10,7 +10,7 @@ import log from "loglevel";
 import remotePlugin from "loglevel-plugin-remote";
 
 const remoteOptions = {
-  url: "http://localhost:3000/logs",
+  url: process.env.REACT_APP_API_BASE_URL + "/logs",
   format: remotePlugin.json,
   method: "POST",
   level: "trace", // Only send trace level messages and above

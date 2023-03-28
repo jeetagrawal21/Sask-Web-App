@@ -9,7 +9,7 @@ function Timeline() {
 
   useEffect(() => {
     axios
-      .post("http://localhost:3000/data")
+      .post(process.env.REACT_APP_API_BASE_URL + "/data")
       .then((response) => {
         setData(response.data);
         setLoading(false);

@@ -127,7 +127,7 @@ describe("SignIn component", () => {
     fireEvent.click(signInButton);
 
     //   // assertions to verify that the POST request is sent to the server
-    expect(axiosMock).toHaveBeenCalledWith("http://localhost:3000/login", {
+    expect(axiosMock).toHaveBeenCalledWith(process.env.REACT_APP_API_BASE_URL + "/login", {
       email: "testuser1@email.com",
       password: "TestPassLonger1!",
     });

@@ -23,7 +23,7 @@ function SignIn() {
    */
   function handleSignIn() {
     axios
-      .post("http://localhost:3000/login", { email, password })
+      .post(process.env.REACT_APP_API_BASE_URL + "/login", participantInfo)
       .then((response) => {
         if (response.data.exist) {
           if (response.data.isadmin) {
