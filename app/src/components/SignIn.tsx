@@ -22,10 +22,16 @@ function SignIn() {
    * then takes them to the appropriate page
    */
   function handleSignIn() {
+    const participantInfo = {
+      email: (document.getElementById("email") as HTMLInputElement).value,
+      password: (document.getElementById("password") as HTMLInputElement).value,
+    };
+
     axios
       .post(process.env.REACT_APP_API_BASE_URL + "/login", participantInfo)
       .then((response) => {
         if (response.data.exist) {
+          console.log(response.data.exist);
           if (response.data.isadmin) {
             navigate("AdminPage");
           } else {
