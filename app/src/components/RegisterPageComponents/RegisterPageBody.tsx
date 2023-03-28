@@ -59,7 +59,7 @@ function RegisterPageBody() {
     };
     // send the participant data to the backend using an axios post request
     axios
-      .post('http://localhost:3000/postregistrationinfo', participantInfo)
+      .post(process.env.REACT_APP_API_BASE_URL + '/postregistrationinfo', participantInfo)
       .then((response) => {});
   }
 

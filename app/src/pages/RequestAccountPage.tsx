@@ -20,7 +20,7 @@ function RequestAccount() {
   //   };
   //   // send the participant data to the backend using an axios post request
   //   axios
-  //     .post('http://localhost:3000/requestAccount', ParticipantId)
+  //     .post(process.env.REACT_APP_API_BASE_URL + '/requestAccount', ParticipantId)
   //     .then((response) => {
 
   //       navigate('/Register');
@@ -36,7 +36,7 @@ function RequestAccount() {
 
     // send the participant data to the backend using an axios post request
     axios
-      .post("http://localhost:3000/requestAccount", ParticipantId)
+      .post(process.env.REACT_APP_API_BASE_URL + "/requestAccount", ParticipantId)
       .then((response) => {
         alert(response);
       });
