@@ -14,7 +14,7 @@ import { appendFileSync } from "fs";
 
 import { credentials} from './declarations/Database_Credentials';
 
-import { setupDataDB, initiateDB } from '@src/services/Internal-Services';
+import { setupDataDB, initiateDB, createPendingTable} from '@src/services/Internal-Services';
 
 
 
@@ -58,6 +58,7 @@ const router = Router();
 
 initiateDB(); //initiates the db
 setupDataDB(); // initeates the data db with the data
+createPendingTable(); //creates pending users table 
 
 
 //Setting up routes

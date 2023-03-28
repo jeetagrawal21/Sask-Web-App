@@ -154,8 +154,45 @@ export async function initiateDB() {
     }
   }
 
+
+
+  
+/**
+ * Creates a new PostgreSQL table named "pendingUser" with a "number" ID column that cannot be left empty,
+ * and a "boolean" column that defaults to "false".
+ */
+  export async function createPendingTable() {
+    const tablecheck = await checkIfTable('pendingUser');
+    if (!tablecheck){
+      try {
+        const pool = new Pool(credentials);
+        const query = `
+          CREATE TABLE pendingUser (
+            id SERIAL PRIMARY KEY,
+            isPending BOOLEAN DEFAULT false NOT NULL
+          );
+        `;
+        await pool.query(query);
+        logger.info('Table "pendingUser" created successfully!');
+        pool.end();
+      } catch (error) {
+        logger.error('Error creating table:', error);
+      }
+    }
+  
+  }
+
+
+
+
   export default {
     initiateDB,
     setupDataDB,
-    checkIfTable
+    checkIfTable,
+    createPendingTable
   } 
+
+
+
+  
+
