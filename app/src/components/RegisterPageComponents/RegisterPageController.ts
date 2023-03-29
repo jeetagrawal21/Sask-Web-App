@@ -44,11 +44,8 @@ function checkName(name: string) {
  * @note This function can be used for both the security questions and security answers.
  */
 function checkSecurityField(field: string): boolean {
-  const isQuestion = field.endsWith('?');
-  const minLength = isQuestion ? 15 : 3;
-  const maxLength = 56;
   const allowedCharacters = /[\w\s.@\-?,&/#+()"'\[\]{}!$%^*|~=]/;
-  const regex = new RegExp(`^(?=.*[a-zA-Z\d])${allowedCharacters.source}{${minLength},${maxLength}}$`);
+  const regex = new RegExp(`^(?=.*[a-zA-Z\d])${allowedCharacters.source}{5,64}$`);
   return regex.test(field);
 }
 
@@ -63,15 +60,14 @@ function checkSecurityField(field: string): boolean {
  * @param securityQuestions security questions string array entered by the user
  * @param securityAnswers security answers string array entered by the user
  * @returns true if the email, password, names, security questions, and security answers are valid, false otherwise
- * @note This function can be used for both the register and sign in pages.
  */
 function handleDisable(
   email: string,
   password: string,
-  names?: string[],
-  confirmPassword?: string,
-  securityQuestions?: string[],
-  securityAnswers?: string[]
+  names: string[],
+  confirmPassword: string,
+  securityQuestions: string[],
+  securityAnswers: string[]
 ) : boolean {
   let disable = !checkEmail(email) || !checkPassword(password);
 
@@ -80,16 +76,16 @@ function handleDisable(
     disable = true;
   }
 
-  // check if security questions/answers are present and valid
+  // check if all the security questions and answers (3 in total) are valid
   if (
-    securityQuestions &&
-    securityAnswers &&
-    securityQuestions.some((question) => question.length > 0 && !checkSecurityField(question)) &&
-    securityAnswers.some((answer) => answer.length > 0 && !checkSecurityField(answer))
+    securityQuestions.length !== 3 ||
+    securityAnswers.length !== 3 ||
+    securityQuestions.some((question) => !checkSecurityField(question)) ||
+    securityAnswers.some((answer) => !checkSecurityField(answer))
   ) {
     disable = true;
   }
-
+    
   // check if the passwords match
   if (confirmPassword && password !== confirmPassword) {
     disable = true;
@@ -103,5 +99,5 @@ export {
   handleDisable,
   checkEmail,
   checkPassword,
-  checkSecurityField,
+  checkSecurityField
 };
