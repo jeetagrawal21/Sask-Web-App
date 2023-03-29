@@ -16,7 +16,7 @@ jobs:
   # This workflow contains a single job called "build"
   test-build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -27,11 +27,11 @@ jobs:
       - name: Build The Stack
         run: docker compose up -d
       
-      # - name: Lint Frontend
-      #   run: docker exec covid_app run eslint
+      - name: Lint Frontend
+        run: docker exec covid_app npm run eslint
       
-      # - name: Lint Backend
-      #   run: docker exec covid_api run eslint
+      - name: Lint Backend
+        run: docker exec covid_api npm run eslint
       
       - name: Stop The Stacks
         if: always()

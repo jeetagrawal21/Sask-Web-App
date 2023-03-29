@@ -6,7 +6,7 @@ on:
 
 jobs:
   notify-discord:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Send notification to Discord
         uses: rjstone/discord-webhook-notify@v1
