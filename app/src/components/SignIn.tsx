@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import {
-  checkEmail,
-  checkPassword,
-  handleDisable,
-} from "../components/RegisterPageComponents/RegisterPageController";
 import "../stylings/SignIn.css";
 
 /**
@@ -58,9 +53,6 @@ function SignIn() {
               setEmail(e.target.value);
             }}
           />
-          {!checkEmail(email) && email !== "" && (
-            <p>Please enter a valid email.</p>
-          )}
         </div>
 
         <div className="password">
@@ -74,14 +66,10 @@ function SignIn() {
               setPassword(e.target.value);
             }}
           />
-          {!checkPassword(password) && password !== "" && (
-            <p>Please enter a valid password.</p>
-          )}
         </div>
 
         <div className="button-div">
           <button
-            disabled={handleDisable(email, password)}
             type="button"
             className="signin-button"
             onClick={handleSignIn}
