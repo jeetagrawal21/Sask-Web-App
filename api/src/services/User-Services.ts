@@ -241,7 +241,7 @@ export async function deleteUser(email: string): Promise<boolean> {
     }
   } catch (error) {
     // If an error occurred
-    logger.error("\ndeleteUser : " + error);
+    logger.error("\ndeleteUser : " + String(error));
     return false;
   } finally {
     pool.end();
@@ -274,7 +274,7 @@ export async function changePass(
       return true;
     } catch (err) {
       // If there was an error updating the password, log the error and return false
-      logger.error('\n changePass: Error changing password: ', err);
+      logger.error('\n changePass: Error changing password: ', String(err));
       await pool.end();
       return false;
     }

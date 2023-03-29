@@ -57,10 +57,10 @@ export async function isParticipantIdPending(participantId: number): Promise<boo
       const result = await pool.query('SELECT id FROM pendingUser WHERE id = $1', [participantId]);
       if (result.rowCount > 0){       // if thhere is a reply (response is not equal 0)
         const returnval = Number(result.rows[0].id) === Number(participantId)  // stores 'does id provided match id in table' result 
-        logger.info('Is participant ID ' + participantId + ' Located in table: ' + returnval) 
+        logger.info('Is participant ID ' + String(participantId) + ' Located in table: ' + String(returnval)); 
         return returnval;    //returns stored results 
       }else{
-        logger.info('Is participant ID ' + participantId + ' Located in table: false') 
+        logger.info('Is participant ID ' + String(participantId) + ' Located in table: false') 
         return false;   //if we never get a reply assume its false 
       }
     } catch (error) {

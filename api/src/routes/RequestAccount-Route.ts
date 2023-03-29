@@ -42,7 +42,7 @@ router
     checking();
 
     //req.session.partIDnum = Number(particpantId['participantId']);
-    logger.info("\nParticipant ID Number Passed: " + particpantId)
+    logger.info("\nParticipant ID Number Passed: " + String(particpantId));
   });
 
   module.exports = router;

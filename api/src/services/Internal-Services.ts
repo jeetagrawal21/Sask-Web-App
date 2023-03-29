@@ -26,14 +26,14 @@ logger.attachTransport((logObj) => {
  * @param tablename - The name of the table to check
  * @returns A boolean indicating whether the table exists or not
  */
-export async function checkIfTable(tablename:String) {
+export async function checkIfTable(tablename:string) {
     const pool = new Pool(credentials);
     try {
       const { rows } = await pool.query("SELECT EXISTS(SELECT FROM pg_catalog.pg_tables WHERE tablename = $1)", [tablename]);
       const exists = rows[0].exists;
       return Boolean(exists);
     } catch (error) {
-      logger.error("\ncheckIfTable errpr: \n" +error);
+      logger.error("\ncheckIfTable errpr: \n" +String(error));
     } finally {
       pool.end();
     }
@@ -66,7 +66,7 @@ export async function checkIfTable(tablename:String) {
         )
       `);
     } catch (error) {
-      logger.error("\ncreateTable errpr: \n" +error);
+      logger.error("\ncreateTable errpr: \n" +String(error));
     } finally {
       pool.end();
     }
@@ -81,7 +81,7 @@ export async function setupDataDB() {
       const filePath = 'data/dbdatasqlcode.sql';
       await runSqlFile(filePath)
         .then(() => logger.info('\nSQL file executed successfully'))
-        .catch(err => logger.error('\nError executing SQL file:', err));
+        .catch(err => logger.error('\nError executing SQL file:', String(err)));
     }
 }
 
@@ -115,7 +115,7 @@ export async function initiateDB() {
           `SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='${tablename}')`
         );
         // Log the value of the "exists" column in the first row of the "res" result.
-        logger.info('\ninitiateDB table exist double check --> ' + res.rows[0].exists);
+        logger.info('\ninitiateDB table exist double check --> ' + String(res.rows[0].exists));
         logger.info('\ninitiateDB --> Table was created successfully.');
         // Call the "accountCreationUser" function with some parameters.
         await accountCreationUser(
@@ -147,7 +147,8 @@ export async function initiateDB() {
         );
       } catch (error) {
         // If an error occurs, log it to the console.
-        logger.error("\ninitiateDB error: \n" +error);
+        logger.error("\ninitiateDB error: \n" +String(error)
+        );
       } finally {
         pool.end();
       }
@@ -176,7 +177,7 @@ export async function initiateDB() {
         logger.info('Table "pendingUser" created successfully!');
         pool.end();
       } catch (error) {
-        logger.error('Error creating table:', error);
+        logger.error('Error creating table:', String(error));
       }
     }
   

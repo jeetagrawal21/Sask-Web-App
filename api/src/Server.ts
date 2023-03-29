@@ -161,7 +161,7 @@ async function initiatelogdb() {
     // Call the "accountcreationuser" function with some parameters.
   } catch (error) {
     // If an error occurs, log it to the console.
-    logger.error('initiatelogdb: ' + error);
+    logger.error('initiatelogdb: ' + String(error));
   } finally {
     pool.end();
   }

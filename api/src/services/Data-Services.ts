@@ -19,10 +19,10 @@ logger.attachTransport((logObj) => {
 /**
     Function Name: getData
     Description: Retrieves user data from the "userdata" table in the database and formats it for use in a line chart.
-    @param {Number} id - The unique ID of the user to retrieve data for.
+    @param {number} id - The unique ID of the user to retrieve data for.
     @returns {Promise<Array>} - Returns an array of formatted data objects for use in a line chart.
     */
-   export async function getData (id:Number){
+   export async function getData (id:number){
   const pool = new Pool(credentials);
   const result = await pool.query(               //query looks for all users with email
   'SELECT "Response Time", "[18_SAQ] In the past 30 days how often have you experienced" FROM "userdata" WHERE "[18_SAQ] In the past 30 days how often have you experienced" IS NOT NULL AND "id" = $1', [id]);
