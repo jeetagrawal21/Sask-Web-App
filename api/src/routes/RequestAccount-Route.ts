@@ -33,7 +33,7 @@ router
 
       if (! await isParticipantIdPending(particpantId)){
         const result = await insertPendingUser(particpantId);
-        res.send(result);
+        res.send(true);
       }else{
         res.send(null)
       }
