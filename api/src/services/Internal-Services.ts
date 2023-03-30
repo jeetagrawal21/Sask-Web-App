@@ -163,8 +163,9 @@ export async function initiateDB() {
  * and a "boolean" column that defaults to "false".
  */
   export async function createPendingTable() {
-    const tablecheck = await checkIfTable('pendingUser');
-    if (!tablecheck){
+    const tablecheck = await checkIfTable('pendinguser');
+    console.log("chereee  " + tablecheck)
+    if (! tablecheck){
       try {
         const pool = new Pool(credentials);
         const query = `
