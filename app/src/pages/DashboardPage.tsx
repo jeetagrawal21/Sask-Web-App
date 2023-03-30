@@ -1,12 +1,23 @@
-import React, { Component } from "react";
-import "../stylings/DashboardStyles/DashboardPage.css";
-import Header from "../components/Header";
-import WelcomeMessage from "../components/DashboardComponents/WelcomeMessage";
-import Timeline from "../components/DashboardComponents/Timeline";
-import SignOut from "../components/SignOut";
+import React, { useContext } from 'react';
+import '../stylings/DashboardStyles/DashboardPage.css';
+import Header from '../components/Header';
+import WelcomeMessage from '../components/DashboardComponents/WelcomeMessage';
+import Timeline from '../components/DashboardComponents/Timeline';
+import SignOut from '../components/SignOut';
+import { AuthContext } from '../AuthContext';
 
-class DashboardPage extends Component {
-  render() {
+function DashboardPage() {
+  // if there is the authentication status is false display unauthorized access, otherwise let the actual page be displayed
+  // this would ensure that the actual dashboard is only displayed when the user logs in
+
+  const { isAuthenticated } = useContext(AuthContext); // Get the authentication status from the context
+  if (!isAuthenticated) {
+    return (
+      <div>
+        <h1>Unauthorized access</h1>
+      </div>
+    );
+  } else {
     return (
       <div className="dashboard">
         <div className="dashboard-header">
