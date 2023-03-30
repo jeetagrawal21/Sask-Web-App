@@ -99,8 +99,8 @@ export async function initiateDB() {
     const tablename = 'users';
     if(await checkIfTable('users')){
       if(await checkIfUser('testuser1@email.com'))
-        changePass('testuser1@email.com', 'Testpasslonger1!');
-      changePass('testadmin1@email.com', 'Testpasslonger2!');
+        changePass('testuser1@email.com', 'TestPassLonger1!');
+      changePass('testadmin1@email.com', 'TestPassLonger2!');
     }
     // Call "checkIfTable" to see if the table exists 
     const tablecheck = await checkIfTable('users');
