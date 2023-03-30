@@ -164,7 +164,6 @@ export async function initiateDB() {
  */
   export async function createPendingTable() {
     const tablecheck = await checkIfTable('pendinguser');
-    console.log("chereee  " + tablecheck)
     if (! tablecheck){
       try {
         const pool = new Pool(credentials);

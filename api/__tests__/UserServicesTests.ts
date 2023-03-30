@@ -16,7 +16,6 @@ describe("checkIfUser function", () => {
     // and assert that it returns true
     const result = await checkIfUser(email);
     expect(result).toBe(true);
-    console.log("checkIfUser function: existing user - PASSED");
   });
 
   test("returns false for a non-existing user", async () => {
@@ -25,7 +24,6 @@ describe("checkIfUser function", () => {
     // and assert that it returns false
     const result = await checkIfUser(email);
     expect(result).toBe(false);
-    console.log("checkIfUser function: non-existing user - PASSED");
   });
 });
 
@@ -37,7 +35,6 @@ describe("checkIfAdmin function", () => {
     // and assert that it returns true
     const result = await checkIfAdmin(email);
     expect(result).toBe(true);
-    console.log("checkIfAdmin function: admin user - PASSED");
   });
 
   it("returns false for a non-admin user", async () => {
@@ -47,7 +44,6 @@ describe("checkIfAdmin function", () => {
     // and assert that it returns false
     const result = await checkIfAdmin(email);
     expect(result).toBe(false);
-    console.log("checkIfAdmin function: non-admin user - PASSED");
   });
 
   it("returns false for a non-existing user", async () => {
@@ -56,7 +52,6 @@ describe("checkIfAdmin function", () => {
     // and assert that it returns false
     const result = await checkIfAdmin(email);
     expect(result).toBe(false);
-    console.log("checkIfAdmin function: non-existing user - PASSED");
   });
 });
 
@@ -70,7 +65,6 @@ describe("getUser function", () => {
     // and assert that it returns the correct user info
     const result = await getUser(email, "testpasslonger1!");
     expect(result.rows.length).toBeGreaterThan(0);
-    console.log("getUser function: existing user - PASSED");
   });
 
   it("returns no user info for a non-existing user", async () => {
@@ -79,7 +73,6 @@ describe("getUser function", () => {
     // and assert that it returns no user info
     const result = await getUser(email, "testpasslonger2!");
     expect(result.rows.length).toBe(0);
-    console.log("getUser function: non-existing user - PASSED");
   });
 });
 
@@ -93,7 +86,6 @@ describe("checkPass function", () => {
     // and assert that it returns true
     const result = await checkPass(email, password);
     expect(result).toBe(true);
-    console.log("checkPass function: correct email and password combination - PASSED");
   });
 
   it("returns false for incorrect email and password combination", async () => {
@@ -104,7 +96,6 @@ describe("checkPass function", () => {
     // and assert that it returns false
     const result = await checkPass(email, password);
     expect(result).toBe(false);
-    console.log("checkPass function: incorrect email and password combination - PASSED");
   });
 
   it("returns false for non-existing user", async () => {
@@ -114,7 +105,6 @@ describe("checkPass function", () => {
     // and assert that it returns false
     const result = await checkPass(email, password);
     expect(result).toBe(false);
-    console.log("checkPass function: non-existing user - PASSED");
   });
 });
 describe("checkPass function", () => {
@@ -126,7 +116,6 @@ describe("checkPass function", () => {
     // and assert that it returns true
     const result = await checkPass(email, pass);
     expect(result).toBe(true);
-    console.log("checkPass function: correct password - PASSED");
   });
 
   it("returns false for incorrect password", async () => {
@@ -136,7 +125,6 @@ describe("checkPass function", () => {
     // and assert that it returns false
     const result = await checkPass(email, pass);
     expect(result).toBe(false);
-    console.log("checkPass function: incorrect password - PASSED");
   });
 
   it("returns false for non-existing user", async () => {
@@ -146,7 +134,6 @@ describe("checkPass function", () => {
     // and assert that it returns false
     const result = await checkPass(email, pass);
     expect(result).toBe(false);
-    console.log("checkPass function: non-existing user - PASSED");
   });
 });
 
@@ -160,7 +147,6 @@ describe("accountCreationAdmin function", () => {
     const pool = new Pool(credentials);
     const queryResult = await pool.query(`SELECT * FROM users WHERE email=$1`, [email]);
     expect(queryResult.rows[0].privilege).toBe(1);
-    console.log("accountCreationAdmin function: creates an admin account when user does not exist - PASSED");
     await pool.query(`
     DELETE FROM users
     WHERE email = $1
@@ -176,7 +162,6 @@ describe("accountCreationAdmin function", () => {
     const pool = new Pool(credentials);
     const queryResult = await pool.query(`SELECT * FROM users WHERE email=$1`, [email]);
     expect(queryResult.rows.length).toBe(1);
-    console.log("accountCreationAdmin function: does not create an admin account when user already exists - PASSED");
     await pool.query(`
     DELETE FROM users
     WHERE email = $1
@@ -211,7 +196,6 @@ describe("accountCreationUser function", () => {
     `, [email]);
     await pool.end();
 
-    console.log("accountCreationUser function: creates a new account for a non-existing user - PASSED");
   });
 
   it("does not create a new account for an existing user", async () => {
@@ -232,7 +216,6 @@ describe("accountCreationUser function", () => {
     await accountCreationUser(ID, surname, givenname2, givenname3, pass, email, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3);
     const result = await checkIfUser(email);
     expect(result).toBe(true);
-    console.log("accountCreationUser function: does not create a new account for an existing user - PASSED");
   });
 });
 
@@ -261,7 +244,6 @@ describe("deleteUser function", () => {
     await deleteUser(email);
     const userExists = await checkIfUser(email);
     expect(userExists).toBe(false);
-    console.log("deleteUser function: existing user - PASSED");
   });
 
   it("does not delete a non-existing user", async () => {
@@ -269,7 +251,6 @@ describe("deleteUser function", () => {
     // Call the deleteUser function with a non-existing user's email
     // and assert that it does not delete any user
     await deleteUser(email);
-    console.log("deleteUser function: non-existing user - PASSED");
   });
 
 });
@@ -301,7 +282,6 @@ describe("changePass function", () => {
     const result = await changePass(email, newpass);
     expect(result).toBe(true);
     await deleteUser(email);
-    console.log("changePass function: successful password change - PASSED");
   });
 
   it("returns false for a non-existing user", async () => {
@@ -311,7 +291,6 @@ describe("changePass function", () => {
     // and assert that it returns false
     const result = await changePass(email, newpass);
     expect(result).toBe(false);
-    console.log("changePass function: non-existing user - PASSED");
   });
 });
 

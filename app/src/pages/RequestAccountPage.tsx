@@ -38,7 +38,6 @@ function RequestAccount() {
     axios
       .post(process.env.REACT_APP_API_BASE_URL + "/requestAccount", ParticipantId)
       .then((response) => {
-        console.log("Priiiiiiiiiiiiiiiiiiiiiiiiinnnt   " + response.data)
         if (response.data){
           alert('Thank you for registering \n You should receive an email from us shortly')
         }else{
