@@ -5,7 +5,7 @@ import RegisterPageBody from '../components/RegisterPageComponents/RegisterPageB
 import { AuthContext } from '../AuthContext';
 import ReturnToHome from '../components/ReturnToHome';
 
-function App() {
+function RegisterPage() {
   const { isAllowedToRegister } = useContext(AuthContext); // Get the authentication status from the context
   if (!isAllowedToRegister) {
     return (
@@ -24,4 +24,4 @@ function App() {
   }
 }
 
-export default App;
+export default RegisterPage;
