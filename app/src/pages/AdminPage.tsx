@@ -8,6 +8,7 @@ import UserRequestsTable from '../components/AdminPageComponents/UserRequestsTab
 import AllUsersTable from '../components/AdminPageComponents/AllUsersTable';
 import SignOut from '../components/SignOut';
 import { AuthContext } from '../AuthContext';
+import ReturnToHome from '../components/ReturnToHome';
 
 const AdminPage: React.FC = () => {
   const [userRequests, setUserRequests] = useState<UserRequest[]>([]);
@@ -91,6 +92,7 @@ const AdminPage: React.FC = () => {
     return (
       <div>
         <h1>Unauthorized access</h1>
+        <ReturnToHome />
       </div>
     );
   } else {

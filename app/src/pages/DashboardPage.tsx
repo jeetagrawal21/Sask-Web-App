@@ -5,6 +5,7 @@ import WelcomeMessage from '../components/DashboardComponents/WelcomeMessage';
 import Timeline from '../components/DashboardComponents/Timeline';
 import SignOut from '../components/SignOut';
 import { AuthContext } from '../AuthContext';
+import ReturnToHome from '../components/ReturnToHome';
 
 function DashboardPage() {
   // if there is the authentication status is false display unauthorized access, otherwise let the actual page be displayed
@@ -15,6 +16,7 @@ function DashboardPage() {
     return (
       <div>
         <h1>Unauthorized access</h1>
+        <ReturnToHome />
       </div>
     );
   } else {
