@@ -13,7 +13,6 @@ function SignOut() {
   const { setAuthenticated } = useContext(AuthContext);
 
   function handleSignOut() {
-    // TODO: implement sign out logic
     localStorage.clear();
     setAuthenticated(false); //set the authentication status to false
 
