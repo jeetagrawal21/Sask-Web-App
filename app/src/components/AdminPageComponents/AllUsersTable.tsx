@@ -18,8 +18,6 @@ const AllUsersTable: React.FC<AllUsersTableProps> = ({
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -27,8 +25,6 @@ const AllUsersTable: React.FC<AllUsersTableProps> = ({
           {allUsers.map((user) => (
             <tr key={user.id}>
               <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
               <td>
                 <button
                   onClick={() => onRemoveUser(user.id)}

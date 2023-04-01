@@ -2,7 +2,7 @@ import express from 'express';
 import { Request, Response } from 'express';
 import { Logger } from "tslog";
 import { appendFileSync } from "fs";
-import { insertPendingUser, isParticipantIdPending } from '@src/services/Account-Service'
+import { insertPendingUser, isParticipantIdPending } from '@src/services/PendingAccount-Service'
 
 
 const router = express.Router();
@@ -41,8 +41,8 @@ router
 
     checking();
 
-    //req.session.partIDnum = Number(particpantId['participantId']);
     logger.info("\nParticipant ID Number Passed: " + String(particpantId));
   });
+
 
   module.exports = router;

@@ -174,10 +174,32 @@ export async function initiateDB() {
           );
         `;
         await pool.query(query);
-        logger.info('Table "pendingUser" created successfully!');
+        logger.info('Table "approvedUsers" created successfully!');
         pool.end();
       } catch (error) {
-        logger.error('Error creating table:', String(error));
+        logger.error('Error creating table approvedUsers:', String(error));
+      }
+    }
+  
+  }
+
+  export async function createApprovedTable() {
+    const tablecheck = await checkIfTable('approvedusers');
+    if (! tablecheck){
+      try {
+        const pool = new Pool(credentials);
+        const query = `
+          CREATE TABLE approvedUsers (
+            id SERIAL PRIMARY KEY,
+            link CHAR(255),
+            approvedTime TIMESTAMP
+          );
+        `;
+        await pool.query(query);
+        logger.info('Table "approvedUsers" created successfully!');
+        pool.end();
+      } catch (error) {
+        logger.error('Error creating table approvedUsers:', String(error));
       }
     }
   
@@ -190,7 +212,8 @@ export async function initiateDB() {
     initiateDB,
     setupDataDB,
     checkIfTable,
-    createPendingTable
+    createPendingTable,
+    createApprovedTable
   } 
 
 

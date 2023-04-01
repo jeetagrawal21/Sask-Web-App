@@ -10,22 +10,18 @@ import {
 const initUserRequests: UserRequest[] = [
   {
     id: 2735,
-    name: "Jack Black",
-    email: "jack.black@example.com",
-    requestDate: new Date(),
+    isPending: true
   },
   {
     id: 1892,
-    name: "Mary White",
-    email: "mary.white@example.com",
-    requestDate: new Date(),
+    isPending: false
   },
 ];
 
 const initUsers: User[] = [
-  { id: 3921, name: "John Doe", email: "john.doe@example.com" },
-  { id: 2012, name: "Jane Smith", email: "jane.smith@example.com" },
-  { id: 3289, name: "Bob Johnson", email: "bob.johnson@example.com" },
+  { id: 3921},
+  { id: 2012},
+  { id: 3289},
 ];
 
 describe("AdminPage", () => {

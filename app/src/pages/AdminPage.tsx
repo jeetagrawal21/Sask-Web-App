@@ -7,6 +7,8 @@ import {
 import UserRequestsTable from "../components/AdminPageComponents/UserRequestsTable";
 import AllUsersTable from "../components/AdminPageComponents/AllUsersTable";
 import SignOut from "../components/SignOut";
+import axios from "axios";
+
 
 const AdminPage: React.FC = () => {
   const [userRequests, setUserRequests] = useState<UserRequest[]>([]);
@@ -14,29 +16,22 @@ const AdminPage: React.FC = () => {
 
   // useEffect hook that runs on component mount to simulate fetching user requests and all users from server
   useEffect(() => {
-    const initUserRequests: UserRequest[] = [
-      {
-        id: 2735,
-        name: "Jack Black",
-        email: "jack.black@example.com",
-        requestDate: new Date(),
-      },
-      {
-        id: 1892,
-        name: "Mary White",
-        email: "mary.white@example.com",
-        requestDate: new Date(),
-      },
-    ];
-    setUserRequests(initUserRequests);
 
+    axios
+    .post(process.env.REACT_APP_API_BASE_URL + "/AdminPage/AdminPagePending")
+    .then((response) => {
+      const initUserRequests: UserRequest[] = response.data
+      setUserRequests(initUserRequests);
+    });
+
+    axios
+    .post(process.env.REACT_APP_API_BASE_URL + "/AdminPage/AdminPageApproved")
+    .then((response) => {
+      const initUsers: User[] = response.data
+      setAllUsers(initUsers);
+    });
     // initialize sample data for all users
-    const initUsers: User[] = [
-      { id: 3921, name: "John Doe", email: "john.doe@example.com" },
-      { id: 2012, name: "Jane Smith", email: "jane.smith@example.com" },
-      { id: 3289, name: "Bob Johnson", email: "bob.johnson@example.com" },
-    ];
-    setAllUsers(initUsers);
+
   }, []);
 
   /**
@@ -50,13 +45,16 @@ const AdminPage: React.FC = () => {
   const handleApproveUserRequest = (userId: number) => {
     const userRequest = userRequests.find((req) => req.id === userId);
     if (userRequest) {
+      axios
+      .post(process.env.REACT_APP_API_BASE_URL + "/AdminPage/approve", userRequest)
+      .then((response) => {
+  
+      });
       setUserRequests(userRequests.filter((req) => req.id !== userId));
       setAllUsers([
         ...allUsers,
         {
           id: userRequest.id,
-          name: userRequest.name,
-          email: userRequest.email,
         },
       ]);
     }
@@ -70,6 +68,10 @@ const AdminPage: React.FC = () => {
   @assertion userRequest with the given userId is not null
   */
   const handleRejectUserRequest = (userId: number) => {
+    axios
+    .post(process.env.REACT_APP_API_BASE_URL + "/AdminPage/rejected", { userId })
+    .then((response) => {
+    });
     setUserRequests(userRequests.filter((req) => req.id !== userId));
   };
 
@@ -81,6 +83,10 @@ const AdminPage: React.FC = () => {
   @assertion user with the given userId is not null
   */
   const handleRemoveUser = (userId: number) => {
+    axios
+    .post(process.env.REACT_APP_API_BASE_URL + "/AdminPage/deleteAproved", { userId })
+    .then((response) => {
+    });
     setAllUsers(allUsers.filter((user) => user.id !== userId));
   };
 
