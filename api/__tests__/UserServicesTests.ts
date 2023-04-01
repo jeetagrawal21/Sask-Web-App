@@ -63,7 +63,7 @@ describe("getUser function", () => {
     // Add an existing user to the database first
     // then call the getUser function with the same email
     // and assert that it returns the correct user info
-    const result = await getUser(email, "testpasslonger1!");
+    const result = await getuser(email, "TestPassLonger1!");
     expect(result.rows.length).toBeGreaterThan(0);
   });
 
@@ -71,7 +71,7 @@ describe("getUser function", () => {
     const email = "nonexistinguser@example.com";
     // Call the getUser function with a non-existing email
     // and assert that it returns no user info
-    const result = await getUser(email, "testpasslonger2!");
+    const result = await getuser(email, "TestPassLonger2!");
     expect(result.rows.length).toBe(0);
   });
 });
@@ -80,7 +80,7 @@ describe("getUser function", () => {
 describe("checkPass function", () => {
   it("returns true for correct email and password combination", async () => {
     const email = "testuser1@email.com";
-    const password = "Testpasslonger1!";
+    const password = "TestPassLonger1!";
     // Add a user to the database with the email and password above
     // then call the checkPass function with the same email and password
     // and assert that it returns true
@@ -111,8 +111,8 @@ describe("checkPass function", () => {
 
   it("returns true for correct password", async () => {
     const email = "testuser1@email.com";
-    const pass = "Testpasslonger1!";
-    // Call the checkPass function with the correct email and password
+    const pass = "TestPassLonger1!";
+    // Call the checkpass function with the correct email and password
     // and assert that it returns true
     const result = await checkPass(email, pass);
     expect(result).toBe(true);

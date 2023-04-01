@@ -1,26 +1,22 @@
-import "../stylings/SignIn.css";
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import {
-  checkEmail,
-  checkPassword,
-  handleDisable,
-} from "./WelcomePageComponents/Controller/SignInController";
+import "../stylings/SignIn.css";
 
-//Used React useState to check if the Email and password are valid. It is set to false and it will change once the desired input is given.
+/**
+ * Check user credentials and redirect to dashboard or admin page
+ * @returns {JSX.Element} - Sign in page
+ */
 function SignIn() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   /**
-   * Purpose: send post request with login data to backend and receives a response on if the user is valid, then takes them to the appropriate page
-   * Preconditions: user input fields as strings
-   * Postconditions:
-   * Return: None
+   * Send post request with login data to backend and receives a response on if the user is valid,
+   * then takes them to the appropriate page
    */
-  function authenticateLogin() {
+  function handleSignIn() {
     const participantInfo = {
       email: (document.getElementById("email") as HTMLInputElement).value,
       password: (document.getElementById("password") as HTMLInputElement).value,
@@ -52,20 +48,12 @@ function SignIn() {
             className="input-fields"
             placeholder="Email*"
             id="email"
+            value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-          ></input>
+          />
         </div>
-
-        {/* If the given email is not valid, this will display an error message. */}
-        {!checkEmail(email) && email !== "" ? (
-          <>
-            <p>Please enter a valid email</p>
-          </>
-        ) : (
-          <></>
-        )}
 
         <div className="password">
           <input
@@ -77,40 +65,25 @@ function SignIn() {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-          ></input>
+          />
         </div>
 
-        {/* If the typed password does not meet the criteria, this will display an error message. */}
-        {!checkPassword(password) && password !== "" && (
-          <>
-            <p>
-              Please enter valid password. It must not be less than 8 characters
-              and must include a special character and a number
-            </p>
-          </>
-        )}
-
-        {/* The sign in button is disabled by default so that the user cannot be redirected or go to the dashboard if they give the wrong details */}
         <div className="button-div">
           <button
-            disabled={handleDisable(email, password)}
             type="button"
             className="signin-button"
-            onClick={authenticateLogin}
+            onClick={handleSignIn}
           >
             SIGN IN
           </button>
 
           <p>
             {" "}
-            Do not have an account?
-            <a
-              onClick={() => navigate("RequestAccount")}
-              className="request-account-link"
-            >
+            Do not have an account?{" "}
+            <Link to="RequestAccount" className="request-account-link">
               {" "}
               Request one.{" "}
-            </a>
+            </Link>
           </p>
         </div>
       </form>
