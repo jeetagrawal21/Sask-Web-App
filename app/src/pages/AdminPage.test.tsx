@@ -5,6 +5,7 @@ import {
   UserRequest,
   User,
 } from "../components/AdminPageComponents/interfaces";
+import { BrowserRouter } from "react-router-dom";
 
 // mock initial data
 const initUserRequests: UserRequest[] = [
@@ -44,7 +45,11 @@ describe("AdminPage", () => {
 
   // test that the page renders the correct headings
   it("renders user requests and all users", async () => {
-    const { getByText } = render(<AdminPage />);
+    const { getByText } =     render(
+      <BrowserRouter>
+        <AdminPage />
+      </BrowserRouter>
+    );
     await waitFor(() => {
       // Check that the page renders the correct headings
       expect(getByText("User Requests")).toBeInTheDocument();
@@ -54,7 +59,11 @@ describe("AdminPage", () => {
 
   // test that a user is added to the all users table when approved
   it("should approve a user request and add user to all users table", async () => {
-    const { getByText, getByTestId, queryByText } = render(<AdminPage />);
+    const { getByText, getByTestId, queryByText } = render(
+      <BrowserRouter>
+        <AdminPage />
+      </BrowserRouter>
+    );
     // wait for initial data to load
     await waitFor(() => {
       expect(getByText("User Requests")).toBeInTheDocument();
@@ -75,7 +84,11 @@ describe("AdminPage", () => {
 
   // test that a user is removed from the user requests table when rejected
   it("should reject a user request and remove it from user requests table", async () => {
-    const { getByText, getByTestId, queryByText } = render(<AdminPage />);
+    const { getByText, getByTestId, queryByText } = render(
+      <BrowserRouter>
+        <AdminPage />
+      </BrowserRouter>
+    );
     // wait for initial data to load
     await waitFor(() => {
       expect(getByText("User Requests")).toBeInTheDocument();
@@ -96,7 +109,11 @@ describe("AdminPage", () => {
 
   // test that a user is removed from the all users table
   it("should remove a user from the all users table", async () => {
-    const { getByTestId, queryByText } = render(<AdminPage />);
+    const { getByTestId, queryByText } = render(
+      <BrowserRouter>
+        <AdminPage />
+      </BrowserRouter>
+    );
 
     // find the Remove button for the first user and click it
     const removeButton = getByTestId(`remove-user-${initUsers[0].id}`);
@@ -110,7 +127,11 @@ describe("AdminPage", () => {
 
   // test that all users can be removed from the users table
   it("should remove multiple users from the all users table", async () => {
-    const { getByText, getByTestId, queryByText } = render(<AdminPage />);
+    const { getByText, getByTestId, queryByText } = render(
+      <BrowserRouter>
+        <AdminPage />
+      </BrowserRouter>
+    );
     // wait for initial data to load
     await waitFor(() => {
       expect(getByText("User Requests")).toBeInTheDocument();
