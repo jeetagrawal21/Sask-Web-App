@@ -38,10 +38,14 @@ function RequestAccount() {
     axios
       .post(process.env.REACT_APP_API_BASE_URL + "/requestAccount", ParticipantId)
       .then((response) => {
-        alert(response);
+        if (response.data){
+          alert('Thank you for registering \n You should receive an email from us shortly')
+        }else{
+          alert('An error occured please contact us for further details')
+        }
       });
 
-    navigate("/Register");
+    navigate("/");
   }
 
   function checkParticipantID(e: any) {
