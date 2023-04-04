@@ -3,11 +3,6 @@ import React, { Component, useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../AuthContext';
-import {
-  checkEmail,
-  checkPassword,
-  handleDisable,
-} from './WelcomePageComponents/Controller/SignInController';
 
 /**
  * Check user credentials and redirect to dashboard or admin page
