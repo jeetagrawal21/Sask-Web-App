@@ -30,7 +30,7 @@ jobs:
           docker compose up --build -d
       - name: Check Selenium server
         run: |
-          netstat -anp | grep 4444
+          netstat -anp | grep 4444 
       - name: Test Frontend
         run: docker exec selenium_test python3 /app/RunTests.py
       
