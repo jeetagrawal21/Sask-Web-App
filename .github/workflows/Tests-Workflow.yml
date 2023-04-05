@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: BasicBuild
+name: Tests-Workflow
 
 # Controls when the workflow will run
 on:
@@ -30,7 +30,7 @@ jobs:
           docker compose up -d
       
       - name: Test Frontend
-        run: docker exec selenium_test python3 RunTests.py
+        run: docker exec selenium_test python3 /app/RunTests.py
       
       # - name: Test Backend
       #   run: docker exec covid_api npm run test:no-reloading
