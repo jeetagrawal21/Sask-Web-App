@@ -1,6 +1,6 @@
 
 import express from 'express';
-import {getData} from '@src/services/Data-Services'
+import { getData } from '@src/services/Data-Services'
 import { Logger } from "tslog";
 import { appendFileSync } from "fs";
 
@@ -9,7 +9,7 @@ const router = express.Router();
 
 
 //setting up logging 
-export const logger = new Logger(); 
+export const logger = new Logger();
 
 logger.attachTransport((logObj) => {
   appendFileSync("BackendLog.txt", JSON.stringify(logObj) + "\n");
@@ -27,7 +27,7 @@ router
 
     // call function to post data to the database
 
-    async function dataGetFormat () {
+    async function dataGetFormat() {
       const data = await getData(42176)
       res.send(data);   // needs failure handling
 
@@ -36,4 +36,4 @@ router
 
   });
 
-  module.exports = router;
+module.exports = router;
