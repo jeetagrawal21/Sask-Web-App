@@ -1,3 +1,4 @@
+import { logger } from '@src/Server';
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
@@ -12,8 +13,8 @@ router.post('/', upload.single('file'), (req, res) => {
     }
 
     const uploadedFilePath = path.join(__dirname, req.file.path);
-    console.log('File uploaded and saved at:', uploadedFilePath);
-
+    // console.log('File uploaded and saved at:', uploadedFilePath);
+    logger.info('File uploaded and saved at:' + uploadedFilePath);
     res.json({ message: 'File uploaded successfully', filePath: req.file.path });
 });
 

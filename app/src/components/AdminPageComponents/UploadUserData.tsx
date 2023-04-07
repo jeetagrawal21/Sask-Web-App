@@ -1,72 +1,57 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useRef } from 'react';
+import './UploadUserData.css';
+import log from 'loglevel';
+import axios from 'axios'
 
-/**
- * Sign out button to clear local storage and redirect to home page
- * @precond user is logged in
- * @postcond user is logged out
- * @returns sign out button
- */
-function UploadUserData() {
-  const navigate = useNavigate();
+const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const file = event.target.files && event.target.files[0];
 
-  function handleUploadUserData() {
-    // TODO: implement Upload user data logic
-    // const file = event.target.files[0]; // get the uploaded file
-    // console.log("Uploaded file:", file);
-
-    // redirect to home page
-    // navigate("/");
+  if (!file) {
+    console.error('No file selected');
+    return;
   }
+
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await axios.post(process.env.REACT_APP_API_BASE_URL + '/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    // Handle the response from the server, e.g., save the uploaded file's URL
+    log.info('File uploaded successfully:', response.data);
+  } catch (error) {
+    log.error('Error uploading the file:', error);
+  }
+};
+
+const UploadUserData: React.FC = () => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
   return (
     <div>
-      <label htmlFor="upload-file" style={{ display: "none" }}>
-        Upload user data
-      </label>
-      <input type="file" id="upload-file" name="upload-file" style={{ display: "none" }} onChange={handleUploadUserData}/>
-      <button
-        type="button"
-        onClick={() => {
-          document.getElementById("upload-file")?.click(); // trigger file explorer
-        }}
-      >
-        Upload user data
+      <button className="upload-button" onClick={handleClick}>
+        Select a file
       </button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        name="file"
+        id="file"
+        style={{ display: "none" }}
+        onChange={handleFileChange}
+      />
+      {/* Other elements... */}
     </div>
   );
-}
-
+};
 export default UploadUserData;
-
-
-
-// import React from "react";
-// import { useNavigate } from "react-router-dom";
-
-// /**
-//  * Sign out button to clear local storage and redirect to home page
-//  * @precond user is logged in
-//  * @postcond user is logged out
-//  * @returns sign out button
-//  */
-// function UploadUserData() {
-//   const navigate = useNavigate();
-
-//   function handleUploadUserData() {
-//     // TODO: implement Upload user data logic
-//     localStorage.clear();
-
-//     // redirect to home page
-//     // navigate("/");
-//   }
-
-//   return (
-//     // <button type="button" onClick={handleUploadUserData}>
-//     <button type="button">
-//       Upload user data
-//     </button>
-//   );
-// }
-
-// export default UploadUserData;

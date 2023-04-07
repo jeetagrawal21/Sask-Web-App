@@ -93,22 +93,22 @@ const AdminPage: React.FC = () => {
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
-  
+
     if (!file) {
       console.error('No file selected');
       return;
     }
-  
+
     try {
       const formData = new FormData();
       formData.append('file', file);
-  
+
       const response = await axios.post(process.env.REACT_APP_API_BASE_URL + '/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-  
+
       // Handle the response from the server, e.g., save the uploaded file's URL
       log.info('File uploaded successfully:', response.data);
     } catch (error) {
@@ -121,23 +121,9 @@ const AdminPage: React.FC = () => {
       <h1>
         AdminPage
         <div style={{ float: 'right', marginRight: '55px' }}>
-        <input type="file" name="file" id="file" style={{ display: "none" }} onChange={handleFileChange} />
-        {/* <label htmlFor="file" style={{ 
-          cursor: "pointer",
-          backgroundColor: "#4CAF50",
-          border: "none",
-          color: "white",
-          padding: "0.4rem",
-          textAlign: "center",
-          textDecoration: "none",
-          display: "inline-block",
-          margin: "0.25rem",
-          borderRadius: "0.25rem",
-          width: "190px",
-          fontSize: "15px",
-          fontWeight: "normal"
-        }}>Upload user data files</label> */}
-        <UploadUserData />
+          {/* <input type="file" name="file" id="file" style={{ display: "none" }} onChange={handleFileChange} /> */}
+
+          <UploadUserData />
           <SignOut />
         </div>
       </h1>
