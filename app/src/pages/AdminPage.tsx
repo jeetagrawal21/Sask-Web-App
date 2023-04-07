@@ -10,6 +10,8 @@ import SignOut from '../components/SignOut';
 import UploadUserData from '../components/AdminPageComponents/UploadUserData';
 import { AuthContext } from '../AuthContext';
 import ReturnToHome from '../components/ReturnToHome';
+import axios from 'axios';
+import log from 'loglevel'
 
 const AdminPage: React.FC = () => {
   const [userRequests, setUserRequests] = useState<UserRequest[]>([]);
@@ -88,49 +90,66 @@ const AdminPage: React.FC = () => {
   };
 
   const { isAuthenticated } = useContext(AuthContext); // Get the authentication status from the context
-  // if (!isAuthenticated) {
-  //   // If the user is not authenticated, redirect to the login page
-  //   return (
-  //     <div>
-  //       <h1>Unauthorized access</h1>
-  //       <ReturnToHome />
-  //     </div>
-  //   );
-  // } else {
-    return (
-      <div>
-        <h1>
-          AdminPage
-          <div style={{ float: 'right', marginRight: '55px' }}>
-          <input type="file" name="file" id="file" style={{ display: "none" }} />
-          {/* <label htmlFor="file" style={{ 
-            cursor: "pointer",
-            backgroundColor: "#4CAF50",
-            border: "none",
-            color: "white",
-            padding: "0.4rem",
-            textAlign: "center",
-            textDecoration: "none",
-            display: "inline-block",
-            margin: "0.25rem",
-            borderRadius: "0.25rem",
-            width: "190px",
-            fontSize: "15px",
-            fontWeight: "normal"
-          }}>Upload user data files</label> */}
-          <UploadUserData />
-            <SignOut />
-          </div>
-        </h1>
-        <UserRequestsTable
-          userRequests={userRequests}
-          onApproveUserRequest={handleApproveUserRequest}
-          onRejectUserRequest={handleRejectUserRequest}
-        />
-        <AllUsersTable allUsers={allUsers} onRemoveUser={handleRemoveUser} />
-      </div>
-    );
-  }
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+  
+    if (!file) {
+      console.error('No file selected');
+      return;
+    }
+  
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      const response = await axios.post(process.env.REACT_APP_API_BASE_URL + '/csv-uploads', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      // Handle the response from the server, e.g., save the uploaded file's URL
+      log.info('File uploaded successfully:', response.data);
+    } catch (error) {
+      log.error('Error uploading the file:', error);
+    }
+  };
+
+  return (
+    <div>
+      <h1>
+        AdminPage
+        <div style={{ float: 'right', marginRight: '55px' }}>
+        <input type="file" name="file" id="file" style={{ display: "none" }} onChange={handleFileChange} />
+        {/* <label htmlFor="file" style={{ 
+          cursor: "pointer",
+          backgroundColor: "#4CAF50",
+          border: "none",
+          color: "white",
+          padding: "0.4rem",
+          textAlign: "center",
+          textDecoration: "none",
+          display: "inline-block",
+          margin: "0.25rem",
+          borderRadius: "0.25rem",
+          width: "190px",
+          fontSize: "15px",
+          fontWeight: "normal"
+        }}>Upload user data files</label> */}
+        <UploadUserData />
+          <SignOut />
+        </div>
+      </h1>
+      <UserRequestsTable
+        userRequests={userRequests}
+        onApproveUserRequest={handleApproveUserRequest}
+        onRejectUserRequest={handleRejectUserRequest}
+      />
+      <AllUsersTable allUsers={allUsers} onRemoveUser={handleRemoveUser} />
+    </div>
+  );
+}
 // };
 
 export default AdminPage;
