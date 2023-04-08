@@ -21,6 +21,7 @@ services:
       - api
     env_file:
       - ./app/.env
+      - ./app/env/development.env
 
   api:
     container_name: covid_api
