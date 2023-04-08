@@ -5,17 +5,16 @@ import { Client, Pool } from 'pg';
 import path from 'path';
 
 import helmet from 'helmet';
-import express, { Request, Response, NextFunction, Router } from 'express';
+import express, { Request, Response, NextFunction, Router} from 'express';
 
 import 'express-async-errors';
 
 import { Logger } from "tslog";
 import { appendFileSync } from "fs";
 
-import { credentials } from './declarations/Database_Credentials';
+import { credentials} from './declarations/Database_Credentials';
 
-import { setupDataDB, initiateDB, createPendingTable } from '@src/services/Internal-Services';
-import uploadRouter from './routes/Upload-Route';
+import { setupDataDB, initiateDB, createPendingTable} from '@src/services/Internal-Services';
 
 
 
@@ -36,11 +35,10 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 // app.use(cookieParser(EnvVars.cookieProps.secret));
 
 
-export const logger = new Logger();
+export const logger = new Logger(); 
 
 logger.attachTransport((logObj) => {
   appendFileSync("BackendLog.txt", JSON.stringify(logObj) + "\n");
@@ -73,7 +71,6 @@ app.use('/requestAccount', requestAccountRoute);
 app.use('/data', dataRoute);
 app.use('/login', loginRoute);
 app.use('/postregistrationinfo', postregistrationinfoRoute);
-app.use('/upload', uploadRouter);
 
 
 
