@@ -19,7 +19,7 @@ import {
   initiateDB,
   createPendingTable,
 } from "@src/services/Internal-Services";
-
+import uploadRoute from "@src/routes/Upload-Route"
 // const fs = require('fs');
 
 // **** Init express **** //
@@ -56,6 +56,7 @@ app.use("/requestAccount", requestAccountRoute);
 app.use("/data", dataRoute);
 app.use("/login", loginRoute);
 app.use("/postregistrationinfo", postregistrationinfoRoute);
+app.use("/upload", uploadRoute);
 
 // Define the log interface
 interface Log {

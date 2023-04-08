@@ -3,12 +3,15 @@ import "../stylings/AdminPage.css";
 import {
   User,
   UserRequest,
-} from "../components/AdminPageComponents/interfaces";
-import UserRequestsTable from "../components/AdminPageComponents/UserRequestsTable";
-import AllUsersTable from "../components/AdminPageComponents/AllUsersTable";
-import SignOut from "../components/SignOut";
-import { AuthContext } from "../AuthContext";
-import ReturnToHome from "../components/ReturnToHome";
+} from '../components/AdminPageComponents/interfaces';
+import UserRequestsTable from '../components/AdminPageComponents/UserRequestsTable';
+import AllUsersTable from '../components/AdminPageComponents/AllUsersTable';
+import SignOut from '../components/SignOut';
+import UploadUserData from '../components/AdminPageComponents/UploadUserData';
+import { AuthContext } from '../AuthContext';
+import ReturnToHome from '../components/ReturnToHome';
+import axios from 'axios';
+import log from 'loglevel'
 
 const AdminPage: React.FC = () => {
   const [userRequests, setUserRequests] = useState<UserRequest[]>([]);
@@ -87,20 +90,15 @@ const AdminPage: React.FC = () => {
   };
 
   const { isAuthenticated } = useContext(AuthContext); // Get the authentication status from the context
-  if (!isAuthenticated) {
-    // If the user is not authenticated, redirect to the login page
-    return (
-      <div>
-        <h1>Unauthorized access</h1>
-        <ReturnToHome />
-      </div>
-    );
-  } else {
-    return (
+
+
+  return (
+    isAuthenticated ? (
       <div>
         <h1>
           AdminPage
           <div style={{ float: "right", marginRight: "55px" }}>
+            <UploadUserData />
             <SignOut />
           </div>
         </h1>
@@ -111,8 +109,13 @@ const AdminPage: React.FC = () => {
         />
         <AllUsersTable allUsers={allUsers} onRemoveUser={handleRemoveUser} />
       </div>
-    );
-  }
+    ) : (
+      <div>
+        <h1>Unauthorized access</h1>
+        <ReturnToHome />
+      </div>
+    )
+  );
 };
 
 export default AdminPage;
