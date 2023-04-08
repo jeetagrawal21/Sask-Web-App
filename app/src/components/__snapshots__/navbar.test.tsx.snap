@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavBar component should render properly 1`] = `
+<div>
+  <nav
+    class="navbar navbar-expand-lg navbar-light bg-light"
+  >
+    <a
+      class="nav-link"
+      href="#"
+    >
+      About
+    </a>
+    <a
+      class="nav-link"
+      href="#"
+    >
+      Contact us
+    </a>
+    <a
+      class="nav-link"
+      href="#"
+    >
+      Help
+    </a>
+  </nav>
+</div>
+`;
+
+exports[`Navbar component should render properly 1`] = `
+<div>
+  <nav
+    class="navbar navbar-expand-lg navbar-light bg-light"
+  >
+    <a
+      class="nav-link"
+      href="#"
+    >
+      About
+    </a>
+    <a
+      class="nav-link"
+      href="#"
+    >
+      Contact us
+    </a>
+    <a
+      class="nav-link"
+      href="#"
+    >
+      Help
+    </a>
+  </nav>
+</div>
+`;

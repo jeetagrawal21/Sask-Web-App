@@ -1,16 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import "./index.css";
 import App from "./App";
-import "./core/config/i18n";
-import "./mocks/server";
 import reportWebVitals from "./reportWebVitals";
+import { AuthProvider } from "./AuthContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <AuthProvider>
       <App />
-    </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

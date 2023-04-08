@@ -1,0 +1,39 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap'); */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Open+Sans:ital,wght@0,700;1,400&display=swap");
+.signin {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: auto;
+  z-index: 10;
+}
+
+.sask-text {
+  font-size: 40px;
+  font-family: "Open Sans", sans-serif;
+}
+.longcovid-text {
+  line-height: 0%;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: #000;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  background-color: #ddd;
+}

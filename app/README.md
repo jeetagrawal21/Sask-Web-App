@@ -1,82 +1,46 @@
-<p align="center">
-  <a href="https://m6v3l9.github.io/react-material-admin/" rel="noopener" target="_blank"><img width="120" src="https://m6v3l9.github.io/react-material-admin/logo.svg" alt="React Material Admin logo"></a></p>
-</p>
+# Getting Started with Create React App
 
-<h1 align="center">React Material Admin</h1>
-<p align="center">
-<b>react-material-admin</b> is a free and open-source admin  application including many real-world examples. It is based on React and Material-UI.
-</p>
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-[![react-material-admin-demo](https://cdn.dribbble.com/users/6538082/screenshots/15805144/media/5687464c7190019afb748863ac6957d3.png?compress=1&resize=1200x900)](https://m6v3l9.github.io/react-material-admin/)
+## Available Scripts
 
-## Getting Started
+In the project directory, you can run:
 
-```
-# Install dependencies
-yarn install
+### `npm start`
 
-# Run the app
-yarn start
-```
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-This will automatically open [http://localhost:3000](http://localhost:3000).
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-## Features
+### `npm test`
 
-```
-- Admin
-  - Home
-  - Dashboard/Charts
-  - FAQ
-  - Help Center
-  - Profile Activity
-  - Profile Information
-  - Profile Password
-- Auth
-  - Forgot Password
-  - Forgot Password Submit
-  - Login
-  - Register
-- Calendar App
-- Core
-  - Forbidden
-  - Not Found
-  - Under Constructions
-- Landing
-- User Management
-```
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## Technologies
+### `npm run build`
 
-| Package               | Description                                    | Docs                                                                            |
-| --------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------- |
-| Analytics             | Google Analytics                               | [Docs](https://analytics.google.com/analytics/web/react-ga)                     |
-| Bundle Size Analyzer  | Source map explorer                            | [Docs](https://create-react-app.dev/docs/analyzing-the-bundle-size)             |
-| Charts                | Recharts                                       | [Docs](https://recharts.org/)                                                   |
-| CI                    | Github CI                                      | [Docs]()                                                                        |
-| Code Splitting        | Route-based code splitting (included in React) | [Docs](https://reactjs.org/docs/code-splitting.html#route-based-code-splitting) |
-| Components            | Material-UI                                    | [Docs](https://material-ui.com/)                                                |
-| Data Fetching         | React Query Toolkit                            | [Docs](https://react-query.tanstack.com/)                                       |
-| Deployment            | Github Pages                                   | [Docs](https://create-react-app.dev/docs/deployment#github-pages)               |
-| Environment Variables | Dotenv (included in Create React App)          | [Docs](https://create-react-app.dev/docs/adding-custom-environment-variables)   |
-| Error Monitoring      | Sentry                                         | [Docs](https://docs.sentry.io/platforms/javascript/guides/react/)               |
-| Form                  | Formik                                         | [Docs](https://formik.org/)                                                     |
-| I18N                  | react-i18next                                  | [Docs](https://react.i18next.com/)                                              |
-| Routing               | React Router                                   | [Docs](https://reactrouter.com/)                                                |
-| Theming (+ dark mode) | Material-UI                                    | [Docs](https://material-ui.com/customization/theming/)                          |
-| Toolchain             | Create React App                               | [Docs](https://create-react-app.dev/)                                           |
-| TypeScript            | TypeScript                                     | [Docs](https://create-react-app.dev/docs/adding-typescript/)                    |
-| Validation            | Yup                                            | [Docs](https://github.com/jquense/yup)                                          |
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Coming Soon
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-| Package      | Description                                 | Docs                            |
-| ------------ | ------------------------------------------- | ------------------------------- |
-| Drag & Drop  | Add Projects page with Drag & Drop features |                                 |
-| E2E Testing  | Cypress                                     | [Docs](https://www.cypress.io/) |
-| Unit Testing | Jest                                        | [Docs](https://jestjs.io/)      |
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## License
+### `npm run eject`
 
-This project is licensed under the terms of the
-[MIT license](/LICENSE).
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).

@@ -1,0 +1,55 @@
+.graph-container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.graph-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.recharts-cartesian-grid-horizontal line {
+  stroke: #f0f0f0;
+}
+
+.recharts-cartesian-axis-tick-value {
+  font-size: 14px;
+  fill: #666;
+}
+
+.recharts-legend-item {
+  font-size: 14px;
+}
+
+.recharts-tooltip {
+  font-size: 14px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.recharts-tooltip-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.recharts-tooltip-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.recharts-tooltip-item-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.recharts-tooltip-item-value {
+  font-weight: bold;
+}

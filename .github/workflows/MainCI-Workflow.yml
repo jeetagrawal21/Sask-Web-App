@@ -6,9 +6,7 @@ name: MainCI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main", "dev" ]
   pull_request:
-    branches: [ "main", "dev" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -28,13 +26,13 @@ jobs:
       # Runs a single command using the runners shell
       - name: Build The Stack
         run: docker compose up -d
-      
-#       - name: Lint Frontend
-#         run: docker exec covid_app run eslint
-      
-#       - name: Lint Backend
-#         run: docker exec covid_api run eslint
-      
+
+      # - name: Lint Frontend
+      # run: docker exec covid_app npm run eslint
+
+      # - name: Lint Backend
+      # run: docker exec covid_api npm run eslint
+
       - name: Stop The Stacks
         if: always()
         shell: bash

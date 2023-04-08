@@ -1,52 +1,39 @@
-import * as Sentry from "@sentry/react";
 import React from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
-import AppRoutes from "./AppRoutes";
-import AuthProvider from "./auth/contexts/AuthProvider";
-import Loader from "./core/components/Loader";
-import QueryWrapper from "./core/components/QueryWrapper";
-import SettingsProvider from "./core/contexts/SettingsProvider";
-import SnackbarProvider from "./core/contexts/SnackbarProvider";
-import usePageTracking from "./core/hooks/usePageTracking";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import WelcomePage from "./pages/WelcomePage";
+import RegisterPage from "./pages/RegisterPage";
+import RequestAccount from "./pages/RequestAccountPage";
+import AdminPage from "./pages/AdminPage";
+import Dashboard from "./pages/DashboardPage";
+import { AuthProvider } from "./AuthContext";
+import log from "loglevel";
+import remotePlugin from "loglevel-plugin-remote";
 
-if (process.env.NODE_ENV === "production") {
-  Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DSN,
-  });
-}
+const remoteOptions = {
+  url: process.env.REACT_APP_API_BASE_URL + "/logs",
+  format: remotePlugin.json,
+  method: "POST",
+  level: "trace", // Only send trace level messages and above
+};
 
-// Create a client
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      suspense: true,
-    },
-  },
-});
+remotePlugin.apply(log, remoteOptions); // use remotePlugin.apply() here
+
+log.enableAll();
 
 function App() {
-  usePageTracking();
-
   return (
-    <React.Suspense fallback={<Loader />}>
-      <Sentry.ErrorBoundary fallback={"An error has occurred"}>
-        <QueryClientProvider client={queryClient}>
-          <SettingsProvider>
-            <QueryWrapper>
-              <SnackbarProvider>
-                <AuthProvider>
-                  <AppRoutes />
-                </AuthProvider>
-              </SnackbarProvider>
-            </QueryWrapper>
-          </SettingsProvider>
-          <ReactQueryDevtools initialIsOpen />
-        </QueryClientProvider>
-      </Sentry.ErrorBoundary>
-    </React.Suspense>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<WelcomePage />} />
+          <Route path="/RequestAccount" element={<RequestAccount />} />
+          <Route path="/Register" element={<RegisterPage />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/AdminPage" element={<AdminPage />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 
