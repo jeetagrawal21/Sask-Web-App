@@ -2,7 +2,7 @@
 // HAS CASES FOR SNAPSHOT TESTING
 
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import NavBar from "./NavBar";
 
 /**
@@ -24,20 +24,20 @@ describe("NavBar component", () => {
 
   // Test Case 2 : Checks if About link renders correctly
   it("should render About link properly", () => {
-    const { getByText } = render(<NavBar />);
-    expect(getByText("About")).toBeInTheDocument();
+    render(<NavBar />);
+    expect(screen.getByText("About")).toBeInTheDocument();
   });
 
   // Test Case 3 : Checks if Contact Us link renders correctly
   it("should render Contact Us link properly", () => {
-    const { getByText } = render(<NavBar />);
-    expect(getByText("Contact us")).toBeInTheDocument();
+    render(<NavBar />);
+    expect(screen.getByText("Contact us")).toBeInTheDocument();
   });
 
   // Test Case 4 : Checks if Help link renders correctly
   it("should render Help link properly", () => {
-    const { getByText } = render(<NavBar />);
-    expect(getByText("Help")).toBeInTheDocument();
+    render(<NavBar />);
+    expect(screen.getByText("Help")).toBeInTheDocument();
   });
 });
 

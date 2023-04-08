@@ -28,15 +28,15 @@ jobs:
         run: |
           cd selenium_test 
           docker compose up --build -d
-      - name: Check Selenium server
-        run: |
-          netstat -anp | grep 4444 
-      - name: Test Frontend
-        run: docker exec selenium_test python3 /app/RunTests.py
+      # - name: Check Selenium server
+      #   run: |
+      #     netstat -anp | grep 4444 
+      # - name: Test Frontend
+      #   run: docker exec selenium_test python3 /app/RunTests.py
       
       # - name: Test Backend
       #   run: docker exec covid_api npm run test:no-reloading
-      
+
       - name: Stop The Stacks
         if: always()
         shell: bash

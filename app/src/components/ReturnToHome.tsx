@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import { useNavigate } from "react-router-dom";
+import React from "react";
 
 /**
  * Returns the user to the home/welcome page
@@ -12,7 +12,7 @@ function ReturnToHome() {
 
   function goToHomePage() {
     // redirect to home page
-    navigate('/');
+    navigate("/");
   }
 
   return (
