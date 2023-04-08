@@ -1,5 +1,4 @@
-import { TAll } from 'jet-validator';
-
+import { TAll } from "jet-validator";
 
 // **** Variables **** //
 
@@ -7,7 +6,6 @@ import { TAll } from 'jet-validator';
 //   Standard,
 //   Admin,
 // }
-
 
 // **** Types **** //
 
@@ -26,8 +24,6 @@ export interface IUser {
   answer3: string;
   pwdHash?: string;
 }
-
-
 
 // **** Functions **** //
 
@@ -75,7 +71,6 @@ export interface IUser {
 //     'role' in arg
 //   );
 // }
-
 
 // // **** Export default **** //
 

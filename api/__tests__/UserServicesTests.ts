@@ -1,12 +1,17 @@
-import { Client, Pool } from 'pg';
-import { checkIfUser, checkIfAdmin, getUser, checkPass, accountCreationAdmin, accountCreationUser, deleteUser, changePass } from '../src/services/User-Services';
-import { credentials} from '../src/declarations/Database_Credentials';
+import { Client, Pool } from "pg";
+import {
+  checkIfUser,
+  checkIfAdmin,
+  getUser,
+  checkPass,
+  accountCreationAdmin,
+  accountCreationUser,
+  deleteUser,
+  changePass,
+} from "../src/services/User-Services";
+import { credentials } from "../src/declarations/Database_Credentials";
 
-
-
-
-
-//Check if User Testing 
+//Check if User Testing
 
 describe("checkIfUser function", () => {
   it("returns true for an existing user", async () => {
@@ -108,7 +113,6 @@ describe("checkPass function", () => {
   });
 });
 describe("checkPass function", () => {
-
   it("returns true for correct password", async () => {
     const email = "testuser1@email.com";
     const pass = "TestPassLonger1!";
@@ -137,35 +141,68 @@ describe("checkPass function", () => {
   });
 });
 
-
 describe("accountCreationAdmin function", () => {
   it("creates an admin account when user does not exist", async () => {
     const email = "newadmin@example.com";
-    const result = await accountCreationAdmin("Doe", "John", "", "password", email, "question1", "answer1", "question2", "answer2", "question3", "answer3");
+    const result = await accountCreationAdmin(
+      "Doe",
+      "John",
+      "",
+      "password",
+      email,
+      "question1",
+      "answer1",
+      "question2",
+      "answer2",
+      "question3",
+      "answer3"
+    );
     expect(result).toBe(undefined); // the function does not return anything
     // Check that the user was added to the database with privilege level of 1
     const pool = new Pool(credentials);
-    const queryResult = await pool.query(`SELECT * FROM users WHERE email=$1`, [email]);
+    const queryResult = await pool.query(`SELECT * FROM users WHERE email=$1`, [
+      email,
+    ]);
     expect(queryResult.rows[0].privilege).toBe(1);
-    await pool.query(`
+    await pool.query(
+      `
     DELETE FROM users
     WHERE email = $1
-    `, [email]);
+    `,
+      [email]
+    );
     await pool.end();
   });
 
   it("does not create an admin account when user already exists", async () => {
     const email = "existinguser@example.com";
-    const result = await accountCreationAdmin("Doe", "John", "", "password", email, "question1", "answer1", "question2", "answer2", "question3", "answer3");
+    const result = await accountCreationAdmin(
+      "Doe",
+      "John",
+      "",
+      "password",
+      email,
+      "question1",
+      "answer1",
+      "question2",
+      "answer2",
+      "question3",
+      "answer3"
+    );
     expect(result).toBe(undefined); // the function does not return anything
     // Check that the user was not added to the database
     const pool = new Pool(credentials);
-    const queryResult = await pool.query(`SELECT * FROM users WHERE email=$1`, [email]);
+    const queryResult = await pool.query(`SELECT * FROM users WHERE email=$1`, [
+      email,
+    ]);
     expect(queryResult.rows.length).toBe(1);
-    await pool.query(`
+    await pool.query(
+      `
     DELETE FROM users
     WHERE email = $1
-    `, [email]);
+    `,
+      [email]
+    );
     await pool.end();
   });
 });
@@ -186,16 +223,31 @@ describe("accountCreationUser function", () => {
     const securityAnswer3 = "The Godfather";
     // Call the accountCreationUser function with the above inputs
     // and assert that it creates a new account for the user
-    await accountCreationUser(ID, surname, givenname2, givenname3, pass, email, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3);
+    await accountCreationUser(
+      ID,
+      surname,
+      givenname2,
+      givenname3,
+      pass,
+      email,
+      securityQuestion1,
+      securityAnswer1,
+      securityQuestion2,
+      securityAnswer2,
+      securityQuestion3,
+      securityAnswer3
+    );
     const result = await checkIfUser(email);
     expect(result).toBe(true);
     const pool = new Pool(credentials);
-    await pool.query(`
+    await pool.query(
+      `
     DELETE FROM users
     WHERE email = $1
-    `, [email]);
+    `,
+      [email]
+    );
     await pool.end();
-
   });
 
   it("does not create a new account for an existing user", async () => {
@@ -213,14 +265,26 @@ describe("accountCreationUser function", () => {
     const securityAnswer3 = "The Shawshank Redemption";
     // Call the accountCreationUser function with the above inputs
     // and assert that it does not create a new account for the user
-    await accountCreationUser(ID, surname, givenname2, givenname3, pass, email, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3);
+    await accountCreationUser(
+      ID,
+      surname,
+      givenname2,
+      givenname3,
+      pass,
+      email,
+      securityQuestion1,
+      securityAnswer1,
+      securityQuestion2,
+      securityAnswer2,
+      securityQuestion3,
+      securityAnswer3
+    );
     const result = await checkIfUser(email);
     expect(result).toBe(true);
   });
 });
 
 describe("deleteUser function", () => {
-
   it("deletes an existing user", async () => {
     // Add a user to the database before the tests start
     const ID = 2;
@@ -237,7 +301,20 @@ describe("deleteUser function", () => {
     const securityAnswer3 = "The Shawshank Redemption";
     // Call the accountCreationUser function with the above inputs
     // and assert that it does not create a new account for the user
-    await accountCreationUser(ID, surname, givenname2, givenname3, pass, email, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3);
+    await accountCreationUser(
+      ID,
+      surname,
+      givenname2,
+      givenname3,
+      pass,
+      email,
+      securityQuestion1,
+      securityAnswer1,
+      securityQuestion2,
+      securityAnswer2,
+      securityQuestion3,
+      securityAnswer3
+    );
 
     // Call the deleteUser function with an existing user's email
     // and assert that it deletes the user
@@ -252,12 +329,10 @@ describe("deleteUser function", () => {
     // and assert that it does not delete any user
     await deleteUser(email);
   });
-
 });
 
 describe("changePass function", () => {
   it("returns true for a successful password change", async () => {
-    
     // Add a user to the database before the tests start
     const ID = 2;
     const surname = "Test";
@@ -273,7 +348,20 @@ describe("changePass function", () => {
     const securityAnswer3 = "The Shawshank Redemption";
     // Call the accountCreationUser function with the above inputs
     // Add an existing user to the database first with the old password
-    await accountCreationUser(ID, surname, givenname2, givenname3, pass, email, securityQuestion1, securityAnswer1, securityQuestion2, securityAnswer2, securityQuestion3, securityAnswer3);
+    await accountCreationUser(
+      ID,
+      surname,
+      givenname2,
+      givenname3,
+      pass,
+      email,
+      securityQuestion1,
+      securityAnswer1,
+      securityQuestion2,
+      securityAnswer2,
+      securityQuestion3,
+      securityAnswer3
+    );
 
     const newpass = "newpassword";
     // Add an existing user to the database first with the old password
@@ -293,6 +381,3 @@ describe("changePass function", () => {
     expect(result).toBe(false);
   });
 });
-
-
-

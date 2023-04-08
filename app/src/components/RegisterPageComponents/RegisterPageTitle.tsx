@@ -1,5 +1,5 @@
-import '../../stylings/RegisterPageStyles/Title.css';
-import React from 'react';
+import "../../stylings/RegisterPageStyles/Title.css";
+import React from "react";
 
 function RegisterPageTitle() {
   return (

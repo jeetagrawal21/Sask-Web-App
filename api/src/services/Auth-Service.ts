@@ -6,7 +6,6 @@
 // import { RouteError } from '@src/declarations/Classes';
 // import { tick } from '@src/declarations/functions';
 
-
 // // **** Variables **** //
 
 // // Errors
@@ -14,7 +13,6 @@
 //   unauth: 'Unauthorized',
 //   emailNotFound: (email: string) => `User with email "${email}" not found`,
 // } as const;
-
 
 // // **** Functions **** //
 
@@ -39,7 +37,7 @@
 //   //   // If password failed, wait 500ms this will increase security
 //   //   await tick(500);
 //   //   throw new RouteError(
-//   //     HttpStatusCodes.UNAUTHORIZED, 
+//   //     HttpStatusCodes.UNAUTHORIZED,
 //   //     errors.unauth,
 //   //   );
 //   // }
@@ -51,7 +49,6 @@
 //     // role: user.role,
 //   });
 // }
-
 
 // // **** Export default **** //
 

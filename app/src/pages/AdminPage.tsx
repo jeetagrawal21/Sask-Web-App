@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
-import '../stylings/AdminPage.css';
+import React, { useState, useEffect, useContext } from "react";
+import "../stylings/AdminPage.css";
 import {
   User,
   UserRequest,
-} from '../components/AdminPageComponents/interfaces';
-import UserRequestsTable from '../components/AdminPageComponents/UserRequestsTable';
-import AllUsersTable from '../components/AdminPageComponents/AllUsersTable';
-import SignOut from '../components/SignOut';
-import { AuthContext } from '../AuthContext';
-import ReturnToHome from '../components/ReturnToHome';
+} from "../components/AdminPageComponents/interfaces";
+import UserRequestsTable from "../components/AdminPageComponents/UserRequestsTable";
+import AllUsersTable from "../components/AdminPageComponents/AllUsersTable";
+import SignOut from "../components/SignOut";
+import { AuthContext } from "../AuthContext";
+import ReturnToHome from "../components/ReturnToHome";
 
 const AdminPage: React.FC = () => {
   const [userRequests, setUserRequests] = useState<UserRequest[]>([]);
@@ -19,14 +19,14 @@ const AdminPage: React.FC = () => {
     const initUserRequests: UserRequest[] = [
       {
         id: 2735,
-        name: 'Jack Black',
-        email: 'jack.black@example.com',
+        name: "Jack Black",
+        email: "jack.black@example.com",
         requestDate: new Date(),
       },
       {
         id: 1892,
-        name: 'Mary White',
-        email: 'mary.white@example.com',
+        name: "Mary White",
+        email: "mary.white@example.com",
         requestDate: new Date(),
       },
     ];
@@ -34,9 +34,9 @@ const AdminPage: React.FC = () => {
 
     // initialize sample data for all users
     const initUsers: User[] = [
-      { id: 3921, name: 'John Doe', email: 'john.doe@example.com' },
-      { id: 2012, name: 'Jane Smith', email: 'jane.smith@example.com' },
-      { id: 3289, name: 'Bob Johnson', email: 'bob.johnson@example.com' },
+      { id: 3921, name: "John Doe", email: "john.doe@example.com" },
+      { id: 2012, name: "Jane Smith", email: "jane.smith@example.com" },
+      { id: 3289, name: "Bob Johnson", email: "bob.johnson@example.com" },
     ];
     setAllUsers(initUsers);
   }, []);
@@ -100,7 +100,7 @@ const AdminPage: React.FC = () => {
       <div>
         <h1>
           AdminPage
-          <div style={{ float: 'right', marginRight: '55px' }}>
+          <div style={{ float: "right", marginRight: "55px" }}>
             <SignOut />
           </div>
         </h1>
