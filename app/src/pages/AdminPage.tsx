@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import '../stylings/AdminPage.css';
+import React, { useState, useEffect, useContext } from "react";
+import "../stylings/AdminPage.css";
 import {
   User,
   UserRequest,
@@ -22,14 +22,14 @@ const AdminPage: React.FC = () => {
     const initUserRequests: UserRequest[] = [
       {
         id: 2735,
-        name: 'Jack Black',
-        email: 'jack.black@example.com',
+        name: "Jack Black",
+        email: "jack.black@example.com",
         requestDate: new Date(),
       },
       {
         id: 1892,
-        name: 'Mary White',
-        email: 'mary.white@example.com',
+        name: "Mary White",
+        email: "mary.white@example.com",
         requestDate: new Date(),
       },
     ];
@@ -37,9 +37,9 @@ const AdminPage: React.FC = () => {
 
     // initialize sample data for all users
     const initUsers: User[] = [
-      { id: 3921, name: 'John Doe', email: 'john.doe@example.com' },
-      { id: 2012, name: 'Jane Smith', email: 'jane.smith@example.com' },
-      { id: 3289, name: 'Bob Johnson', email: 'bob.johnson@example.com' },
+      { id: 3921, name: "John Doe", email: "john.doe@example.com" },
+      { id: 2012, name: "Jane Smith", email: "jane.smith@example.com" },
+      { id: 3289, name: "Bob Johnson", email: "bob.johnson@example.com" },
     ];
     setAllUsers(initUsers);
   }, []);
@@ -91,65 +91,31 @@ const AdminPage: React.FC = () => {
 
   const { isAuthenticated } = useContext(AuthContext); // Get the authentication status from the context
 
-  /**
-   * handleFileChange is an event handler function that is triggered when a file is selected for upload
-   * @param {React.ChangeEvent<HTMLInputElement>} event - the event object
-   */
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    // Extract the selected file from the input event
-    const file = event.target.files && event.target.files[0];
-
-    // If no file was selected, log an error and return from the function
-    if (!file) {
-      log.error('No file selected');
-      return;
-    }
-
-    try {
-      // Create a new form data object and append the selected file to it
-      const formData = new FormData();
-      formData.append('file', file);
-
-      // Send a POST request to the server to upload the file
-      const response = await axios.post(
-        process.env.REACT_APP_API_BASE_URL + '/upload',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-
-      // Log the response from the server after the file is uploaded successfully
-      log.info('File uploaded successfully:', response.data);
-    } catch (error) {
-      // Log an error if there was a problem uploading the file
-      log.error('Error uploading the file:', error);
-    }
-  };
-
 
   return (
-    <div>
-      <h1>
-        AdminPage
-        <div style={{ float: 'right', marginRight: '55px' }}>
-          {/* <input type="file" name="file" id="file" style={{ display: "none" }} onChange={handleFileChange} /> */}
-
-          <UploadUserData />
-          <SignOut />
-        </div>
-      </h1>
-      <UserRequestsTable
-        userRequests={userRequests}
-        onApproveUserRequest={handleApproveUserRequest}
-        onRejectUserRequest={handleRejectUserRequest}
-      />
-      <AllUsersTable allUsers={allUsers} onRemoveUser={handleRemoveUser} />
-    </div>
+    isAuthenticated ? (
+      <div>
+        <h1>
+          AdminPage
+          <div style={{ float: "right", marginRight: "55px" }}>
+            <UploadUserData />
+            <SignOut />
+          </div>
+        </h1>
+        <UserRequestsTable
+          userRequests={userRequests}
+          onApproveUserRequest={handleApproveUserRequest}
+          onRejectUserRequest={handleRejectUserRequest}
+        />
+        <AllUsersTable allUsers={allUsers} onRemoveUser={handleRemoveUser} />
+      </div>
+    ) : (
+      <div>
+        <h1>Unauthorized access</h1>
+        <ReturnToHome />
+      </div>
+    )
   );
-}
-// };
+};
 
 export default AdminPage;

@@ -1,24 +1,20 @@
-
-import { Client, Pool } from 'pg';
-import { credentials} from '../declarations/Database_Credentials';
+import { Client, Pool } from "pg";
+import { credentials } from "../declarations/Database_Credentials";
 import { Logger } from "tslog";
 import { appendFileSync } from "fs";
 
-
-//setting up logging 
-export const logger = new Logger(); 
+//setting up logging
+export const logger = new Logger();
 
 logger.attachTransport((logObj) => {
   appendFileSync("BackendLog.txt", JSON.stringify(logObj) + "\n");
 });
 
-
-
 // DEMO CODE ON HOW TO CONNECT WITH POOL CONNECTION (NEVER CALLED)
 
 async function poolDemo() {
   const pool = new Pool(credentials);
-  const now = await pool.query('SELECT * FROM users');
+  const now = await pool.query("SELECT * FROM users");
   console.log(now.rows);
   await pool.end();
 
@@ -30,15 +26,11 @@ async function poolDemo() {
 async function clientDemo() {
   const client = new Client(credentials);
   await client.connect();
-  const now = await client.query('SELECT NOW()');
+  const now = await client.query("SELECT NOW()");
   await client.end();
 
   return now;
 }
-
-
-
-
 
 /**
     Function Name: checkIfUser
@@ -46,7 +38,7 @@ async function clientDemo() {
     @param {string} email - The email address of the user to check for.
     @returns {Promise<boolean>} - Returns true if a user with the provided email exists in the database, false otherwise.
     */
-   export async function checkIfUser(email: string) {
+export async function checkIfUser(email: string) {
   const pool = new Pool(credentials);
   const now = await pool.query(
     //query looks for all users with email and password
@@ -54,16 +46,15 @@ async function clientDemo() {
     [email]
   );
   pool.end();
-  return Boolean(now['rows'][0]['exists']); // typecast the return value to bool. Came back in array sorta thing thus all the nonsense
+  return Boolean(now["rows"][0]["exists"]); // typecast the return value to bool. Came back in array sorta thing thus all the nonsense
 }
-
 
 /**
  * Check if the user with the given email is an admin
  * @param {string} email - The email of the user to check
  * @returns {Promise<boolean>} - A promise that resolves to a boolean value indicating if the user is an admin or not
  */
-export async function checkIfAdmin(email:string) {
+export async function checkIfAdmin(email: string) {
   // create a new pool using the credentials for the database
   const pool = new Pool(credentials);
 
@@ -88,7 +79,6 @@ export async function checkIfAdmin(email:string) {
   return false;
 }
 
-
 /**
 
     Function Name: getUser
@@ -97,7 +87,7 @@ export async function checkIfAdmin(email:string) {
     @param {string} pass - The password of the user.
     @returns {Promise<object>} - Returns an object containing user information if found, otherwise returns null.
     */
-   export async function getUser(email: string, pass: string) {
+export async function getUser(email: string, pass: string) {
   const pool = new Pool(credentials);
   const result = await pool.query(
     //query looks for all users with email
@@ -108,7 +98,6 @@ export async function checkIfAdmin(email:string) {
   return result;
 }
 
-
 /**
 
     Function Name: checkPass
@@ -117,7 +106,7 @@ export async function checkIfAdmin(email:string) {
     @param {string} pass - The password of the user to verify.
     @returns {Promise<boolean>} - Returns true if the email and password combination is correct, false otherwise.
     */
-   export async function checkPass(email: string, pass: string) {
+export async function checkPass(email: string, pass: string) {
   const pool = new Pool(credentials);
   const result = await pool.query(
     //query looks for all users with email and password
@@ -125,10 +114,8 @@ export async function checkIfAdmin(email:string) {
     [email, pass]
   );
   pool.end();
-  return Boolean(result['rows'][0]['exists']); // typecast the return value to bool. Came back in array sorta thing thus all the nonsense
+  return Boolean(result["rows"][0]["exists"]); // typecast the return value to bool. Came back in array sorta thing thus all the nonsense
 }
-
-
 
 //Creates account for admins (admins have a privilege of 1 as opposed to 0)
 export async function accountCreationAdmin(
@@ -147,7 +134,7 @@ export async function accountCreationAdmin(
   const pool = new Pool(credentials);
   if (await checkIfUser(email)) {
     //calls check if user exist (using email) if returns true he exist account not created else account created
-    logger.info('\naccountCreationAdmin : account not created');
+    logger.info("\naccountCreationAdmin : account not created");
   } else {
     const result = await pool.query(
       //account created
@@ -168,7 +155,7 @@ export async function accountCreationAdmin(
         securityAnswer3,
       ]
     );
-    logger.info('\naccountCreationAdmin : Account created');
+    logger.info("\naccountCreationAdmin : Account created");
   }
   await pool.end();
 }
@@ -191,7 +178,7 @@ export async function accountCreationUser(
   const pool = new Pool(credentials);
   if (await checkIfUser(email)) {
     //calls check if user exist (using email) if returns true he exist account not created else account created
-    logger.info('\naccountCreationUser : account not created');
+    logger.info("\naccountCreationUser : account not created");
   } else {
     const result = await pool.query(
       //account created
@@ -212,7 +199,7 @@ export async function accountCreationUser(
         securityAnswer3,
       ]
     );
-    logger.info('\naccountCreationUser : Account created');
+    logger.info("\naccountCreationUser : Account created");
   }
   await pool.end();
 }
@@ -248,7 +235,6 @@ export async function deleteUser(email: string): Promise<boolean> {
   }
 }
 
-
 /**
  * Changes the password of the user with the specified email address
  * @param email - Email address of the user whose password is to be changed
@@ -270,17 +256,17 @@ export async function changePass(
         newpass,
       ]);
       await pool.end();
-      logger.info('\n changePass: Password changed successfully!');
+      logger.info("\n changePass: Password changed successfully!");
       return true;
     } catch (err) {
       // If there was an error updating the password, log the error and return false
-      logger.error('\n changePass: Error changing password: ', String(err));
+      logger.error("\n changePass: Error changing password: ", String(err));
       await pool.end();
       return false;
     }
   } else {
     // If the user with the specified email address doesn't exist, log an error and return false
-    logger.info('\n changePass: User not found.');
+    logger.info("\n changePass: User not found.");
     await pool.end();
     return false;
   }
@@ -295,5 +281,4 @@ export default {
   accountCreationUser,
   deleteUser,
   changePass,
-} 
-
+};

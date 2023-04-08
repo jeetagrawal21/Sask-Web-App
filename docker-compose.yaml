@@ -46,7 +46,6 @@ services:
       - db/.env
       - api/env/development.env
 
-
   postgres:
     image: postgres:15.1-alpine3.17
     hostname: covid_postgres
@@ -68,7 +67,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: root
     ports:
       - "5050:80"
-      
+
 volumes:
   app_node_modules:
   api_node_modules:

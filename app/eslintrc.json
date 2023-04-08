@@ -18,23 +18,11 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": [
-    "@typescript-eslint",
-    "prettier",
-    "react-hooks"
-  ],
+  "plugins": ["@typescript-eslint", "prettier", "react-hooks"],
   "rules": {
-    "react/react-in-jsx-scope": [
-      "off"
-    ],
-    "react/jsx-uses-react": [
-      "off"
-    ],
-    "react/jsx-props-no-spreading": [
-      "warn"
-    ],
-    "react/no-unescaped-entities": [
-      "off"
-    ]
+    "react/react-in-jsx-scope": ["off"],
+    "react/jsx-uses-react": ["off"],
+    "react/jsx-props-no-spreading": ["warn"],
+    "react/no-unescaped-entities": ["off"]
   }
 }

@@ -36,12 +36,17 @@ function RequestAccount() {
 
     // send the participant data to the backend using an axios post request
     axios
-      .post(process.env.REACT_APP_API_BASE_URL + "/requestAccount", ParticipantId)
+      .post(
+        process.env.REACT_APP_API_BASE_URL + "/requestAccount",
+        ParticipantId
+      )
       .then((response) => {
-        if (response.data){
-          alert('Thank you for registering \n You should receive an email from us shortly')
-        }else{
-          alert('An error occured please contact us for further details')
+        if (response.data) {
+          alert(
+            "Thank you for registering \n You should receive an email from us shortly"
+          );
+        } else {
+          alert("An error occured please contact us for further details");
         }
       });
 

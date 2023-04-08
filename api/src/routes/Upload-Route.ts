@@ -73,6 +73,11 @@ router.post('/', upload.single('file'), (req, res) => {
           }
         });
       }
+
+      /*
+       * Logging that the CSV processing has been completed
+       */
+      logger.info("Completed processing csv");
     })
     .on('error', (error) => {
       /*
@@ -81,11 +86,6 @@ router.post('/', upload.single('file'), (req, res) => {
       res.status(500).send(`Error processing CSV file: ${error}`);
       logger.error(`Error processing CSV file: ${error}`);
     });
-
-  /*
-   * Logging that the CSV processing has been completed
-   */
-  logger.info("Completed processing csv");
 });
 
 /*

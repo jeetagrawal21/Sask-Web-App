@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Open+Sans:ital,wght@0,700;1,400&family=Source+Sans+Pro:ital@1&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Open+Sans:ital,wght@0,700;1,400&family=Source+Sans+Pro:ital@1&display=swap");
 
 body {
   background-color: #fff;
@@ -13,7 +13,7 @@ body {
 .welcome-message {
   padding-top: 30px;
   width: 50%;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   text-align: center;
 }
 .welcome-text-heading {

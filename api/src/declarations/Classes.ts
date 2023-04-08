@@ -2,8 +2,7 @@
  * Miscellaneous shared classes go here.
  */
 
-import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
-
+import HttpStatusCodes from "@src/declarations/major/HttpStatusCodes";
 
 /**
  * Error with status code and message
