@@ -33,7 +33,8 @@ function checkPassword(password: string): boolean {
  * @returns true if the name provided by the user matches the description provided in the function
  */
 function checkName(name: string) {
-  const nameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/;
+  const nameRegex =
+    /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/;
   return nameRegex.test(name);
 }
 
@@ -45,11 +46,11 @@ function checkName(name: string) {
  */
 function checkSecurityField(field: string): boolean {
   const allowedCharacters = /[\w\s.@\-?,&/#+()"'\[\]{}!$%^*|~=]/;
-  const regex = new RegExp(`^(?=.*[a-zA-Z\d])${allowedCharacters.source}{5,64}$`);
+  const regex = new RegExp(
+    `^(?=.*[a-zA-Z\d])${allowedCharacters.source}{5,64}$`
+  );
   return regex.test(field);
 }
-
-
 
 /**
  * Checks if the email, password, names, security questions, and security answers are valid and returns the opposite of that.
@@ -68,7 +69,7 @@ function handleDisable(
   confirmPassword: string,
   securityQuestions: string[],
   securityAnswers: string[]
-) : boolean {
+): boolean {
   let disable = !checkEmail(email) || !checkPassword(password);
 
   // only check the names that are longer than 0 characters
@@ -85,7 +86,7 @@ function handleDisable(
   ) {
     disable = true;
   }
-    
+
   // check if the passwords match
   if (confirmPassword && password !== confirmPassword) {
     disable = true;
@@ -99,5 +100,5 @@ export {
   handleDisable,
   checkEmail,
   checkPassword,
-  checkSecurityField
+  checkSecurityField,
 };

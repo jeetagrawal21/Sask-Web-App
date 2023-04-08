@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
-import '../App.css';
-import RegisterPageTitle from '../components/RegisterPageComponents/RegisterPageTitle';
-import RegisterPageBody from '../components/RegisterPageComponents/RegisterPageBody';
-import { AuthContext } from '../AuthContext';
-import ReturnToHome from '../components/ReturnToHome';
+import React, { useContext } from "react";
+import "../App.css";
+import RegisterPageTitle from "../components/RegisterPageComponents/RegisterPageTitle";
+import RegisterPageBody from "../components/RegisterPageComponents/RegisterPageBody";
+import { AuthContext } from "../AuthContext";
+import ReturnToHome from "../components/ReturnToHome";
 
 function RegisterPage() {
   const { isAllowedToRegister } = useContext(AuthContext); // Get the authentication status from the context

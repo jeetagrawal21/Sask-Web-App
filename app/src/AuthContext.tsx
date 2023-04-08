@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState } from "react";
 
 // Define the type of the children prop that will be passed to AuthProvider
 interface AuthProviderProps {

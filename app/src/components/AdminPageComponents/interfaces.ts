@@ -2,11 +2,11 @@
 Represents a user in the list of all users
 */
 export interface User {
-    id: number;
-    name: string;
-    email: string;
-  }
-  
+  id: number;
+  name: string;
+  email: string;
+}
+
 /*
 Represents a user request to be added to the list of all users
 */
