@@ -91,30 +91,44 @@ const AdminPage: React.FC = () => {
 
   const { isAuthenticated } = useContext(AuthContext); // Get the authentication status from the context
 
+  /**
+   * handleFileChange is an event handler function that is triggered when a file is selected for upload
+   * @param {React.ChangeEvent<HTMLInputElement>} event - the event object
+   */
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    // Extract the selected file from the input event
     const file = event.target.files && event.target.files[0];
 
+    // If no file was selected, log an error and return from the function
     if (!file) {
-      console.error('No file selected');
+      log.error('No file selected');
       return;
     }
 
     try {
+      // Create a new form data object and append the selected file to it
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post(process.env.REACT_APP_API_BASE_URL + '/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      // Send a POST request to the server to upload the file
+      const response = await axios.post(
+        process.env.REACT_APP_API_BASE_URL + '/upload',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
 
-      // Handle the response from the server, e.g., save the uploaded file's URL
+      // Log the response from the server after the file is uploaded successfully
       log.info('File uploaded successfully:', response.data);
     } catch (error) {
+      // Log an error if there was a problem uploading the file
       log.error('Error uploading the file:', error);
     }
   };
+
 
   return (
     <div>
