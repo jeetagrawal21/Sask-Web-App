@@ -23,7 +23,7 @@ async function insertRow(row: Record<string, string>): Promise<void> {
     const pool = new Pool(credentials);
 
     // Get the keys of the row object and join them into a comma-separated string
-    const keys = Object.keys(row).map((key: any) => `"${key}"`).join(', ');
+    const keys = Object.keys(row).map((key: String) => `"${key}"`).join(', ');
 
     // Get the values of the row object, replace empty string with NULL and escape single quotes
     const values = Object.values(row)
