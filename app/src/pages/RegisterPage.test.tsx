@@ -1,8 +1,8 @@
 import { render, fireEvent, getByText, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import RegisterPageBody from "./RegisterPageBody";
+import RegisterPageBody from "../components/RegisterPageComponents/RegisterPageBody";
 import React from "react";
-import RegisterPageTitle from "./RegisterPageTitle";
+import RegisterPageTitle from "../components/RegisterPageComponents/RegisterPageTitle";
 import axios from "axios";
 
 import {
@@ -11,7 +11,7 @@ import {
   handleDisable,
   checkEmail,
   checkPassword,
-} from "./RegisterPageController";
+} from "../components/RegisterPageComponents/RegisterPageController";
 import "@testing-library/jest-dom";
 
 // Unit tests
@@ -110,7 +110,7 @@ describe("checkSecurityField function validates a correct security question", ()
 });
 describe("checkSecurityField function does not validate an incorrect security question format", () => {
   it("should return false for a security question that is too short", () => {
-    const invalidSecurityQuestion = "Are you sure?";
+    const invalidSecurityQuestion = "How?";
     // assert that the security question does not validate
     expect(checkSecurityField(invalidSecurityQuestion)).toBe(false);
   });
