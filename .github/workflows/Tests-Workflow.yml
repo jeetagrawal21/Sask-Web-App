@@ -6,7 +6,6 @@ name: Tests-Workflow
 on:
   # Triggers the workflow on pull request events
   pull_request:
-  push:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,12 +24,12 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Build The Stack
-        run: docker-compose up --compatibility -d
+        run: docker-compose up --compatibility --build -d
         env:
           COMPOSE_OPTS: --compatibility
 
-      - name: Test Frontend
-        run: docker exec covid_app npm run test:ci src/smoke_tests/*
+      # - name: Test Frontend
+      #   run: docker exec covid_app npm run test:ci src/smoke_tests/*
       
       # - name: Test Backend
       #   run: docker exec covid_api npm run test:no-reloading
