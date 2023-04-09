@@ -73,7 +73,7 @@ const pendingaccountRoute = require('@src/routes/PendingAccount-Route')
 app.use('/requestAccount', requestAccountRoute);
 app.use('/data', dataRoute);
 app.use('/login', loginRoute);
-app.use('/postregistrationinfo', postregistrationinfoRoute);
+app.use('/Register', postregistrationinfoRoute);
 app.use('/AdminPage', pendingaccountRoute);
 
 

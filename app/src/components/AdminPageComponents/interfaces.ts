@@ -29,3 +29,8 @@ export interface AllUsersTableProps {
   allUsers: User[];
   onRemoveUser: (userId: number) => void;
 }
+
+export interface User {
+  id: number;
+  link: string;
+}

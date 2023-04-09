@@ -52,7 +52,9 @@ export async function insertPendingUser(id: number): Promise<void> {
  */
 export async function deletePendingUser(id: number): Promise<void> {
   try {
-    // Connect to the database.
+    const participantstatus = await isParticipantIdPending(id)
+    if(participantstatus){
+          // Connect to the database.
     const pool = new Pool(credentials);
 
     // Define the SQL query to delete a row from the "pendingUser" table.
@@ -68,6 +70,11 @@ export async function deletePendingUser(id: number): Promise<void> {
     logger.info(`Row with ID ${id} deleted from "pendingUser" table!`);
 
     await pool.end();
+    }else{
+      console.log("errorrrrrrrr")
+      throw new Error('User Not Found'); 
+    }
+
 
   } catch (error) {
     // Log an error message to the console if something goes wrong.
@@ -102,6 +109,32 @@ export async function isParticipantIdPending(participantId: number): Promise<boo
       await pool.end();
     }
   }
+
+/**
+ * Checks if the given participant ID already exists in the "approvedusers" table.
+ * @param participantId The participant ID to check for.
+ * @returns A Promise that resolves with a boolean indicating whether the participant ID exists in the table.
+ */
+export async function isParticipantIdApproved(participantId: number): Promise<boolean> {
+  const pool = new Pool(credentials);
+
+  try {
+    const result = await pool.query('SELECT id FROM approvedusers WHERE id = $1', [participantId]);
+    if (result.rowCount > 0){       // if there is a reply (response is not equal to 0)
+      const returnval = Number(result.rows[0].id) === Number(participantId);  // stores 'does id provided match id in table' result 
+      logger.info('Is participant ID ' + String(participantId) + ' located in table: ' + String(returnval)); 
+      return returnval;    //returns stored result 
+    }else{
+      logger.info('Is participant ID ' + String(participantId) + ' located in table: false'); 
+      return false;   //if we never get a reply, assume it's false 
+    }
+  } catch (error) {
+    logger.error('Error checking participant ID:', error);
+    return false;
+  } finally {
+    await pool.end();
+  }
+}
 
   /**
  * Retrieves all users from the "approvedUsers" table.
@@ -171,11 +204,11 @@ export async function getAllAprovedUsers(): Promise<User[]> {
  * @param approvedTime The approval time value for the new row.
  * @returns A Promise that resolves when the insertion is complete.
  */
-export async function insertApprovedUser(id: Number, approvedTime: Date): Promise<void> {
+export async function insertApprovedUser(id: number, approvedTime: Date): Promise<void> {
   try {
     // Connect to the database.
     const pool = new Pool(credentials);
-    const link = 'linktest.com'
+    const link = linkgen(id);
 
 
     // Define the SQL query to insert a new row into the "approvedUsers" table.
@@ -230,38 +263,58 @@ export async function insertApprovedUser(id: Number, approvedTime: Date): Promis
 
 
 /**
- * Deletes a row from the "approvedUsers" table with the given ID.
- * @param id The ID value of the row to delete.
- * @returns A Promise that resolves when the deletion is complete.
+ * Takes a number and returns an encoded URL.
+ * @param num - The number to encode.
+ * @returns The encoded URL, or null if an error occurred.
  */
- export async function linkgen(id: number): Promise<void> {
+
+ function linkgen(id: number): string | null {
   try {
-    // Connect to the database.
-    const pool = new Pool(credentials);
-
-    // Define the SQL query to delete a row from the "approvedUsers" table.
-    const query = `
-      DELETE FROM approvedUsers
-      WHERE id = $1;
-    `;
-
-    // Execute the query to delete the row.
-    await pool.query(query, [id]);
-
-    // Log a success message to the console.
-    logger.info(`Row with ID ${id} deleted from "approvedUsers" table!`);
-
-    await pool.end();
-
+    // Define the encoding scheme.
+    const encodingScheme = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-';
+    // Convert the number to a string.
+    const numString = id.toString();
+    // Convert each digit in the number to a corresponding character in the encoding scheme.
+    const encoded = Array.from(numString, digit => encodingScheme[parseInt(digit)]);
+    // Join the encoded characters into a single string.
+    const encodedString = encoded.join('');
+    // Construct a URL with the encoded string.
+    const url = `http://localhost:3080/register/?id=${encodedString}`;
+    // Return the encoded URL.
+    return url;
   } catch (error) {
-    // Log an error message to the console if something goes wrong.
-    logger.error('Error deleting row:', error);
+    // If an error occurs during the encoding process, log the error and return null.
+    logger.error(`Error encoding number to URL: ${error}`);
+    return null;
+  }
+}
+
+/**
+ * Takes an encoded URL and returns the corresponding number using the custom encoding scheme.
+ * @param url - The encoded URL to decode.
+ * @returns The decoded number, or null if an error occurred.
+ */
+export function decodeURLToNumber(url: string): number | null {
+  try {
+    // Define the encoding scheme.
+    const encodingScheme = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-';
+    // Extract the encoded string from the URL by removing the base URL.
+    const encodedString = url.replace('http://localhost:3080/register/?id=', '');
+    // Convert each encoded character in the string to the corresponding digit in the encoding scheme.
+    const decoded = Array.from(encodedString, char => encodingScheme.indexOf(char));
+    // Convert the array of digits back to a string and parse it as a number.
+    const decodedString = decoded.join('');
+    const num = parseInt(decodedString);
+    // Return the decoded number.
+    return num;
+  } catch (error) {
+    // If an error occurs during the decoding process, log the error and return null.
+    logger.error(`Error decoding URL to number: ${error}`);
+    return null;
   }
 }
 
 
-
-  
   
 
   export default {
@@ -271,5 +324,7 @@ export async function insertApprovedUser(id: Number, approvedTime: Date): Promis
     deletePendingUser,
     insertApprovedUser,
     deleteApprovedUser,
-    getAllAprovedUsers
+    getAllAprovedUsers,
+    decodeURLToNumber,
+    isParticipantIdApproved
   } 

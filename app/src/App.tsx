@@ -26,7 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/RequestAccount" element={<RequestAccount />} />
-        <Route path="/Register" element={<Register />} />
+        <Route path="/Register/*" element={<Register />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/AdminPage" element={<AdminPage />} />
       </Routes>

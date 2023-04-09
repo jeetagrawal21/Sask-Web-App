@@ -80,7 +80,7 @@ describe("getUser function", () => {
 describe("checkPass function", () => {
   it("returns true for correct email and password combination", async () => {
     const email = "testuser1@email.com";
-    const password = "Testpasslonger1!";
+    const password = "TestPassLonger1!";
     // Add a user to the database with the email and password above
     // then call the checkPass function with the same email and password
     // and assert that it returns true
@@ -111,7 +111,7 @@ describe("checkPass function", () => {
 
   it("returns true for correct password", async () => {
     const email = "testuser1@email.com";
-    const pass = "Testpasslonger1!";
+    const pass = "TestPassLonger1!";
     // Call the checkPass function with the correct email and password
     // and assert that it returns true
     const result = await checkPass(email, pass);

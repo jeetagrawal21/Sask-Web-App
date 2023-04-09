@@ -31,41 +31,32 @@ function RegisterPageBody() {
   const [givenName1, setGivenName1] = useState('');
   const [givenName2, setGivenName2] = useState('');
 
-  function postRegistrationData() {
-    // checks if the passwords put in password and confirm password fields are exactly the same
+  function handleSubmit() {
     const participantInfo = {
-      surname: (document.getElementById('surname') as HTMLInputElement).value,
-      email: (document.getElementById('email') as HTMLInputElement).value,
-      givenName1: (document.getElementById('givenName1') as HTMLInputElement)
-        .value,
-      givenName2: (document.getElementById('givenName2') as HTMLInputElement)
-        .value,
-      question1: (
-        document.getElementById('securityQuestion1') as HTMLInputElement
-      ).value,
-      question2: (
-        document.getElementById('securityQuestion2') as HTMLInputElement
-      ).value,
-      question3: (
-        document.getElementById('securityQuestion3') as HTMLInputElement
-      ).value,
-      answer1: (document.getElementById('securityAnswer1') as HTMLInputElement)
-        .value,
-      answer2: (document.getElementById('securityAnswer2') as HTMLInputElement)
-        .value,
-      answer3: (document.getElementById('securityAnswer3') as HTMLInputElement)
-        .value,
-      password: (document.getElementById('password') as HTMLInputElement).value,
+      surname,
+      email,
+      givenName1,
+      givenName2,
+      question1: securityQuestion1,
+      question2: securityQuestion2,
+      question3: securityQuestion3,
+      answer1: securityAnswer1,
+      answer2: securityAnswer2,
+      answer3: securityAnswer3,
+      password,
     };
-    // send the participant data to the backend using an axios post request
     axios
-      .post(process.env.REACT_APP_API_BASE_URL + '/postregistrationinfo', participantInfo)
-      .then((response) => {});
+      .post(process.env.REACT_APP_API_BASE_URL + '/Register', participantInfo)
+      .then((response) => {
+      })
+      .catch((error) => {
+      });
   }
+  
 
   return (
     <div className="register">
-      <form>
+      <form onSubmit={handleSubmit}>
         {/* Textfield to enter surname */}
         <div>
           <input
@@ -318,19 +309,13 @@ function RegisterPageBody() {
         )}
 
         <div className="register-page-button-div">
-          <button
-            disabled={handleDisable(
-              [surname, givenName1, givenName2],
-              password,
-              email,
-              [securityQuestion1, securityQuestion2, securityQuestion3],
-              [securityAnswer1, securityAnswer2, securityAnswer3]
-            )}
-            className="signin-button"
-            onClick={postRegistrationData}
-          >
-            REGISTER
-          </button>
+        <button
+          onClick={handleSubmit}
+          className="signin-button"
+          type="submit"
+        >
+          REGISTER
+        </button>
         </div>
       </form>
     </div>

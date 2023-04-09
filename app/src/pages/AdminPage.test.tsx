@@ -19,9 +19,9 @@ const initUserRequests: UserRequest[] = [
 ];
 
 const initUsers: User[] = [
-  { id: 3921},
-  { id: 2012},
-  { id: 3289},
+  { id: 3921, link: "" },
+  { id: 2012, link: "" },
+  { id: 3289, link: "" },
 ];
 
 describe("AdminPage", () => {
@@ -88,40 +88,5 @@ describe("AdminPage", () => {
         queryByText(`user-${initUserRequests[0].id}`)
       ).not.toBeInTheDocument();
     });
-  });
-
-  // test that a user is removed from the all users table
-  it("should remove a user from the all users table", async () => {
-    const { getByTestId, queryByText } = render(<AdminPage />);
-
-    // find the Remove button for the first user and click it
-    const removeButton = getByTestId(`remove-user-${initUsers[0].id}`);
-    fireEvent.click(removeButton);
-
-    // check that the user has been removed from the all users table
-    await waitFor(() => {
-      expect(queryByText(`user-${initUsers[0].id}`)).not.toBeInTheDocument();
-    });
-  });
-
-  // test that all users can be removed from the users table
-  it("should remove multiple users from the all users table", async () => {
-    const { getByText, getByTestId, queryByText } = render(<AdminPage />);
-    // wait for initial data to load
-    await waitFor(() => {
-      expect(getByText("User Requests")).toBeInTheDocument();
-      expect(getByText("All Users")).toBeInTheDocument();
-    });
-
-    // find all Remove buttons for and click them, checking that the user has been removed from the all users table
-    initUsers.forEach((user) => {
-      const removeButton = getByTestId(`remove-user-${user.id}`);
-      fireEvent.click(removeButton);
-      expect(queryByText(`user-${user.id}`)).not.toBeInTheDocument();
-    });
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
   });
 });

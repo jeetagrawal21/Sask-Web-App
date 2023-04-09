@@ -48,13 +48,14 @@ const AdminPage: React.FC = () => {
       axios
       .post(process.env.REACT_APP_API_BASE_URL + "/AdminPage/approve", userRequest)
       .then((response) => {
-  
+    
       });
       setUserRequests(userRequests.filter((req) => req.id !== userId));
       setAllUsers([
         ...allUsers,
         {
           id: userRequest.id,
+          link: "", // Add link property with an empty string as the default value
         },
       ]);
     }

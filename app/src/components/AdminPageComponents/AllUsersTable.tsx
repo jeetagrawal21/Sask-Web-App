@@ -13,12 +13,13 @@ const AllUsersTable: React.FC<AllUsersTableProps> = ({
 }) => {
   return (
     <div>
-      <h2>All Users</h2>
+      <h2>Approved Users</h2>
       <table>
         <thead>
           <tr>
             <th>ID</th>
             <th>Actions</th>
+            <th>Link</th>
           </tr>
         </thead>
         <tbody>
@@ -33,6 +34,7 @@ const AllUsersTable: React.FC<AllUsersTableProps> = ({
                   Remove
                 </button>
               </td>
+              <td>{user.link}</td>
             </tr>
           ))}
         </tbody>

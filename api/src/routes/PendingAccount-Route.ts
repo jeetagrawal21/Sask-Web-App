@@ -61,7 +61,7 @@ approvePending();
 router.post('/rejected', async (req: Request, res: Response) => {
 
 async function deletePending() {  
-    deletePendingUser(req.body.userId);
+    deletePendingUser(80000);
     logger.info("User deleted: " + req.body.userId);
 }
 deletePending();
