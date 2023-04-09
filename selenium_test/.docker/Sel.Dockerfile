@@ -9,5 +9,4 @@ RUN apt-get update && \
 
 # Install selenium
 RUN pip3 install selenium
-    
-USER 1001
+
