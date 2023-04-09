@@ -25,14 +25,10 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Build The Stack
-        run: |
-          cd selenium_test 
-          docker compose up --build -d
-      # - name: Check Selenium server
-      #   run: |
-      #     netstat -anp | grep 4444 
-      # - name: Test Frontend
-      #   run: docker exec selenium_test python3 /app/RunTests.py
+        run: docker compose up --build -d
+
+      - name: Test Frontend
+        run: docker exec covid_app npm run test:ci src/smoke_tests/*
       
       # - name: Test Backend
       #   run: docker exec covid_api npm run test:no-reloading
