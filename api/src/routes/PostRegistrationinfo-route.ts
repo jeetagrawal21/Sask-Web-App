@@ -1,5 +1,5 @@
-import express from 'express';
-import { accountCreationUser } from '@src/services/User-Services';
+import express from "express";
+import { accountCreationUser } from "@src/services/User-Services";
 import { Logger } from "tslog";
 import { appendFileSync } from "fs";
 import { decodeURLToNumber, isParticipantIdApproved } from '@src/services/PendingAccount-Service';
@@ -7,8 +7,8 @@ import { decodeURLToNumber, isParticipantIdApproved } from '@src/services/Pendin
 const router = express.Router();
 const app = express();
 
-//setting up logging 
-export const logger = new Logger(); 
+//setting up logging
+export const logger = new Logger();
 
 logger.attachTransport((logObj) => {
   appendFileSync("BackendLog.txt", JSON.stringify(logObj) + "\n");

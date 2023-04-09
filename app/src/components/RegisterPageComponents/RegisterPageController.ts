@@ -1,72 +1,104 @@
-import React, { Component, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import {
-  checkEmail,
-  checkPassword,
-} from '../WelcomePageComponents/Controller/SignInController';
+/**
+ * Check if the format of a given email is valid.
+ * @param email email string entered by the user
+ * @returns true if the email provided by the user matches the description provided in the function
+ */
+function checkEmail(email: string) {
+  const emailRegex =
+    /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]{2,3}\s*$/;
+  return emailRegex.test(email);
+}
 
 /**
-   Purpose: Checks if the format of a given name is valid.
-   Precondition: name: string entered by the user
-   PostCondition: None
-   Return: true if the name provided by the user matches the description provided in the function  
-*/
+ * Checks if the format of a given password is valid.
+ * @param password password string entered by the user
+ * @returns true if the password provided by the user matches the description provided in the function
+ */
+function checkPassword(password: string): boolean {
+  let count = 0;
+
+  if (password.length >= 8 && password.length <= 32) {
+    if (/\d/.test(password)) count++;
+    if (/[a-z]/.test(password)) count++;
+    if (/[A-Z]/.test(password)) count++;
+    if (/[*.!@#$%^&(){}\[\]:;"'<>,.?\/~`_+\-=|\\]/.test(password)) count++;
+  }
+
+  return count > 3;
+}
+
+/**
+ * Check if the format of a given name is valid.
+ * @param name name string entered by the user
+ * @returns true if the name provided by the user matches the description provided in the function
+ */
 function checkName(name: string) {
-  const nameRegex = /^[a-zA-Z0-9\s!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{1,}$/;
+  const nameRegex =
+    /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/;
   return nameRegex.test(name);
 }
 
 /**
-   Purpose: Checks if the format of a given question is valid.
-   Precondition: question: string entered by the user
-   PostCondition: None
-   Return: true if the question provided by the user matches the description provided in the function  
-*/
-function checkSecurityQuestion(question: string) {
-  const securityQuestionRegex = /^.+\?$/;
-  return securityQuestionRegex.test(question);
+ * Checks if the format of a given security field is valid.
+ * @param field security field string entered by the user
+ * @returns true if the security field provided by the user matches the description provided in the function
+ * @note This function can be used for both the security questions and security answers.
+ */
+function checkSecurityField(field: string): boolean {
+  const allowedCharacters = /[\w\s.@\-?,&/#+()"'\[\]{}!$%^*|~=]/;
+  const regex = new RegExp(
+    `^(?=.*[a-zA-Z\d])${allowedCharacters.source}{5,64}$`
+  );
+  return regex.test(field);
 }
 
 /**
-   Purpose: Checks if the format of a given answer is valid.
-   Precondition: answer: string entered by the user
-   PostCondition: None
-   Return: true if the answer provided by the user matches the description provided in the function  
-*/
-function checkSecurityAnswer(answer: string) {
-  const securityAnswerRegex = /^[a-zA-Z0-9\s]{1,30}$/;
-  return securityAnswerRegex.test(answer);
-}
-
-/**
-   Purpose: Disables a button if the requirements specified are not fulfilled
-   Precondition: names: List of names,  email: email string entered by the user, password: password string entered by the user,
-                  securityQuestions: List of security questions, securityAnswers: List of security answers from the user
-   PostCondition: None
-   Return: true if any of the inputs do not meet the requirement   
-*/
+ * Checks if the email, password, names, security questions, and security answers are valid and returns the opposite of that.
+ * @param email email string entered by the user
+ * @param password password string entered by the user
+ * @param names names string array entered by the user
+ * @param confirmPassword confirm password string entered by the user
+ * @param securityQuestions security questions string array entered by the user
+ * @param securityAnswers security answers string array entered by the user
+ * @returns true if the email, password, names, security questions, and security answers are valid, false otherwise
+ */
 function handleDisable(
-  names: string[],
-  password: string,
   email: string,
+  password: string,
+  names: string[],
+  confirmPassword: string,
   securityQuestions: string[],
   securityAnswers: string[]
-) {
-  let result =
-    checkEmail(email) &&
-    checkPassword(password) &&
-    checkName(names[0]) &&
-    checkName(names[1]) &&
-    checkName(names[2]) &&
-    checkSecurityQuestion(securityQuestions[0]) &&
-    checkSecurityQuestion(securityQuestions[1]) &&
-    checkSecurityQuestion(securityQuestions[2]) &&
-    checkSecurityAnswer(securityAnswers[0]) &&
-    checkSecurityAnswer(securityAnswers[1]) &&
-    checkSecurityAnswer(securityAnswers[2]);
+): boolean {
+  let disable = !checkEmail(email) || !checkPassword(password);
 
-  return !result;
+  // only check the names that are longer than 0 characters
+  if (names && names.some((name) => name.length > 0 && !checkName(name))) {
+    disable = true;
+  }
+
+  // check if all the security questions and answers (3 in total) are valid
+  if (
+    securityQuestions.length !== 3 ||
+    securityAnswers.length !== 3 ||
+    securityQuestions.some((question) => !checkSecurityField(question)) ||
+    securityAnswers.some((answer) => !checkSecurityField(answer))
+  ) {
+    disable = true;
+  }
+
+  // check if the passwords match
+  if (confirmPassword && password !== confirmPassword) {
+    disable = true;
+  }
+
+  return disable;
 }
 
-export { checkName, checkSecurityQuestion, checkSecurityAnswer, handleDisable };
+export {
+  checkName,
+  handleDisable,
+  checkEmail,
+  checkPassword,
+  checkSecurityField,
+};

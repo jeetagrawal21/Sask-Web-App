@@ -1,20 +1,17 @@
 import { render, fireEvent, getByText, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import RegisterPageBody from "./RegisterPageBody";
+import RegisterPageBody from "../components/RegisterPageComponents/RegisterPageBody";
 import React from "react";
-import RegisterPageTitle from "./RegisterPageTitle";
+import RegisterPageTitle from "../components/RegisterPageComponents/RegisterPageTitle";
 import axios from "axios";
-import {
-  checkEmail,
-  checkPassword,
-} from "../WelcomePageComponents/Controller/SignInController";
 
 import {
   checkName,
-  checkSecurityQuestion,
-  checkSecurityAnswer,
+  checkSecurityField,
   handleDisable,
-} from "./RegisterPageController";
+  checkEmail,
+  checkPassword,
+} from "../components/RegisterPageComponents/RegisterPageController";
 import "@testing-library/jest-dom";
 
 // Unit tests
@@ -100,27 +97,26 @@ describe("checkName function does validate an incorrect name format", () => {
 });
 
 /**
- *  checkSecurityQuestion tests
+ *  checkSecurityField tests
  */
 
-describe("checkSecurityQuestion function validates a correct security question", () => {
+describe("checkSecurityField function validates a correct security question", () => {
   it("should return true for a security question with the right format", () => {
     const validSecurityQuestion =
       "What is the name of your favourite car brand?";
     // assert that the security question validates correctly
-    expect(checkSecurityQuestion(validSecurityQuestion)).toBe(true);
+    expect(checkSecurityField(validSecurityQuestion)).toBe(true);
   });
 });
-describe("checkSecurityQuestion function does not validate an incorrect security question format", () => {
-  it("should return false for a security question with the wrong format (no question mark)", () => {
-    const invalidSecurityQuestion =
-      "What is the name of your favourite car brand";
+describe("checkSecurityField function does not validate an incorrect security question format", () => {
+  it("should return false for a security question that is too short", () => {
+    const invalidSecurityQuestion = "How?";
     // assert that the security question does not validate
-    expect(checkSecurityQuestion(invalidSecurityQuestion)).toBe(false);
+    expect(checkSecurityField(invalidSecurityQuestion)).toBe(false);
   });
   it("should return false for a security question that is empty", () => {
     const invalidSecurityQuestion = "";
-    expect(checkSecurityQuestion(invalidSecurityQuestion)).toBe(false);
+    expect(checkSecurityField(invalidSecurityQuestion)).toBe(false);
   });
 });
 
@@ -128,23 +124,23 @@ describe("checkSecurityQuestion function does not validate an incorrect security
  *  checkAnswer tests
  */
 
-describe("checkSecurityAnswer function validates a correct security answer", () => {
+describe("checkSecurityField function validates a correct security answer", () => {
   it("should return true for a security answer with the right format", () => {
     const validSecurityAnswer = "Mercedes Benz";
     // assert that the security answer validates correctly
-    expect(checkSecurityAnswer(validSecurityAnswer)).toBe(true);
+    expect(checkSecurityField(validSecurityAnswer)).toBe(true);
   });
 });
-describe("checkSecurityAnswer function does not validate an incorrect security answer format", () => {
+describe("checkSecurityField function does not validate an incorrect security answer format", () => {
   it("should return false for a security answer that is empty", () => {
     const invalidSecurityAnswer = "";
     // assert that the security answer does not validate
-    expect(checkSecurityAnswer(invalidSecurityAnswer)).toBe(false);
+    expect(checkSecurityField(invalidSecurityAnswer)).toBe(false);
   });
   it("should return false for a security question that is more than 30 characters", () => {
     const invalidSecurityAnswer =
       "it all started when I was 16, it was a beautiful thursday morning, then out of nowhere the unexpected happened.";
-    expect(checkSecurityAnswer(invalidSecurityAnswer)).toBe(false);
+    expect(checkSecurityField(invalidSecurityAnswer)).toBe(false);
   });
 });
 
@@ -161,34 +157,32 @@ describe("RegisterPageBody component", () => {
   });
   it("should have an email input field", () => {
     render(<RegisterPageBody />);
-    const emailInput = screen.getByPlaceholderText("Enter your email*");
+    const emailInput = screen.getByPlaceholderText("Email *");
     expect(emailInput).toBeInTheDocument();
     expect(emailInput).toHaveAttribute("id");
   });
   it("should have a surname input field", () => {
     render(<RegisterPageBody />);
-    const surnameInput = screen.getByPlaceholderText("Enter your surname*");
+    const surnameInput = screen.getByPlaceholderText("Surname *");
     expect(surnameInput).toBeInTheDocument();
     expect(surnameInput).toHaveAttribute("id");
   });
   it("should have a given name  input field", () => {
     render(<RegisterPageBody />);
-    const givenNameInput = screen.getByPlaceholderText(
-      "Enter your Given Name 1*"
-    );
+    const givenNameInput = screen.getByPlaceholderText("Given Name 1");
     expect(givenNameInput).toBeInTheDocument();
     expect(givenNameInput).toHaveAttribute("id");
   });
   it("should have a password input field", () => {
     render(<RegisterPageBody />);
-    const paswordInput = screen.getByPlaceholderText("Enter your password*");
+    const paswordInput = screen.getByPlaceholderText("Password *");
     expect(paswordInput).toBeInTheDocument();
     expect(paswordInput).toHaveAttribute("id");
   });
   it("should have a security question input field", () => {
     render(<RegisterPageBody />);
     const securityQuestionInput = screen.getByPlaceholderText(
-      "Enter security question 1*"
+      "Security Question 1 *"
     );
     expect(securityQuestionInput).toBeInTheDocument();
     expect(securityQuestionInput).toHaveAttribute("id");
@@ -196,7 +190,7 @@ describe("RegisterPageBody component", () => {
   it("should have a security answer input field", () => {
     render(<RegisterPageBody />);
     const securityAnswerInput = screen.getByPlaceholderText(
-      "Enter security answer 1*"
+      "Security Answer 1 *"
     );
     expect(securityAnswerInput).toBeInTheDocument();
     expect(securityAnswerInput).toHaveAttribute("id");

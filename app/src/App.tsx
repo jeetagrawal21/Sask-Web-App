@@ -2,10 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import WelcomePage from "./pages/WelcomePage";
-import Register from "./pages/RegisterPage";
+import RegisterPage from "./pages/RegisterPage";
 import RequestAccount from "./pages/RequestAccountPage";
 import AdminPage from "./pages/AdminPage";
 import Dashboard from "./pages/DashboardPage";
+import { AuthProvider } from "./AuthContext";
 import log from "loglevel";
 import remotePlugin from "loglevel-plugin-remote";
 
@@ -23,13 +24,15 @@ log.enableAll();
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<WelcomePage />} />
-        <Route path="/RequestAccount" element={<RequestAccount />} />
-        <Route path="/Register/*" element={<Register />} />
-        <Route path="/Dashboard" element={<Dashboard />} />
-        <Route path="/AdminPage" element={<AdminPage />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<WelcomePage />} />
+          <Route path="/RequestAccount" element={<RequestAccount />} />
+          <Route path="/Register" element={<RegisterPage />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/AdminPage" element={<AdminPage />} />
+        </Routes>
+      </AuthProvider>
     </Router>
   );
 }

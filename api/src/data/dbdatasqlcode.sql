@@ -49,7 +49,7 @@ CREATE TABLE "userdata" (
   "[17_SAQ] Have you experienced a lingering cough in the past" double precision DEFAULT NULL,
   "[131_SAQ] If you had COVID-19 was this symptom more frequent" double precision DEFAULT NULL,
   "[18_SAQ] In the past 30 days how often have you experienced" double precision DEFAULT NULL,
-  "[19_VAS] In the past 30 days rate the severity of your cough" double precision DEFAULT NULL,
+  "[19_VAS] In the past 30 days rate the severity of your coug" double precision DEFAULT NULL,
   "[20_SAQ] Have you seen a health care provider about this sy" double precision DEFAULT NULL,
   "[21_SAQ] Were you satisfied with the plan of care prescribe" double precision DEFAULT NULL,
   "[24_SAQ] Have you experienced any pain or discomfort in you" double precision DEFAULT NULL,
