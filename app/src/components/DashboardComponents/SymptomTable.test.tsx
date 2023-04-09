@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import SymptomTable from './SymptomTable';
 
 describe('SymptomTable component', () => {
