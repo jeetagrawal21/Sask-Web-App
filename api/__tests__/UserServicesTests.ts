@@ -115,8 +115,8 @@ describe("checkPass function", () => {
 describe("checkPass function", () => {
   it("returns true for correct password", async () => {
     const email = "testuser1@email.com";
-    const pass = "TestPassLonger1!";
-    // Call the checkpass function with the correct email and password
+    const pass = "Testpasslonger1!";
+    // Call the checkPass function with the correct email and password
     // and assert that it returns true
     const result = await checkPass(email, pass);
     expect(result).toBe(true);

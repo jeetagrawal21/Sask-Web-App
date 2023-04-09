@@ -12,7 +12,16 @@ import "express-async-errors";
 import { Logger } from "tslog";
 import { appendFileSync } from "fs";
 
-import { credentials } from "./declarations/Database_Credentials";
+import { credentials} from './declarations/Database_Credentials';
+
+import { setupDataDB, initiateDB, createPendingTable, createApprovedTable} from '@src/services/Internal-Services';
+
+
+
+
+
+
+
 
 import {
   setupDataDB,
@@ -44,13 +53,25 @@ const router = Router();
 
 initiateDB(); //initiates the db
 setupDataDB(); // initeates the data db with the data
-createPendingTable(); //creates pending users table
+createPendingTable(); //creates pending users table 
+createApprovedTable();
+
 
 //Setting up routes
-const requestAccountRoute = require("@src/routes/requestAccount-route");
-const dataRoute = require("@src/routes/data-route");
-const loginRoute = require("@src/routes/login-route");
-const postregistrationinfoRoute = require("@src/routes/postregistrationinfo-route");
+const requestAccountRoute = require('@src/routes/requestAccount-route')
+const dataRoute = require('@src/routes/data-route')
+const loginRoute = require('@src/routes/login-route')
+const postregistrationinfoRoute = require('@src/routes/postregistrationinfo-route')
+const pendingaccountRoute = require('@src/routes/PendingAccount-Route')
+
+
+app.use('/requestAccount', requestAccountRoute);
+app.use('/data', dataRoute);
+app.use('/login', loginRoute);
+app.use('/Register', postregistrationinfoRoute);
+app.use('/AdminPage', pendingaccountRoute);
+
+
 
 app.use("/requestAccount", requestAccountRoute);
 app.use("/data", dataRoute);

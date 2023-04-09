@@ -20,9 +20,6 @@ const UserRequestsTable: React.FC<UserRequestsTableProps> = ({
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Request Date</th>
             <th>Approve</th>
             <th>Reject</th>
           </tr>
@@ -31,9 +28,6 @@ const UserRequestsTable: React.FC<UserRequestsTableProps> = ({
           {userRequests.map((userRequest) => (
             <tr key={userRequest.id}>
               <td>{userRequest.id}</td>
-              <td>{userRequest.name}</td>
-              <td>{userRequest.email}</td>
-              <td>{userRequest.requestDate.toString()}</td>
               <td>
                 <button
                   onClick={() => onApproveUserRequest(userRequest.id)}

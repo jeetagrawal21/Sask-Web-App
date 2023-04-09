@@ -13,22 +13,19 @@ const AllUsersTable: React.FC<AllUsersTableProps> = ({
 }) => {
   return (
     <div>
-      <h2>All Users</h2>
+      <h2>Approved Users</h2>
       <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
             <th>Actions</th>
+            <th>Link</th>
           </tr>
         </thead>
         <tbody>
           {allUsers.map((user) => (
             <tr key={user.id}>
               <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
               <td>
                 <button
                   onClick={() => onRemoveUser(user.id)}
@@ -37,6 +34,7 @@ const AllUsersTable: React.FC<AllUsersTableProps> = ({
                   Remove
                 </button>
               </td>
+              <td>{user.link}</td>
             </tr>
           ))}
         </tbody>
