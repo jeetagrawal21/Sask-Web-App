@@ -3,8 +3,8 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import AllUsersTable from "./AllUsersTable";
 
 const allUsers = [
-  { id: 1, name: "John", email: "john@example.com" },
-  { id: 2, name: "Jane", email: "jane@example.com" },
+  { id: 1, link: "http://john.example.com" },
+  { id: 2, link: "http://jane.example.com" },
 ];
 
 describe("AllUsersTable", () => {
@@ -12,10 +12,10 @@ describe("AllUsersTable", () => {
 
   it("renders the correct headings", () => {
     render(<AllUsersTable allUsers={allUsers} onRemoveUser={onRemoveUser} />);
-    expect(screen.getByText("All Users")).toBeInTheDocument();
+    expect(screen.getByText("Approved Users")).toBeInTheDocument();
     expect(screen.getByText("ID")).toBeInTheDocument();
-    expect(screen.getByText("Name")).toBeInTheDocument();
-    expect(screen.getByText("Email")).toBeInTheDocument();
+    expect(screen.getByText("Actions")).toBeInTheDocument();
+    expect(screen.getByText("Link")).toBeInTheDocument();
   });
 
   it("renders the correct users data", () => {
@@ -23,11 +23,9 @@ describe("AllUsersTable", () => {
     const rows = screen.getAllByRole("row");
     expect(rows.length).toBe(3); // Including header row
     expect(rows[1]).toHaveTextContent("1");
-    expect(rows[1]).toHaveTextContent("John");
-    expect(rows[1]).toHaveTextContent("john@example.com");
+    expect(rows[1]).toHaveTextContent("http://john.example.com");
     expect(rows[2]).toHaveTextContent("2");
-    expect(rows[2]).toHaveTextContent("Jane");
-    expect(rows[2]).toHaveTextContent("jane@example.com");
+    expect(rows[2]).toHaveTextContent("http://jane.example.com");
   });
 
   it("calls onRemoveUser when remove button is clicked for user 1", () => {
