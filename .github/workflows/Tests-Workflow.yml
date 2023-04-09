@@ -25,7 +25,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Build The Stack
-        run: docker compose up --compatibility --build -d
+        run: docker-compose up --compatibility -d
         env:
           COMPOSE_OPTS: --compatibility
 
