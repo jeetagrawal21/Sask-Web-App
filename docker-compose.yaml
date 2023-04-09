@@ -22,7 +22,6 @@ services:
     env_file:
       - ./app/.env
       - ./app/env/development.env
-    mem_limit: 2g # allocate 2GB of memory to the container
 
   api:
     container_name: covid_api
