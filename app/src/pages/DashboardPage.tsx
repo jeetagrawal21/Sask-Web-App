@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
-import "../stylings/DashboardStyles/DashboardPage.css";
-import Header from "../components/Header";
-import WelcomeMessage from "../components/DashboardComponents/WelcomeMessage";
-import Timeline from "../components/DashboardComponents/Timeline";
-import SignOut from "../components/SignOut";
-import { AuthContext } from "../AuthContext";
-import ReturnToHome from "../components/ReturnToHome";
+import React, { useContext } from 'react';
+import '../stylings/DashboardStyles/DashboardPage.css';
+import Header from '../components/Header';
+import WelcomeMessage from '../components/DashboardComponents/WelcomeMessage';
+import Timeline from '../components/DashboardComponents/Timeline';
+import SignOut from '../components/SignOut';
+import Table from '../components/DashboardComponents/Table';
+import { AuthContext } from '../AuthContext';
+import ReturnToHome from '../components/ReturnToHome';
 
 function DashboardPage() {
   // if there is the authentication status is false display unauthorized access, otherwise let the actual page be displayed
@@ -32,6 +33,7 @@ function DashboardPage() {
           <div className="welcome-message">
             <WelcomeMessage />
           </div>
+          <Table />
           <Timeline />
         </div>
       </div>
