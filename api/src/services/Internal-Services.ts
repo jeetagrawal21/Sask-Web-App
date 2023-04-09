@@ -33,7 +33,7 @@ export async function checkIfTable(tablename: string) {
     const exists = rows[0].exists;
     return Boolean(exists);
   } catch (error) {
-    logger.error("\ncheckIfTable errpr: \n" + String(error));
+    logger.error("\ncheckIfTable error: \n" + String(error));
   } finally {
     pool.end();
   }
@@ -65,7 +65,7 @@ async function createTable() {
         )
       `);
   } catch (error) {
-    logger.error("\ncreateTable errpr: \n" + String(error));
+    logger.error("\ncreateTable error: \n" + String(error));
   } finally {
     pool.end();
   }
@@ -201,7 +201,6 @@ export async function createPendingTable() {
       }
     }
   }
-}
 
 
 

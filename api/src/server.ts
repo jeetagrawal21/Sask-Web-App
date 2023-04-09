@@ -23,11 +23,6 @@ import { setupDataDB, initiateDB, createPendingTable, createApprovedTable} from 
 
 
 
-import {
-  setupDataDB,
-  initiateDB,
-  createPendingTable,
-} from "@src/services/Internal-Services";
 import uploadRoute from "@src/routes/Upload-Route"
 // const fs = require('fs');
 
