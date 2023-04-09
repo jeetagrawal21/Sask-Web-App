@@ -25,8 +25,9 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Build The Stack
-        run: docker compose up --build -d
-        options: --memory=2g # allocate 2GB of memory to the container
+        run: docker compose up --compatibility --build -d
+        env:
+          COMPOSE_OPTS: --compatibility
 
       - name: Test Frontend
         run: docker exec covid_app npm run test:ci src/smoke_tests/*
