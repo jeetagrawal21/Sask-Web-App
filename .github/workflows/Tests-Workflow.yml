@@ -26,10 +26,10 @@ jobs:
       # Runs a single command using the runners shell
       - name: Build The Stack
         run: docker compose up --build -d
+        options: --memory=2g # allocate 2GB of memory to the container
 
       - name: Test Frontend
         run: docker exec covid_app npm run test:ci src/smoke_tests/*
-        options: --memory=2g # allocate 2GB of memory to the container
       
       # - name: Test Backend
       #   run: docker exec covid_api npm run test:no-reloading
