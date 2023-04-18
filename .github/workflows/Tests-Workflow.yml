@@ -1,12 +1,10 @@
 # This is a basic workflow to help you get started with Actions
 
-name: BasicBuild
+name: Tests-Workflow
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  # push:
-  #   branches: [ "main", "dev" ]
+  # Triggers the workflow on pull request events
   pull_request:
 
   # Allows you to run this workflow manually from the Actions tab
@@ -26,11 +24,13 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Build The Stack
-        run: docker compose up -d
+        run: docker-compose up --compatibility --build -d
+        env:
+          COMPOSE_OPTS: --compatibility
 
       # - name: Test Frontend
-      #   run: docker exec covid_app npm run test:ci
-
+      #   run: docker exec covid_app npm run test:ci src/smoke_tests/*
+      
       # - name: Test Backend
       #   run: docker exec covid_api npm run test:no-reloading
 

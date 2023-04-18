@@ -2,19 +2,15 @@
 Represents a user in the list of all users
 */
 export interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
+    id: number;
+  }
+  
 /*
 Represents a user request to be added to the list of all users
 */
 export interface UserRequest {
   id: number;
-  name: string;
-  email: string;
-  requestDate: Date;
+  isPending: boolean;
 }
 
 /*
@@ -32,4 +28,9 @@ Represents a table containing the list of all users
 export interface AllUsersTableProps {
   allUsers: User[];
   onRemoveUser: (userId: number) => void;
+}
+
+export interface User {
+  id: number;
+  link: string;
 }

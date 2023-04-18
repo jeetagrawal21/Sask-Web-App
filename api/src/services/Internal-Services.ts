@@ -33,7 +33,7 @@ export async function checkIfTable(tablename: string) {
     const exists = rows[0].exists;
     return Boolean(exists);
   } catch (error) {
-    logger.error("\ncheckIfTable errpr: \n" + String(error));
+    logger.error("\ncheckIfTable error: \n" + String(error));
   } finally {
     pool.end();
   }
@@ -65,7 +65,7 @@ async function createTable() {
         )
       `);
   } catch (error) {
-    logger.error("\ncreateTable errpr: \n" + String(error));
+    logger.error("\ncreateTable error: \n" + String(error));
   } finally {
     pool.end();
   }
@@ -171,18 +171,49 @@ export async function createPendingTable() {
             isPending BOOLEAN DEFAULT false NOT NULL
           );
         `;
-      await pool.query(query);
-      logger.info('Table "pendingUser" created successfully!');
-      pool.end();
-    } catch (error) {
-      logger.error("Error creating table:", String(error));
+        await pool.query(query);
+        logger.info('Table "approvedUsers" created successfully!');
+        pool.end();
+      } catch (error) {
+        logger.error('Error creating table approvedUsers:', String(error));
+      }
+    }
+  
+  }
+
+  export async function createApprovedTable() {
+    const tablecheck = await checkIfTable('approvedusers');
+    if (! tablecheck){
+      try {
+        const pool = new Pool(credentials);
+        const query = `
+          CREATE TABLE approvedUsers (
+            id SERIAL PRIMARY KEY,
+            link CHAR(255),
+            approvedTime TIMESTAMP
+          );
+        `;
+        await pool.query(query);
+        logger.info('Table "approvedUsers" created successfully!');
+        pool.end();
+      } catch (error) {
+        logger.error('Error creating table approvedUsers:', String(error));
+      }
     }
   }
-}
 
-export default {
-  initiateDB,
-  setupDataDB,
-  checkIfTable,
-  createPendingTable,
-};
+
+
+
+  export default {
+    initiateDB,
+    setupDataDB,
+    checkIfTable,
+    createPendingTable,
+    createApprovedTable
+  } 
+
+
+
+  
+

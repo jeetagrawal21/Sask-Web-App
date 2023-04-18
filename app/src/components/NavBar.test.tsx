@@ -41,24 +41,4 @@ describe("NavBar component", () => {
   });
 });
 
-/**
-    test('snapshot test for About link', () => {
-    const component = create(<NavBar />);
-    const aboutLink = component.root.findByProps({ href: '/about' });
-    expect(aboutLink.props.children).toBe('About');
-    expect(component.toJSON()).toMatchSnapshot();
-  });
 
-  test('snapshot test for Contact Us link', () => {
-    const component = create(<NavBar />);
-    const contactLink = component.root.findByProps({ href: '/contactus' });
-    expect(contactLink.props.children).toBe('Contact Us');
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-
-  test('snapshot test for Help link', () => {
-    const component = create(<NavBar />);
-    const contactLink = component.root.findByProps({ href: '/help' });
-    expect(contactLink.props.children).toBe('Help');
-    expect(component.toJSON()).toMatchSnapshot();
-   */
